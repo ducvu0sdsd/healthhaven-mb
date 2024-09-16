@@ -1,0 +1,135 @@
+// MenuArea.js
+import React, { useContext, useEffect, useState } from 'react';
+import { Animated, Dimensions, View, Text, TouchableOpacity, Image } from 'react-native';
+import { menuContext } from '../../contexts/MenuContext';
+import Icon from 'react-native-vector-icons/Feather';
+import Icon1 from 'react-native-vector-icons/Entypo';
+import Icon2 from 'react-native-vector-icons/FontAwesome6';
+import Icon3 from 'react-native-vector-icons/FontAwesome5';
+import Icon4 from 'react-native-vector-icons/MaterialIcons';
+import Icon5 from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon6 from 'react-native-vector-icons/FontAwesome';
+import Icon7 from 'react-native-vector-icons/MaterialIcons';
+import { screenContext } from '../../contexts/ScreenContext';
+import { userContext } from '../../contexts/UserContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { utilsContext } from '../../contexts/UtilsContext';
+import { notifyType } from '../../utils/notify';
+
+const MenuArea = () => {
+    const { menuData, menuHandler } = useContext(menuContext);
+    const { userData, userHandler } = useContext(userContext)
+    const { screenHandler } = useContext(screenContext)
+    const { utilsHandler } = useContext(utilsContext)
+    const { width } = Dimensions.get('window'); // Lấy chiều rộng của màn hình
+    const [translateX] = useState(new Animated.Value(menuData.display === true ? 0 : width));
+
+    useEffect(() => {
+        Animated.timing(translateX, {
+            toValue: menuData.display === true ? 0 : width,
+            duration: 300, // Thời gian animation (ms)
+            useNativeDriver: true, // Sử dụng Native Driver cho hiệu suất tốt hơn
+        }).start();
+    }, [menuData.display]);
+
+    const navigate = (goal) => {
+        menuHandler.setDisplay(false)
+        screenHandler.navigate(goal)
+    }
+
+    const handleLogout = async () => {
+        await AsyncStorage.removeItem('accessToken')
+        await AsyncStorage.removeItem('refreshToken')
+        userHandler.setUser()
+        utilsHandler.notify(notifyType.SUCCESS, 'Đăng Xuất Thành Công')
+    }
+
+    return (
+        <Animated.View
+            style={{
+                transform: [{ translateX }],
+                position: 'absolute',
+                height: '100%',
+                width: '80%', // Sử dụng chiều rộng của màn hình
+                backgroundColor: 'white',
+                zIndex: 2,
+                top: 0,
+                flexDirection: 'column',
+                gap: 20,
+                right: 0,
+                paddingTop: 20,
+                paddingLeft: 25,
+                paddingRight: 10
+            }}
+        >
+            <TouchableOpacity onPress={() => menuHandler.setDisplay(false)}>
+                <Icon name="x" style={{ fontSize: 30, position: 'absolute', right: 10, top: 10 }} />
+            </TouchableOpacity>
+
+            {userData.user && (
+                <View style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
+                    <Image source={{ uri: userData.user.image }} style={{ height: 46, width: 46, borderRadius: 23 }} />
+                    <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>{userData.user.fullName}</Text>
+                </View>
+            )}
+
+            <TouchableOpacity onPress={() => navigate('landing')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <Icon1 name='home' style={{ fontSize: 30, color: '#567fea' }} />
+                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trang Chủ</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate('services')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
+                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Các Dịch Vụ</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <Icon2 name='user-doctor' style={{ fontSize: 30, color: '#4ce1c6' }} />
+                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đội Ngũ Bác Sĩ</Text>
+            </TouchableOpacity>
+
+            {userData.user?.role === 'USER' && (<>
+                <TouchableOpacity onPress={() => navigate('services')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon5 name='file-document' style={{ fontSize: 30, color: '#ff3359' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Sức Khỏe</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon6 name='heartbeat' style={{ fontSize: 30, color: '#ff3359' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Theo Dõi Sức Khỏe</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('appointments')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon3 name='calendar-check' style={{ fontSize: 30, color: '#ebd400' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Của Bạn</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
+                </TouchableOpacity>
+            </>)}
+
+            <TouchableOpacity onPress={() => navigate('forums')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <Icon1 name='message' style={{ fontSize: 30, color: '#fb3997' }} />
+                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thảo Luận</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate('blogs')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <Icon3 name='blog' style={{ fontSize: 30, color: '#ff7834' }} />
+                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cẩm Nang</Text>
+            </TouchableOpacity>
+            {!userData.user ? (
+                <View style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => menuHandler.setDisplaySignUp(true)} style={{ borderRadius: 5, backgroundColor: 'blue', paddingVertical: 8, paddingHorizontal: 20 }}>
+                        <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Đăng Ký</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => menuHandler.setDisplaySignIn(true)} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', paddingVertical: 8, paddingHorizontal: 20 }}>
+                        <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Đăng Nhập</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                <TouchableOpacity onPress={() => handleLogout()} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon4 name='logout' style={{ fontSize: 30, color: 'black' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đăng Xuất</Text>
+                </TouchableOpacity>
+            )}
+        </Animated.View>
+    );
+};
+
+export default MenuArea;
