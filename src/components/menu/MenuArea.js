@@ -77,17 +77,40 @@ const MenuArea = () => {
                 <Icon1 name='home' style={{ fontSize: 30, color: '#567fea' }} />
                 <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trang Chủ</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigate('services')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
-                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Các Dịch Vụ</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                <Icon2 name='user-doctor' style={{ fontSize: 30, color: '#4ce1c6' }} />
-                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đội Ngũ Bác Sĩ</Text>
-            </TouchableOpacity>
+
+            {userData.user?.role === 'DOCTOR' && (<>
+                <TouchableOpacity onPress={() => navigate('tickets')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Phiếu Đăng Ký</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon2 name='user-doctor' style={{ fontSize: 30, color: '#4ce1c6' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Bệnh Nhân Của Tôi</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('chat-message')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('chat-message')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Bác Sĩ</Text>
+                </TouchableOpacity>
+            </>)}
+
+
+            {userData.user?.role !== 'DOCTOR' && (<>
+                <TouchableOpacity onPress={() => navigate('services')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Các Dịch Vụ</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon2 name='user-doctor' style={{ fontSize: 30, color: '#4ce1c6' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đội Ngũ Bác Sĩ</Text>
+                </TouchableOpacity>
+            </>)}
 
             {userData.user?.role === 'USER' && (<>
-                <TouchableOpacity onPress={() => navigate('services')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('medical-record')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon5 name='file-document' style={{ fontSize: 30, color: '#ff3359' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Sức Khỏe</Text>
                 </TouchableOpacity>
@@ -99,7 +122,7 @@ const MenuArea = () => {
                     <Icon3 name='calendar-check' style={{ fontSize: 30, color: '#ebd400' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Của Bạn</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('zego')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('chat-message')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
                 </TouchableOpacity>

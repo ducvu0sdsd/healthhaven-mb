@@ -8,6 +8,8 @@ import AddQuestion from "../components/forums/AddQuestion";
 import DetailBlog from "../components/blogs/DetailBlog";
 import FormBookingNormal from "../components/booking/FormBookingNormal";
 import InformationBookingNormal from "../components/booking/normal/InformationBookingNormal";
+import DetailAppointment from "../components/appointments/DetailAppointment";
+import ChatArea from "../components/chat/ChatArea";
 export const menuContext = createContext()
 
 const MenuProvider = ({ children }) => {
@@ -19,6 +21,9 @@ const MenuProvider = ({ children }) => {
     const [displayDetailBlog, setDisplayDetailBlog] = useState(false)
     const [displayFormBookingNormal, setDisplayFormBookingNormal] = useState(false)
     const [displayInformationBookingNormal, setDisplayInformationBookingNormal] = useState(false)
+    const [displayDetailAppointment, setDisplayDetailAppointment] = useState(false)
+    const [displayChatArea, setDisplayChatArea] = useState(false)
+
 
     const hidden = () => {
         setDisplay(false)
@@ -29,6 +34,9 @@ const MenuProvider = ({ children }) => {
         setDisplayDetailBlog(false)
         setDisplayFormBookingNormal(false)
         setDisplayInformationBookingNormal(false)
+        setDisplayDetailAppointment(false)
+        setDisplayChatArea(false)
+
     }
 
     const data = {
@@ -39,7 +47,9 @@ const MenuProvider = ({ children }) => {
         displayAddQuestion,
         displayDetailBlog,
         displayFormBookingNormal,
-        displayInformationBookingNormal
+        displayInformationBookingNormal,
+        displayDetailAppointment,
+        displayChatArea,
     }
 
     const handler = {
@@ -50,7 +60,9 @@ const MenuProvider = ({ children }) => {
         setDisplayAddQuestion,
         setDisplayDetailBlog,
         setDisplayFormBookingNormal,
-        setDisplayInformationBookingNormal
+        setDisplayInformationBookingNormal,
+        setDisplayDetailAppointment,
+        setDisplayChatArea,
     }
 
     return (
@@ -67,6 +79,8 @@ const MenuProvider = ({ children }) => {
             <DetailBlog />
             <FormBookingNormal />
             <InformationBookingNormal />
+            <DetailAppointment />
+            <ChatArea />
         </menuContext.Provider>
     )
 }

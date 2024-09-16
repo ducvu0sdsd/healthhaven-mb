@@ -34,6 +34,15 @@ const ScreenProvider = ({ children }) => {
             case 'zego':
                 setCurrentScreen(7)
                 break
+            case 'medical-record':
+                setCurrentScreen(8)
+                break
+            case 'chat-message':
+                setCurrentScreen(9)
+                break
+            case 'tickets':
+                setCurrentScreen(10)
+                break
         }
     }
 

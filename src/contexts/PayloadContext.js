@@ -7,6 +7,13 @@ const PayLoadProvider = ({ children }) => {
     const [qa, setQa] = useState()
     const [blog, setBlog] = useState()
 
+    //room
+    const [currentRoom, setCurrentRoom] = useState()
+
+    // detail appointment
+    const [detailAppointment, setDetailAppointment] = useState()
+    const [displayConnect, setDisplayConnect] = useState()
+
     // booking
     const [priceList, setPriceList] = useState()
     const [doctorRecord, setDoctorRecord] = useState()
@@ -20,7 +27,10 @@ const PayLoadProvider = ({ children }) => {
         priceList,
         doctorRecord,
         sick,
-        bookingNormal
+        bookingNormal,
+        detailAppointment,
+        displayConnect,
+        currentRoom
     }
 
     const handler = {
@@ -29,7 +39,10 @@ const PayLoadProvider = ({ children }) => {
         setPriceList,
         setDoctorRecord,
         setSick,
-        setBookingNormal
+        setBookingNormal,
+        setDetailAppointment,
+        setDisplayConnect,
+        setCurrentRoom
     }
 
     return (
