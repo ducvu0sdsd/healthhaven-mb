@@ -99,7 +99,7 @@ const MenuArea = () => {
                     <Icon3 name='calendar-check' style={{ fontSize: 30, color: '#ebd400' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Của Bạn</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('zego')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
                 </TouchableOpacity>

@@ -31,6 +31,9 @@ const ScreenProvider = ({ children }) => {
             case 'appointments':
                 setCurrentScreen(6)
                 break
+            case 'zego':
+                setCurrentScreen(7)
+                break
         }
     }
 
