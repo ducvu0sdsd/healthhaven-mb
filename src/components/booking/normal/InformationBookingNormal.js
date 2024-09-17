@@ -10,6 +10,7 @@ import { formatMoney } from '../../../utils/other';
 import Icon2 from 'react-native-vector-icons/Entypo';
 import ChoosePayment from '../ChoosePayment';
 import Complete from '../Complete';
+import * as ImagePicker from 'expo-image-picker';
 
 const InformationBookingNormal = () => {
     const { menuData, menuHandler } = useContext(menuContext);
@@ -17,7 +18,6 @@ const InformationBookingNormal = () => {
     const [translateX] = useState(new Animated.Value(menuData.displayInformationBookingNormal === true ? 0 : width));
     const scrollViewRef = useRef(null);
     const [step, setStep] = useState(0)
-    // console.log(step)
 
     //data
     const { userData } = useContext(userContext)
@@ -33,10 +33,34 @@ const InformationBookingNormal = () => {
 
     useEffect(() => {
         if (scrollViewRef.current) {
-            console.log(step * width)
             scrollViewRef.current.scrollTo({ x: step * width, animated: true });
         }
     }, [step])
+
+    const openGallery = async () => {
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+                base64: true,
+            });
+
+            if (!result.cancelled) {
+                const file = {
+                    base64: result.assets[0].base64,
+                    originalname: result.assets[0].fileName,
+                    uri: result.assets[0].uri,
+                    mimetype: result.assets[0].mimeType,
+                    size: result.assets[0].fileSize
+                }
+                payloadHandler.setBookingImages([...payloadData.bookingImages, file])
+            }
+        } catch (error) {
+            console.error('Lỗi khi mở thư viện ảnh:', error);
+        }
+    };
 
     return (
         <Animated.View
@@ -127,11 +151,14 @@ const InformationBookingNormal = () => {
                         <View style={{ flexDirection: 'column', gap: 5, borderRadius: 5, width: '85%', borderWidth: 1, borderColor: '#cacfd2', marginTop: 15, paddingHorizontal: 20, paddingVertical: 10 }}>
                             <Text style={{ fontFamily: 'Nunito-S', fontSize: 15 }}>Đính kèm hình ảnh mô tả (nếu có)
                             </Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%', marginTop: 5 }}>
-                                <TouchableOpacity style={{ flexDirection: 'column', gap: 5, borderRadius: 5, borderColor: '#e5e7e9', borderWidth: 2 }}>
-                                    <Icon2 name='image' style={{ fontSize: 30 }} />
-                                    <Text style={{ fontSize: 15, fontFamily: 'Nunito-B' }}>Thêm Ảnh</Text>
+                            <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', width: '80%', marginTop: 5 }}>
+                                <TouchableOpacity onPress={() => openGallery()} style={{ flexDirection: 'column', gap: 5, borderRadius: 5, alignItems: 'center' }}>
+                                    <Icon2 name='image' style={{ fontSize: 25 }} />
+                                    <Text style={{ fontSize: 13, fontFamily: 'Nunito-S' }}>Thêm Ảnh</Text>
                                 </TouchableOpacity>
+                                {payloadData.bookingImages.map((image, index) => (
+                                    <Image key={index} source={{ uri: image.uri }} style={{ width: 60, height: 60 }} />
+                                ))}
                             </View>
                         </View>
                         <TouchableOpacity onPress={() => setStep(1)} style={{ borderRadius: 5, marginTop: 10, backgroundColor: '#1dcbb6', height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 15 }}>

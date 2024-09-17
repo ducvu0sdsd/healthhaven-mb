@@ -43,6 +43,12 @@ const ScreenProvider = ({ children }) => {
             case 'tickets':
                 setCurrentScreen(10)
                 break
+            case 'follow-health':
+                setCurrentScreen(11)
+                break
+            case 'profile':
+                setCurrentScreen(12)
+                break
         }
     }
 

@@ -9,20 +9,19 @@ import { screenContext } from '../contexts/ScreenContext';
 const ChatMessageScreen = () => {
     const { width } = Dimensions.get('window');
     const { menuHandler } = useContext(menuContext)
-    const { payloadHandler } = useContext(payloadContext)
+    const { payloadHandler, payloadData } = useContext(payloadContext)
     const { userData } = useContext(userContext)
-    const [rooms, setRooms] = useState([])
 
     useEffect(() => {
         if (userData.user && userData.user?.role === 'USER') {
             api({ type: TypeHTTP.GET, sendToken: true, path: `/rooms/get-room-patient/${userData.user._id}` })
                 .then(rooms => {
-                    setRooms(rooms.filter(item => item.status === "ACTIVE"))
+                    payloadHandler.setRooms(rooms.filter(item => item.status === "ACTIVE"))
                 })
         } else if (userData.user && userData.user?.role === 'DOCTOR') {
             api({ type: TypeHTTP.GET, sendToken: true, path: `/rooms/get-room-doctor/${userData.user._id}` })
                 .then(rooms => {
-                    setRooms(rooms.filter(item => item.status === "ACTIVE"))
+                    payloadHandler.setRooms(rooms.filter(item => item.status === "ACTIVE"))
                 })
         }
     }, [userData.user])
@@ -39,9 +38,9 @@ const ChatMessageScreen = () => {
                     </View>
                 </View>
                 <View style={{ height: 1, width: '100%', backgroundColor: '#bfc9ca' }} />
-                <Text style={{ fontFamily: 'Nunito-B', fontSize: 17 }}>Cuộc Trò Chuyện ({rooms.length})</Text>
+                <Text style={{ fontFamily: 'Nunito-B', fontSize: 17 }}>Cuộc Trò Chuyện ({payloadData.rooms.length})</Text>
                 <ScrollView style={{ width: '100%', height: '80%' }}>
-                    {rooms.map((room, index) => (
+                    {payloadData.rooms.map((room, index) => (
                         <TouchableOpacity onPress={() => {
                             payloadHandler.setCurrentRoom(room)
                             menuHandler.setDisplayChatArea(true)

@@ -67,10 +67,10 @@ const MenuArea = () => {
             </TouchableOpacity>
 
             {userData.user && (
-                <View style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
+                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
                     <Image source={{ uri: userData.user.image }} style={{ height: 46, width: 46, borderRadius: 23 }} />
                     <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>{userData.user.fullName}</Text>
-                </View>
+                </TouchableOpacity>
             )}
 
             <TouchableOpacity onPress={() => navigate('landing')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
@@ -114,7 +114,7 @@ const MenuArea = () => {
                     <Icon5 name='file-document' style={{ fontSize: 30, color: '#ff3359' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Sức Khỏe</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('follow-health')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon6 name='heartbeat' style={{ fontSize: 30, color: '#ff3359' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Theo Dõi Sức Khỏe</Text>
                 </TouchableOpacity>

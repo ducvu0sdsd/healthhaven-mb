@@ -12,6 +12,8 @@ import ZegoScreen from './ZegoScreen'
 import MedicalRecordScreen from './MedicalRecordScreen'
 import ChatMessageScreen from './ChatMessageScreen'
 import TicketScreen from './TicketsScreen'
+import FollowHealthScreen from './FollowHealthScreen'
+import ProfileScreen from './ProfileScreen'
 
 const Index = () => {
     const { width } = Dimensions.get('window');
@@ -42,6 +44,8 @@ const Index = () => {
             <MedicalRecordScreen />
             <ChatMessageScreen />
             <TicketScreen />
+            <FollowHealthScreen />
+            <ProfileScreen />
             {/* for patient */}
 
         </ScrollView>
