@@ -14,6 +14,7 @@ import ChatMessageScreen from './ChatMessageScreen'
 import TicketScreen from './TicketsScreen'
 import FollowHealthScreen from './FollowHealthScreen'
 import ProfileScreen from './ProfileScreen'
+import MyPatientScreen from './MyPatientScreen'
 
 const Index = () => {
     const { width } = Dimensions.get('window');
@@ -46,6 +47,7 @@ const Index = () => {
             <TicketScreen />
             <FollowHealthScreen />
             <ProfileScreen />
+            <MyPatientScreen />
             {/* for patient */}
 
         </ScrollView>

@@ -3,20 +3,21 @@ import { Dimensions, ImageBackground, Pressable, ScrollView, Text, TouchableOpac
 import { menuContext } from '../contexts/MenuContext';
 import { payloadContext } from '../contexts/PayloadContext';
 import { userContext } from '../contexts/UserContext';
+import { screenContext } from '../contexts/ScreenContext';
 
 const ZegoScreen = () => {
     const { width } = Dimensions.get('window');
     const { menuHandler } = useContext(menuContext)
     const { payloadHandler } = useContext(payloadContext)
     const { userData } = useContext(userContext)
-
+    const { screenData } = useContext(screenContext)
     return (
         <ScrollView>
-            {/* {screenData.currentScreen === 1 && ( */}
             <View style={{ flexWrap: 'wrap', flexDirection: 'column', width, gap: 10, paddingHorizontal: 20, paddingVertical: 10 }}>
-                <Text>ZegoScreen</Text>
+                {screenData.currentScreen === 7 && (<>
+                    <Text>ZegoScreen</Text>
+                </>)}
             </View>
-            {/* )} */}
         </ScrollView>
     )
 }

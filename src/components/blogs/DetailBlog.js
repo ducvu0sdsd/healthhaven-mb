@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Animated, Text, TouchableOpacity, View } from 'react-native';
-import { menuContext } from '../../contexts/MenuContext';
-import { Dimensions } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Animated, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Feather';
-import { payloadContext } from '../../contexts/PayloadContext';
 import { WebView } from 'react-native-webview';
+import { menuContext } from '../../contexts/MenuContext';
+import { payloadContext } from '../../contexts/PayloadContext';
 import { deploy } from '../../utils/api';
-
 const DetailBlog = () => {
     const { menuData, menuHandler } = useContext(menuContext);
     const { payloadData, payloadHandler } = useContext(payloadContext)
@@ -46,9 +45,15 @@ const DetailBlog = () => {
                     <Icon name="x" style={{ fontSize: 30 }} />
                 </TouchableOpacity>
             </View>
-            <View style={{ width: '100%', flexDirection: 'column', height, alignItems: 'center', paddingTop: 50 }}>
-
-            </View>
+            <ScrollView style={{ width: '100%', paddingHorizontal: 20, flexDirection: 'column', height, paddingTop: 50 }}>
+                {payloadData.blog && (<>
+                    <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>{payloadData.blog?.title}</Text>
+                    <RenderHtml
+                        contentWidth={width}
+                        source={{ html: payloadData.blog?.content }}
+                    />
+                </>)}
+            </ScrollView>
         </Animated.View >
     )
 }

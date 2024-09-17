@@ -24,7 +24,7 @@ const LandingScreen = () => {
     }, [])
 
     return (
-        <View style={{ flexDirection: 'column', paddingHorizontal: 10, width, paddingVertical: 10, gap: 10 }}>
+        <ScrollView style={{ flexDirection: 'column', paddingHorizontal: 10, width, paddingVertical: 10, gap: 10 }}>
             <View style={{ width: '100%', overflow: 'hidden', position: 'relative', flexDirection: 'row', height: 180, backgroundColor: '#1dcbb6', borderRadius: 8, paddingVertical: 10 }}>
                 <View style={{ width: '50%', paddingHorizontal: 12, flexDirection: 'column', justifyContent: 'center' }}>
                     <Text style={{ fontSize: 15, fontFamily: 'Nunito-B', color: 'white', lineHeight: 20 }}>Tham khảo ý kiến sức khỏe về bệnh tim mạch tại HealthHaven.</Text>
@@ -121,7 +121,7 @@ const LandingScreen = () => {
 
                 ))}
             </ScrollView>
-        </View>
+        </ScrollView>
     )
 }
 

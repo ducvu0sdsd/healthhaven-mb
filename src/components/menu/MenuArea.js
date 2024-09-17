@@ -66,9 +66,33 @@ const MenuArea = () => {
                 <Icon name="x" style={{ fontSize: 30, position: 'absolute', right: 10, top: 10 }} />
             </TouchableOpacity>
 
-            {userData.user && (
+            {(userData.user && userData.user.role === 'USER') && (
                 <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
                     <Image source={{ uri: userData.user.image }} style={{ height: 46, width: 46, borderRadius: 23 }} />
+                    <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>{userData.user.fullName}</Text>
+                </TouchableOpacity>
+            )}
+
+            {(userData.user && userData.user.role === 'DOCTOR') && (
+                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
+                    <View style={{
+                        height: 50,
+                        width: 50,
+                        borderWidth: 1,
+                        borderColor: '#1dcbb6',
+                        overflow: 'hidden',
+                        borderRadius: 150
+                    }}>
+                        <Image
+                            source={{
+                                uri: userData.user.image
+                            }}
+                            style={{
+                                height: 70,
+                                width: 50,
+                            }}
+                        />
+                    </View>
                     <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>{userData.user.fullName}</Text>
                 </TouchableOpacity>
             )}
@@ -83,7 +107,7 @@ const MenuArea = () => {
                     <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Phiếu Đăng Ký</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('doctors')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('my-patient')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon2 name='user-doctor' style={{ fontSize: 30, color: '#4ce1c6' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Bệnh Nhân Của Tôi</Text>
                 </TouchableOpacity>

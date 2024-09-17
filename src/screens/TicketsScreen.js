@@ -11,6 +11,7 @@ import { userContext } from '../contexts/UserContext';
 import { api, TypeHTTP } from '../utils/api';
 import { convertDateToDayMonthYearVietNam } from '../utils/date';
 import { returnNumber } from '../utils/other';
+import { screenContext } from '../contexts/ScreenContext';
 const TicketScreen = () => {
     const { width, height } = Dimensions.get('window');
     const { menuHandler } = useContext(menuContext)
@@ -22,31 +23,34 @@ const TicketScreen = () => {
     const [appointments, setAppointments] = useState([])
     const [type, setType] = useState("1");
     const [ticketType, setTicketType] = useState('1')
+    const { screenData } = useContext(screenContext)
 
     // Phiếu đăng ký
     return (
         <>
             <ScrollView >
-                {/* {screenData.currentScreen === 1 && ( */}
                 <View style={{ flexWrap: 'wrap', flexDirection: 'column', width, gap: 10, paddingHorizontal: 20, paddingVertical: 10, height }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', color: 'black' }}>Chào Mừng {userData.user?.fullName}</Text>
-                    <Text style={{ fontSize: 15, fontFamily: 'Nunito-R', color: 'black' }}>Bắt đầu ngày mới với những cuộc hẹn mới.</Text>
-                    {/* toggle */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <TouchableOpacity onPress={() => setDisplay(true)} style={{ gap: 5, backgroundColor: '#f0f0f0', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, paddingHorizontal: 10, borderRadius: 10 }}>
-                            <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Phiếu đăng ký theo dõi</Text>
-                            <Icon name='chevron-down' style={{ fontSize: 25, color: 'black' }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setDisplayTime(true)} style={{ gap: 5, backgroundColor: '#f0f0f0', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, paddingHorizontal: 10, borderRadius: 10 }}>
-                            <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Hôm nay</Text>
-                            <Icon name='chevron-down' style={{ fontSize: 25, color: 'black' }} />
-                        </TouchableOpacity>
-                    </View>
-                    {ticketType === '1' ? (
-                        <CuocHen type={type} setType={setType} />
-                    ) : (
-                        <PhieuTheoDoi type={type} setType={setType} />
-                    )}
+                    {screenData.currentScreen === 10 && (<>
+                        <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', color: 'black' }}>Chào Mừng {userData.user?.fullName}</Text>
+                        <Text style={{ fontSize: 15, fontFamily: 'Nunito-R', color: 'black' }}>Bắt đầu ngày mới với những cuộc hẹn mới.</Text>
+                        {/* toggle */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => setDisplay(true)} style={{ gap: 5, backgroundColor: '#f0f0f0', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, paddingHorizontal: 10, borderRadius: 10 }}>
+                                <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Phiếu đăng ký theo dõi</Text>
+                                <Icon name='chevron-down' style={{ fontSize: 25, color: 'black' }} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setDisplayTime(true)} style={{ gap: 5, backgroundColor: '#f0f0f0', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, paddingHorizontal: 10, borderRadius: 10 }}>
+                                <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Hôm nay</Text>
+                                <Icon name='chevron-down' style={{ fontSize: 25, color: 'black' }} />
+                            </TouchableOpacity>
+                        </View>
+                        {ticketType === '1' ? (
+                            <CuocHen type={type} setType={setType} />
+                        ) : (
+                            <PhieuTheoDoi type={type} setType={setType} />
+                        )}
+                    </>)}
+
                 </View>
                 {display && (
                     <View style={{ width, height, justifyContent: 'center', position: 'absolute', top: 0, left: 0, alignItems: 'center', flexDirection: 'row' }}>

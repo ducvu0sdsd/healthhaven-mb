@@ -210,9 +210,11 @@ const ChatArea = () => {
                             <Text style={{ fontFamily: 'Nunito-R', fontSize: 15 }}>Đang Hoạt Động</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => handleShowUpdateHealth()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 35, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10, paddingHorizontal: 20 }}>
-                        <Text style={{ fontSize: 13, color: 'white', fontFamily: 'Nunito-B' }}>Sức Khỏe</Text>
-                    </TouchableOpacity>
+                    {currentUser === 'PATIENT' && (
+                        <TouchableOpacity onPress={() => handleShowUpdateHealth()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 35, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10, paddingHorizontal: 20 }}>
+                            <Text style={{ fontSize: 13, color: 'white', fontFamily: 'Nunito-B' }}>Sức Khỏe</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
                 <View style={{ height: 1, width: '100%', backgroundColor: '#d5dbdb', marginTop: 10 }} />
                 <ScrollView onContentSizeChange={() => {
@@ -351,7 +353,7 @@ const ChatArea = () => {
                                         </View>
                                     }
                                     else {
-                                        return <View key={index} style={{ width: '100%', flexDirection: 'row', borderRadius: 5, alignItems: 'center', justifyContent: 'flex-start', marginTop: 10 }}>
+                                        return <View key={index} style={{ width: '100%', flexDirection: 'row', borderRadius: 5, alignItems: 'center', justifyContent: 'flex-start', marginTop: 10, gap: 10 }}>
                                             {userData.user?.role === 'DOCTOR' ? (
                                                 <Image source={{ uri: payloadData.currentRoom?.patient.image }} style={{ height: 50, width: 50, borderRadius: 25 }} />
                                             ) : (

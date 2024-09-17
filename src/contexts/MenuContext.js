@@ -11,6 +11,7 @@ import InformationBookingNormal from "../components/booking/normal/InformationBo
 import DetailAppointment from "../components/appointments/DetailAppointment";
 import ChatArea from "../components/chat/ChatArea";
 import Health from "../components/health/Health";
+import DetailLogbook from "../components/logbook/DetailLogbook";
 export const menuContext = createContext()
 
 const MenuProvider = ({ children }) => {
@@ -25,6 +26,7 @@ const MenuProvider = ({ children }) => {
     const [displayDetailAppointment, setDisplayDetailAppointment] = useState(false)
     const [displayChatArea, setDisplayChatArea] = useState(false)
     const [displayHealth, setDisplayHealth] = useState(false)
+    const [displayDetailLogbook, setDisplayDetailLogbook] = useState(false)
 
 
     const hidden = () => {
@@ -39,6 +41,7 @@ const MenuProvider = ({ children }) => {
         setDisplayDetailAppointment(false)
         setDisplayChatArea(false)
         setDisplayHealth(false)
+        setDisplayDetailLogbook(false)
     }
 
     const data = {
@@ -52,7 +55,8 @@ const MenuProvider = ({ children }) => {
         displayInformationBookingNormal,
         displayDetailAppointment,
         displayChatArea,
-        displayHealth
+        displayHealth,
+        displayDetailLogbook
     }
 
     const handler = {
@@ -66,7 +70,8 @@ const MenuProvider = ({ children }) => {
         setDisplayInformationBookingNormal,
         setDisplayDetailAppointment,
         setDisplayChatArea,
-        setDisplayHealth
+        setDisplayHealth,
+        setDisplayDetailLogbook
     }
 
     return (
@@ -86,6 +91,7 @@ const MenuProvider = ({ children }) => {
             <DetailAppointment />
             <ChatArea />
             <Health />
+            <DetailLogbook />
         </menuContext.Provider>
     )
 }
