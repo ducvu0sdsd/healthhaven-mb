@@ -4,7 +4,7 @@ import CalenderCheck from 'react-native-vector-icons/FontAwesome';
 import { userContext } from '../../contexts/UserContext';
 import { utilsContext } from '../../contexts/UtilsContext';
 import { api, TypeHTTP } from '../../utils/api';
-import { compareTimeDate1GreaterThanDate2, convertDateToDayMonthYearObject, convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam, isALargerWithin10Minutes, isALargerWithin60Minutes, sortByAppointmentDate } from '../../utils/date';
+import { compareTimeDate1GreaterThanDate2, compare2Date, convertDateToDayMonthYearObject, convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam, isALargerWithin10Minutes, isALargerWithin60Minutes, sortByAppointmentDate } from '../../utils/date';
 import { returnNumber } from '../../utils/other';
 import { notifyType } from '../../utils/notify';
 import { payloadContext } from '../../contexts/PayloadContext';

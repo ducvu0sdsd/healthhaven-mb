@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Dimensions, Image, ImageBackground, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions, Image, ImageBackground, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import StatusEach from '../components/mypatient/StatusEach';
+import StatusPatient from '../components/mypatient/StatusPatient';
 import { menuContext } from '../contexts/MenuContext';
 import { payloadContext } from '../contexts/PayloadContext';
-import { userContext } from '../contexts/UserContext';
 import { screenContext } from '../contexts/ScreenContext';
-import StatusEach from '../components/mypatient/StatusEach';
+import { userContext } from '../contexts/UserContext';
 import { api, TypeHTTP } from '../utils/api';
-import StatusPatient from '../components/mypatient/StatusPatient';
 
 const MyPatientScreen = () => {
     const { width } = Dimensions.get('window');
@@ -20,7 +20,10 @@ const MyPatientScreen = () => {
         if (userData.user) {
             api({ type: TypeHTTP.GET, path: `/healthLogBooks/findByDoctor/${userData.user._id}`, sendToken: true })
                 .then(logBooks => {
-                    setLogBooks(logBooks)
+                    if (logBooks) {
+                        setLogBooks(logBooks)
+                    }
+
                 })
         }
     }, [userData.user])
@@ -29,13 +32,13 @@ const MyPatientScreen = () => {
     return (
         <View>
             <View style={{ flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', width, gap: 10, paddingHorizontal: 20, paddingTop: 5 }}>
-                {screenData.currentScreen === 13 && (<>
+                {(screenData.currentScreen === 13 && logBooks) && (<>
                     <Text style={{ fontFamily: 'Nunito-B', fontSize: 20, width: '100%', textAlign: 'center' }}>Bệnh Nhân Của Tôi</Text>
                     <StatusEach logBooks={logBooks} />
                     <StatusPatient logBooks={logBooks} />
                     <Text style={{ fontFamily: 'Nunito-B', fontSize: 17, width: '100%', marginTop: 10 }}>Bệnh Nhân:</Text>
                     <ScrollView style={{ width: '100%', height: 210 }}>
-                        {logBooks.map((logbook, index) => (
+                        {logBooks.filter((item) => item.status.status_type === "ACCEPTED").map((logbook, index) => (
                             <TouchableOpacity onPress={() => {
                                 menuHandler.setDisplayDetailLogbook(true)
                                 payloadHandler.setLogbook(logbook)

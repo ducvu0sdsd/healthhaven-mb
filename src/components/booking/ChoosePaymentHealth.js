@@ -31,11 +31,6 @@ const ChoosePayment = ({ setStep }) => {
             </View>
 
             <View style={{ flexDirection: 'column', gap: 10, borderRadius: 5, width: '85%', borderWidth: 1, borderColor: '#cacfd2', marginTop: 10 }}>
-                <View style={{ alignItems: 'center', flexDirection: 'row', gap: 5, borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <Text>Giờ Hẹn: </Text>
-                    <Text style={{ backgroundColor: 'blue', color: 'white', fontFamily: 'Nunito-S', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5 }}>{payloadData.bookingNormal?.appointment_date.time}</Text>
-                    <Text style={{ backgroundColor: '#1dcbb6', color: 'white', fontFamily: 'Nunito-S', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5 }}>{convertDateToDayMonthYear(payloadData.bookingNormal?.appointment_date)}</Text>
-                </View>
                 <View style={{ alignItems: 'start', flexDirection: 'row', gap: 15, borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
                     <View style={{
                         height: 55,
@@ -54,10 +49,10 @@ const ChoosePayment = ({ setStep }) => {
                         />
                     </View>
                     <View style={{ flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
-                        <Text style={{ fontFamily: 'Nunito-R', fontSize: 15 }}>Khám bệnh trực tuyến</Text>
+                        <Text style={{ fontFamily: 'Nunito-R', fontSize: 15, width: '65%' }}>Dịch Vụ Theo Dõi Sức Khỏe với bác sĩ {payloadData.doctorRecord?.doctor.fullName}</Text>
                         <Text style={{ fontFamily: 'Nunito-B', fontSize: 15 }}>{payloadData.doctorRecord?.doctor.fullName}</Text>
                         <Text style={{ fontFamily: 'Nunito-S', fontSize: 13, paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#e0eff6', borderRadius: 5, marginVertical: 2 }}>{payloadData.doctorRecord?.doctor.specialize}</Text>
-                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 15 }}>{formatMoney(payloadData.bookingNormal?.priceList.price)} đ</Text>
+                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 15 }}>{formatMoney(payloadData.bookingHealth?.priceList.price)} đ</Text>
                     </View>
                 </View>
             </View>
@@ -65,11 +60,11 @@ const ChoosePayment = ({ setStep }) => {
             <View style={{ flexDirection: 'column', gap: 10, borderRadius: 5, width: '85%', borderWidth: 1, borderColor: '#cacfd2', marginTop: 15, paddingHorizontal: 20, paddingVertical: 10 }}>
                 <View style={{ flexDirection: 'row', gap: 1, justifyContent: 'space-between' }}>
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 15 }}>Giá dịch vụ</Text>
-                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 14 }}>{formatMoney(payloadData.bookingNormal?.priceList.price)} đ</Text>
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 14 }}>{formatMoney(payloadData.bookingHealth?.priceList.price)} đ</Text>
                 </View>
                 <View style={{ flexDirection: 'row', gap: 1, justifyContent: 'space-between' }}>
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 15 }}>Tổng Thanh Toán</Text>
-                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, color: 'red' }}>{formatMoney(payloadData.bookingNormal?.priceList.price)} đ</Text>
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, color: 'red' }}>{formatMoney(payloadData.bookingHealth?.priceList.price)} đ</Text>
                 </View>
             </View>
 

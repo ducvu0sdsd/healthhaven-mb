@@ -65,11 +65,10 @@ const ProfileScreen = () => {
                 userHandler.setUser(res);
                 utilsHandler.notify(
                     notifyType.SUCCESS,
-                    "Đăng tải câu hỏi thành công !!!"
+                    "Cập nhật thông tin thành công !!!"
                 );
             })
             .catch((error) => {
-                console.log(error.message);
                 utilsHandler.notify(
                     notifyType.FAIL,
                     error.message
@@ -100,12 +99,10 @@ const ProfileScreen = () => {
                         api({
                             type: TypeHTTP.POST,
                             body: { ...user, image: listImage[0] },
-                            path: `/auth/update/${userData.user?.role === "DOCTOR" ? "doctor" : "User"
-                                }`,
+                            path: `/auth/update/${userData.user?.role === "DOCTOR" ? "doctor" : "User"}`,
                             sendToken: true,
                         })
                             .then((res) => {
-                                console.log(res)
                                 userHandler.setUser(res);
                                 utilsHandler.notify(
                                     notifyType.SUCCESS,
@@ -125,7 +122,7 @@ const ProfileScreen = () => {
                     <View style={{ flexDirection: 'row', width: '100%', gap: 5 }}>
                         <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 5 }}>
                             {userData.user?.role === 'USER' ? (
-                                <Image source={{ uri: userData.user?.image }} style={{ height: 70, width: 70, borderRadius: 25 }} />
+                                <Image source={{ uri: userData.user?.image }} style={{ height: 70, width: 70, borderRadius: 35 }} />
                             ) : (
                                 <View style={{
                                     height: 70,

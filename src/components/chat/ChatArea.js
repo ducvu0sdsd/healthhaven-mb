@@ -153,7 +153,6 @@ const ChatArea = () => {
         api({ type: TypeHTTP.GET, sendToken: true, path: `/healthLogBooks/findByPatient/${userData.user._id}` })
             .then(logBooks => {
                 const logBook = logBooks.filter(item => item.doctor._id === payloadData.currentRoom.doctor._id && item.status.status_type === 'ACCEPTED')[0];
-                console.log(logBook)
                 payloadHandler.setLogbook(logBook)
                 menuHandler.setDisplayHealth(true)
             })

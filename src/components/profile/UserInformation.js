@@ -19,6 +19,7 @@ const UserInformation = ({ user, setUser }) => {
       <View style={{ flexDirection: 'column', gap: 5, width: '100%', alignItems: 'center' }}>
         <Text style={{ width: '85%', fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Giới tính: </Text>
         <TextInput onChangeText={e => setUser({ ...user, sex: e === 'Nam' ? true : false })} value={user?.sex === true ? 'Nam' : 'Nữ'} placeholder='Giới tính...' style={{ color: 'black', height: 45, zIndex: 1, width: '85%', backgroundColor: 'white', borderWidth: 1, paddingHorizontal: 10, borderRadius: 7, borderColor: '#bbb' }} />
+
       </View>
       <View style={{ flexDirection: 'column', gap: 5, width: '100%', alignItems: 'center' }}>
         <Text style={{ width: '85%', fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Email: </Text>

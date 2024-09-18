@@ -8,6 +8,9 @@ import { formatMoney } from '../utils/other';
 import Icon from "react-native-vector-icons/AntDesign";
 import { payloadContext } from '../contexts/PayloadContext';
 import { menuContext } from '../contexts/MenuContext';
+import { utilsContext } from '../contexts/UtilsContext';
+import { userContext } from '../contexts/UserContext';
+import { notifyType } from '../utils/notify';
 
 const DetailDoctorScreen = () => {
     const { data } = useContext(dataContext)
@@ -19,6 +22,19 @@ const DetailDoctorScreen = () => {
     const [forums, setForums] = useState([]);
     const { menuHandler } = useContext(menuContext)
     const { payloadHandler } = useContext(payloadContext)
+    const { utilsHandler } = useContext(utilsContext)
+    const { userData } = useContext(userContext)
+    const [healthLogBooks, setHealthLogBooks] = useState([]);
+
+    useEffect(() => {
+        if (userData.user) {
+            api({ type: TypeHTTP.GET, path: `/healthLogBooks/findByPatient/${userData.user?._id}`, sendToken: true })
+                .then(res => {
+                    setHealthLogBooks(res)
+                })
+        }
+
+    }, [userData.user]);
 
     useEffect(() => {
         api({
@@ -112,7 +128,25 @@ const DetailDoctorScreen = () => {
                                     <Text style={{ fontSize: 15, fontFamily: 'Nunito-S', color: 'white' }} >{formatMoney(priceList?.price)}đ</Text>
                                 </View>
                             </View>
+                            {!healthLogBooks.filter(log => (log.status.status_type === 'ACCEPTED' || log.status.status_type === 'QUEUE' || log.status.status_type === 'TRANSFER')).length > 0 && (
+                                <TouchableOpacity onPress={() => {
+                                    if (userData.user) {
+                                        if (userData.user?.email === "") {
+                                            utilsHandler.notify(notifyType.WARNING, "Vui lòng cập nhật email để đặt khám !!!")
+                                            return;
+                                        }
+                                    } else {
+                                        utilsHandler.notify(notifyType.WARNING, "Vui lòng đăng nhập để đặt lịch theo dõi sức khỏe với bác sĩ nhé !!!")
+                                        return;
+                                    }
+                                    menuHandler.setDisplayServicesFollowing(true)
+                                    payloadHandler.setDoctorRecord(doctorRecord)
+                                }} style={{ borderRadius: 5, backgroundColor: 'white', marginTop: 5, paddingVertical: 11, flexDirection: 'row', justifyContent: 'center' }}>
+                                    <Text style={{ color: 'black', fontFamily: 'Nunito-B', fontSize: 14 }}>Đăng Ký Theo Dõi Sức Khỏe</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
+
 
                         <View style={{ width: '100%', gap: 10, marginTop: 20, flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
                             <View style={{

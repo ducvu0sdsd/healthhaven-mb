@@ -67,14 +67,14 @@ const MenuArea = () => {
             </TouchableOpacity>
 
             {(userData.user && userData.user.role === 'USER') && (
-                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
+                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7, width: '90%' }}>
                     <Image source={{ uri: userData.user.image }} style={{ height: 46, width: 46, borderRadius: 23 }} />
-                    <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>{userData.user.fullName}</Text>
+                    <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', }}>{userData.user.fullName}</Text>
                 </TouchableOpacity>
             )}
 
             {(userData.user && userData.user.role === 'DOCTOR') && (
-                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7 }}>
+                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7, width: '90%' }}>
                     <View style={{
                         height: 50,
                         width: 50,
@@ -115,7 +115,7 @@ const MenuArea = () => {
                     <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate('chat-message')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('doctor-record')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Bác Sĩ</Text>
                 </TouchableOpacity>

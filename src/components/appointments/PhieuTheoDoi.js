@@ -152,7 +152,7 @@ const PhieuTheoDoi = ({ type, setType }) => {
               <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3 }}>Chức năng: </Text>
               {logBook.status.status_type === "TRANSFER" ? (
                 <>
-                  <TouchableOpacity onPress={() => handleAcceptLogBook()} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                  <TouchableOpacity onPress={() => handleAcceptLogBook(logBook)} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
                     <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Chấp nhận</Text>
                   </TouchableOpacity>
 
@@ -160,10 +160,10 @@ const PhieuTheoDoi = ({ type, setType }) => {
               ) : (
                 logBook.status.status_type === "QUEUE" && (
                   <>
-                    <TouchableOpacity onPress={() => handleAcceptLogBook()} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                    <TouchableOpacity onPress={() => handleAcceptLogBook(logBook)} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
                       <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Chấp nhận</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleRejectLogBook()} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                    <TouchableOpacity onPress={() => handleRejectLogBook(logBook)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
                       <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Từ chối</Text>
                     </TouchableOpacity>
                   </>

@@ -6,11 +6,13 @@ import Heart from '../../assets/heart.png'
 import { api, TypeHTTP } from '../utils/api';
 import { dataContext } from '../contexts/DataContext';
 import { screenContext } from '../contexts/ScreenContext';
+import { userContext } from '../contexts/UserContext';
 
 const LandingScreen = () => {
     const { width } = Dimensions.get('window');
     const { data, handler } = useContext(dataContext)
     const { screenHandler } = useContext(screenContext)
+    const { userData } = useContext(userContext)
 
     useEffect(() => {
         api({ type: TypeHTTP.GET, path: '/doctorRecords/getAll', sendToken: false })
@@ -41,8 +43,10 @@ const LandingScreen = () => {
                     <TouchableOpacity
                         key={index}
                         onPress={() => {
-                            screenHandler.setCurrentDoctorRecord(doctorRecord)
-                            screenHandler.navigate('detail-doctor')
+                            if (userData.user && userData.user.role === 'USER') {
+                                screenHandler.setCurrentDoctorRecord(doctorRecord)
+                                screenHandler.navigate('detail-doctor')
+                            }
                         }}
                         style={{
                             paddingVertical: 15,

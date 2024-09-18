@@ -24,6 +24,10 @@ const InformationBookingNormal = () => {
     const { payloadData, payloadHandler } = useContext(payloadContext)
 
     useEffect(() => {
+        setStep(0)
+    }, [menuData.displayInformationBookingNormal])
+
+    useEffect(() => {
         Animated.timing(translateX, {
             toValue: menuData.displayInformationBookingNormal === true ? 0 : width,
             duration: 300, // Thời gian animation (ms)

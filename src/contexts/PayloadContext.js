@@ -7,8 +7,13 @@ const PayLoadProvider = ({ children }) => {
     const [qa, setQa] = useState()
     const [blog, setBlog] = useState()
 
+    // schedule
+    const [day, setDay] = useState()
+    const [time, setTime] = useState()
+
     //health
     const [logbook, setLogbook] = useState()
+    const [patient, setPatient] = useState()
 
     //room
     const [currentRoom, setCurrentRoom] = useState()
@@ -26,6 +31,9 @@ const PayLoadProvider = ({ children }) => {
     // => 
     const [bookingNormal, setBookingNormal] = useState()
 
+    // booking follow health
+    const [bookingHealth, setBookingHealth] = useState()
+
     const data = {
         qa,
         blog,
@@ -38,7 +46,11 @@ const PayLoadProvider = ({ children }) => {
         currentRoom,
         rooms,
         bookingImages,
-        logbook
+        logbook,
+        day,
+        time,
+        patient,
+        bookingHealth
     }
 
     const handler = {
@@ -53,7 +65,11 @@ const PayLoadProvider = ({ children }) => {
         setCurrentRoom,
         setRooms,
         setBookingImages,
-        setLogbook
+        setLogbook,
+        setDay,
+        setTime,
+        setPatient,
+        setBookingHealth
     }
 
     return (

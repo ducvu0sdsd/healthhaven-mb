@@ -131,7 +131,7 @@ export default CompleteInformation
 
 
 
-const RadioButton = ({ label, value, selected, onSelect }) => {
+export const RadioButton = ({ label, value, selected, onSelect }) => {
     return (
         <TouchableOpacity onPress={() => onSelect(value)} style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
             <View

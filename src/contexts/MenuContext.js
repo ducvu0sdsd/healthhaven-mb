@@ -12,6 +12,11 @@ import DetailAppointment from "../components/appointments/DetailAppointment";
 import ChatArea from "../components/chat/ChatArea";
 import Health from "../components/health/Health";
 import DetailLogbook from "../components/logbook/DetailLogbook";
+import Schedule from "../components/doctorrecord/Schedule";
+import DetailTime from "../components/doctorrecord/DetailTime";
+import MedicalRecord from "../components/logbook/MedicalRecord";
+import ServicesFollowing from "../components/booking/follow-health/ServicesFollowing";
+import InformationBookingHealth from "../components/booking/follow-health/InformationBookingHealth";
 export const menuContext = createContext()
 
 const MenuProvider = ({ children }) => {
@@ -27,6 +32,11 @@ const MenuProvider = ({ children }) => {
     const [displayChatArea, setDisplayChatArea] = useState(false)
     const [displayHealth, setDisplayHealth] = useState(false)
     const [displayDetailLogbook, setDisplayDetailLogbook] = useState(false)
+    const [displaySchedule, setDisplaySchedule] = useState(false)
+    const [displayDetailTime, setDisplayDetailTime] = useState(false)
+    const [displayMedicalRecord, setDisplayMedicalRecord] = useState(false)
+    const [displayServicesFollowing, setDisplayServicesFollowing] = useState(false)
+    const [displayInformationBookingHealth, setDisplayInformationBookingHealth] = useState(false)
 
 
     const hidden = () => {
@@ -42,6 +52,11 @@ const MenuProvider = ({ children }) => {
         setDisplayChatArea(false)
         setDisplayHealth(false)
         setDisplayDetailLogbook(false)
+        setDisplaySchedule(false)
+        setDisplayDetailTime(false)
+        setDisplayMedicalRecord(false)
+        setDisplayServicesFollowing(false)
+        setDisplayInformationBookingHealth(false)
     }
 
     const data = {
@@ -56,7 +71,12 @@ const MenuProvider = ({ children }) => {
         displayDetailAppointment,
         displayChatArea,
         displayHealth,
-        displayDetailLogbook
+        displayDetailLogbook,
+        displaySchedule,
+        displayDetailTime,
+        displayMedicalRecord,
+        displayServicesFollowing,
+        displayInformationBookingHealth
     }
 
     const handler = {
@@ -71,7 +91,12 @@ const MenuProvider = ({ children }) => {
         setDisplayDetailAppointment,
         setDisplayChatArea,
         setDisplayHealth,
-        setDisplayDetailLogbook
+        setDisplayDetailLogbook,
+        setDisplaySchedule,
+        setDisplayDetailTime,
+        setDisplayMedicalRecord,
+        setDisplayServicesFollowing,
+        setDisplayInformationBookingHealth
     }
 
     return (
@@ -86,12 +111,18 @@ const MenuProvider = ({ children }) => {
             <DetailQuestion />
             <AddQuestion />
             <DetailBlog />
+            <ServicesFollowing />
             <FormBookingNormal />
             <InformationBookingNormal />
+            <InformationBookingHealth />
             <DetailAppointment />
-            <ChatArea />
             <Health />
             <DetailLogbook />
+            <Schedule />
+            <DetailTime />
+            <ChatArea />
+            {/* <MedicalRecord /> */}
+            <MedicalRecord />
         </menuContext.Provider>
     )
 }
