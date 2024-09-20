@@ -10,6 +10,7 @@ import Icon4 from 'react-native-vector-icons/MaterialIcons';
 import Icon5 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon6 from 'react-native-vector-icons/FontAwesome';
 import Icon7 from 'react-native-vector-icons/MaterialIcons';
+import Icon8 from 'react-native-vector-icons/MaterialCommunityIcons';
 import { screenContext } from '../../contexts/ScreenContext';
 import { userContext } from '../../contexts/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -170,10 +171,16 @@ const MenuArea = () => {
                     </TouchableOpacity>
                 </View>
             ) : (
-                <TouchableOpacity onPress={() => handleLogout()} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon4 name='logout' style={{ fontSize: 30, color: 'black' }} />
-                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đăng Xuất</Text>
-                </TouchableOpacity>
+                <>
+                    <TouchableOpacity onPress={() => navigate('notify')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon8 name='bell' style={{ fontSize: 30, color: 'black' }} />
+                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thông báo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleLogout()} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon4 name='logout' style={{ fontSize: 30, color: 'black' }} />
+                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đăng Xuất</Text>
+                    </TouchableOpacity>
+                </>
             )}
         </Animated.View>
     );

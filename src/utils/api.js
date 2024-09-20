@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 export let baseURL = 'http://192.168.1.5:8999'
 axios.defaults.baseURL = `${baseURL}`
-export const deploy = 'https://health-haven-seven.vercel.app'
+export const deploy = 'https://heath-haven-meet.vercel.app'
 
 export const TypeHTTP = {
     GET: 'get',

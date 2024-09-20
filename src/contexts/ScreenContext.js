@@ -55,6 +55,9 @@ const ScreenProvider = ({ children }) => {
             case 'doctor-record':
                 setCurrentScreen(14)
                 break
+            case 'notify':
+                setCurrentScreen(15)
+                break
         }
     }
 

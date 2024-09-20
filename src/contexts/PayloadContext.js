@@ -7,6 +7,12 @@ const PayLoadProvider = ({ children }) => {
     const [qa, setQa] = useState()
     const [blog, setBlog] = useState()
 
+    // zego
+    const [accessToken, setAccessToken] = useState()
+    const [refreshToken, setRefreshToken] = useState()
+    const [meetId, setMeetId] = useState()
+    const [meetType, setMeetType] = useState()
+
     // schedule
     const [day, setDay] = useState()
     const [time, setTime] = useState()
@@ -50,7 +56,11 @@ const PayLoadProvider = ({ children }) => {
         day,
         time,
         patient,
-        bookingHealth
+        bookingHealth,
+        accessToken,
+        refreshToken,
+        meetId,
+        meetType
     }
 
     const handler = {
@@ -69,7 +79,11 @@ const PayLoadProvider = ({ children }) => {
         setDay,
         setTime,
         setPatient,
-        setBookingHealth
+        setBookingHealth,
+        setAccessToken,
+        setRefreshToken,
+        setMeetId,
+        setMeetType
     }
 
     return (

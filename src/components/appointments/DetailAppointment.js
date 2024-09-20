@@ -8,6 +8,9 @@ import { userContext } from '../../contexts/UserContext';
 import { api, TypeHTTP } from '../../utils/api';
 import { calculateDetailedTimeDifference, convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam } from '../../utils/date';
 import { color, status } from '../../screens/AppointmentsScreen';
+import { screenContext } from '../../contexts/ScreenContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { set } from 'date-fns';
 
 const DetailAppointment = () => {
     const { menuData, menuHandler } = useContext(menuContext);
@@ -17,6 +20,40 @@ const DetailAppointment = () => {
     const [doctorRecord, setDoctorRecord] = useState();
     const { userData } = useContext(userContext);
     const [medicalRecords, setMedicalRecords] = useState([]);
+    const { screenHandler } = useContext(screenContext)
+    const [accessToken, setAccessToken] = useState()
+    const [refreshToken, setRefreshToken] = useState()
+
+    const navigate = (goal) => {
+        menuHandler.setDisplay(false)
+        screenHandler.navigate(goal)
+        menuHandler.setDisplayDetailAppointment(false)
+    }
+
+    useEffect(() => {
+        const getTokens = async () => {
+            try {
+                const access = await AsyncStorage.getItem('accessToken');
+                const refresh = await AsyncStorage.getItem('refreshToken');
+
+                // Chỉ set token sau khi nhận được
+                setAccessToken(access);
+                setRefreshToken(refresh);
+            } catch (error) {
+                console.log('Error fetching tokens:', error);
+            }
+        };
+
+        getTokens(); // Gọi hàm async để lấy token
+
+        // Cleanup function
+        return () => {
+            setAccessToken(undefined); // Reset về giá trị hợp lý, ví dụ undefined
+            setRefreshToken(undefined);
+        };
+    }, []);
+
+
     useEffect(() => {
         Animated.timing(translateX, {
             toValue: menuData.displayDetailAppointment === true ? 0 : width,
@@ -164,7 +201,15 @@ const DetailAppointment = () => {
                         )}
                     </ScrollView>
                     {payloadData.displayConnect !== payloadData.detailAppointment?._id && (
-                        <TouchableOpacity style={{ borderRadius: 5, backgroundColor: '#1dcbb6', paddingVertical: 11, marginTop: 12, paddingHorizontal: 20 }}>
+                        <TouchableOpacity onPress={() => {
+                            payloadHandler.setAccessToken(accessToken)
+                            payloadHandler.setRefreshToken(refreshToken)
+                            payloadHandler.setMeetId(payloadData.detailAppointment?._id)
+                            payloadHandler.setMeetType(userData.user?.role === "USER"
+                                ? "patient"
+                                : "doctor")
+                            navigate('zego')
+                        }} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', paddingVertical: 11, marginTop: 12, paddingHorizontal: 20 }}>
                             <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Tham Gia Cuộc Hẹn</Text>
                         </TouchableOpacity>
                     )}

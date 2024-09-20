@@ -30,7 +30,8 @@
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
-    "socket.io-client": "^4.7.5"
+    "socket.io-client": "^4.7.5",
+    "undefined": "react-native/Libraries/Linking/Linking"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -38,6 +38,16 @@ const BlogsScreen = () => {
         return { firstParagraph, firstImageUrl };
     };
 
+    const clickDetailBlog = (blog) => {
+        api({
+            path: `/forums/update/views/${blog._id}`,
+            sendToken: false,
+            type: TypeHTTP.POST,
+        });
+        payloadHandler.setBlog(blog)
+        menuHandler.setDisplayDetailBlog(true)
+    }
+
     return (
         <ScrollView>
             <View style={{ flexWrap: 'wrap', flexDirection: 'column', width, gap: 20, paddingHorizontal: 20, paddingVertical: 10 }}>
@@ -49,10 +59,7 @@ const BlogsScreen = () => {
                             );
                         return (
                             <Pressable
-                                onPress={() => {
-                                    payloadHandler.setBlog(blog)
-                                    menuHandler.setDisplayDetailBlog(true)
-                                }}
+                                onPress={() => clickDetailBlog(blog)}
                                 key={index}
                                 style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}
                             >
