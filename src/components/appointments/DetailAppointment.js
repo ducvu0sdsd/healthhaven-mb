@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { menuContext } from '../../contexts/MenuContext';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { payloadContext } from '../../contexts/PayloadContext';
 import { userContext } from '../../contexts/UserContext';
-import { api, TypeHTTP } from '../../utils/api';
+import { api, deploy, TypeHTTP } from '../../utils/api';
 import { calculateDetailedTimeDifference, convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam } from '../../utils/date';
 import { color, status } from '../../screens/AppointmentsScreen';
 import { screenContext } from '../../contexts/ScreenContext';
@@ -76,6 +76,14 @@ const DetailAppointment = () => {
             }).then((res) => setMedicalRecords(res));
         }
     }, [payloadData.detailAppointment]);
+
+    const handleGoToMeet = () => {
+        const url = `${deploy}/meet/${payloadData.detailAppointment?._id}/${userData.user?.role === "USER"
+            ? "patient"
+            : "doctor"}?accesstoken=${accessToken}&refreshtoken=${refreshToken}`;
+        console.log(url)
+        Linking.openURL(url)
+    }
 
 
     return (
@@ -200,16 +208,8 @@ const DetailAppointment = () => {
                             )
                         )}
                     </ScrollView>
-                    {payloadData.displayConnect !== payloadData.detailAppointment?._id && (
-                        <TouchableOpacity onPress={() => {
-                            payloadHandler.setAccessToken(accessToken)
-                            payloadHandler.setRefreshToken(refreshToken)
-                            payloadHandler.setMeetId(payloadData.detailAppointment?._id)
-                            payloadHandler.setMeetType(userData.user?.role === "USER"
-                                ? "patient"
-                                : "doctor")
-                            navigate('zego')
-                        }} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', paddingVertical: 11, marginTop: 12, paddingHorizontal: 20 }}>
+                    {(payloadData.displayConnect !== payloadData.detailAppointment?._id && userData.user?.role === 'USER') && (
+                        <TouchableOpacity onPress={() => handleGoToMeet()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', paddingVertical: 11, marginTop: 12, paddingHorizontal: 20 }}>
                             <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Tham Gia Cuộc Hẹn</Text>
                         </TouchableOpacity>
                     )}
