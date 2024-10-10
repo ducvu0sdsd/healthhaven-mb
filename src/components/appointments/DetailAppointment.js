@@ -44,14 +44,16 @@ const DetailAppointment = () => {
             }
         };
 
-        getTokens(); // Gọi hàm async để lấy token
+        if (userData.user) {
+            getTokens(); // Gọi hàm async để lấy token
+        }
 
         // Cleanup function
         return () => {
             setAccessToken(undefined); // Reset về giá trị hợp lý, ví dụ undefined
             setRefreshToken(undefined);
         };
-    }, []);
+    }, [userData.user]);
 
 
     useEffect(() => {
@@ -78,11 +80,14 @@ const DetailAppointment = () => {
     }, [payloadData.detailAppointment]);
 
     const handleGoToMeet = () => {
-        const url = `${deploy}/meet/${payloadData.detailAppointment?._id}/${userData.user?.role === "USER"
-            ? "patient"
-            : "doctor"}?accesstoken=${accessToken}&refreshtoken=${refreshToken}`;
-        console.log(url)
-        Linking.openURL(url)
+        if (accessToken && refreshToken) {
+            const url = `${deploy}/meet/${payloadData.detailAppointment?._id}/${userData.user?.role === "USER"
+                ? "patient"
+                : "doctor"}?accesstoken=${accessToken}&refreshtoken=${refreshToken}`;
+            console.log(url)
+            Linking.openURL(url)
+        }
+
     }
 
 

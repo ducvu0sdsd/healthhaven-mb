@@ -34,7 +34,7 @@ const Health = () => {
                 height: '100%',
                 width: '100%', // Sử dụng chiều rộng của màn hình
                 backgroundColor: 'white',
-                zIndex: 3,
+                zIndex: 4,
                 top: 0,
                 flexDirection: 'column',
                 // alignItems: 'center',
