@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Animated, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CalenderCheck from 'react-native-vector-icons/FontAwesome';
 import { userContext } from '../../contexts/UserContext';
+import { utilsContext } from '../../contexts/UtilsContext';
 import { api, TypeHTTP } from '../../utils/api';
 import { convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam } from '../../utils/date';
-import { formatMoney, returnNumber } from '../../utils/other';
-import { utilsContext } from '../../contexts/UtilsContext';
 import { notifyType } from '../../utils/notify';
+import { formatMoney, returnNumber } from '../../utils/other';
 //PhieuTheoDoi
 const PhieuTheoDoi = ({ type, setType }) => {
   const { userData } = useContext(userContext);
@@ -146,7 +146,7 @@ const PhieuTheoDoi = ({ type, setType }) => {
           <View style={{ flexDirection: 'column', marginTop: 5, paddingBottom: 10 }}>
             <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, marginTop: 3 }}>Bệnh nhân: {logBook.patient.fullName}</Text>
             <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3 }}>Thời gian: {convertDateToDayMonthYearVietNam(logBook.date)}</Text>
-            <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3, color: logBook.status.status_type === "QUEUE" ? "black" : logBook.status.status_type === "ACCEPTED" ? "green" : logBook?.status.status_type === "COMPLETED" ? 'blue' : "red", }}>Trạng thái: {logBook?.status?.status_message}</Text>
+            <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3, color: logBook.status.status_type === "QUEUE" ? "black" : logBook.status.status_type === "ACCEPTED" ? "green" : logBook?.status.status_type === "COMPLETED" ? 'blue' : "red", }}>Trạng thái: {logBook?.status?.message}</Text>
             <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3 }}>Loại phiếu: {formatMoney(logBook.priceList.price)}đ/{logBook.priceList.type}</Text>
             <View style={{ flexDirection: 'row', gap: 5 }}>
               <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3 }}>Chức năng: </Text>

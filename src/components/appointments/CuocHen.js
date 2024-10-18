@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CalenderCheck from 'react-native-vector-icons/FontAwesome';
+import { menuContext } from '../../contexts/MenuContext';
+import { payloadContext } from '../../contexts/PayloadContext';
 import { userContext } from '../../contexts/UserContext';
 import { utilsContext } from '../../contexts/UtilsContext';
 import { api, TypeHTTP } from '../../utils/api';
-import { compareTimeDate1GreaterThanDate2, compare2Date, convertDateToDayMonthYearObject, convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam, isALargerWithin10Minutes, isALargerWithin60Minutes, sortByAppointmentDate } from '../../utils/date';
-import { returnNumber } from '../../utils/other';
+import { compare2Date, compareTimeDate1GreaterThanDate2, convertDateToDayMonthYearObject, convertDateToDayMonthYearTimeObject, convertDateToDayMonthYearVietNam, isALargerWithin10Minutes, isALargerWithin60Minutes, sortByAppointmentDate } from '../../utils/date';
 import { notifyType } from '../../utils/notify';
-import { payloadContext } from '../../contexts/PayloadContext';
-import { menuContext } from '../../contexts/MenuContext';
+import { returnNumber } from '../../utils/other';
 // CuocHen
 const CuocHen = ({ type, setType }) => {
   const [doctorRecord, setDoctorRecord] = useState()

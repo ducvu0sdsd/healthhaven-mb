@@ -1,23 +1,23 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { Dimensions, ScrollView } from 'react-native'
-import LandingScreen from './LandingScreen'
-import DoctorsScreen from './DoctorsScreen'
 import { screenContext } from '../contexts/ScreenContext'
-import DetailDoctorScreen from './DetailDoctorScreen'
-import ServicesScreen from './ServicesScreen'
-import ForumsScreen from './ForumsScreen'
-import BlogsScreen from './BlogsScreen'
 import AppointmentScreen from './AppointmentsScreen'
-import ZegoScreen from './ZegoScreen'
-import MedicalRecordScreen from './MedicalRecordScreen'
+import BlogsScreen from './BlogsScreen'
 import ChatMessageScreen from './ChatMessageScreen'
-import TicketScreen from './TicketsScreen'
-import FollowHealthScreen from './FollowHealthScreen'
-import ProfileScreen from './ProfileScreen'
-import MyPatientScreen from './MyPatientScreen'
+import DetailDoctorScreen from './DetailDoctorScreen'
 import DoctorRecordScreen from './DoctorRecordScreen'
+import DoctorsScreen from './DoctorsScreen'
+import FollowHealthScreen from './FollowHealthScreen'
+import ForumsScreen from './ForumsScreen'
+import LandingScreen from './LandingScreen'
+import MedicalRecordScreen from './MedicalRecordScreen'
+import MyPatientScreen from './MyPatientScreen'
 import NotificationScreen from './NotificationScreen'
-
+import ProfileScreen from './ProfileScreen'
+import ProfitDoctorScreen from './ProfitDoctorScreen'
+import ServicesScreen from './ServicesScreen'
+import TicketScreen from './TicketsScreen'
+import ZegoScreen from './ZegoScreen'
 const Index = () => {
     const { width } = Dimensions.get('window');
     const { screenData } = useContext(screenContext)
@@ -52,6 +52,7 @@ const Index = () => {
             <MyPatientScreen />
             <DoctorRecordScreen />
             <NotificationScreen />
+            <ProfitDoctorScreen />
             {/* for patient */}
 
         </ScrollView>

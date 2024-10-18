@@ -58,6 +58,9 @@ const ScreenProvider = ({ children }) => {
             case 'notify':
                 setCurrentScreen(15)
                 break
+            case "profit":
+                setCurrentScreen(16)
+                break    
         }
     }
 

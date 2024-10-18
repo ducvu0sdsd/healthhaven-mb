@@ -1,19 +1,17 @@
 // MenuArea.js
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useEffect, useState } from 'react';
-import { Animated, Dimensions, View, Text, TouchableOpacity, Image } from 'react-native';
-import { menuContext } from '../../contexts/MenuContext';
-import Icon from 'react-native-vector-icons/Feather';
+import { Animated, Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon1 from 'react-native-vector-icons/Entypo';
-import Icon2 from 'react-native-vector-icons/FontAwesome6';
+import Icon from 'react-native-vector-icons/Feather';
+import { default as Chart, default as Icon6 } from 'react-native-vector-icons/FontAwesome';
 import Icon3 from 'react-native-vector-icons/FontAwesome5';
-import Icon4 from 'react-native-vector-icons/MaterialIcons';
-import Icon5 from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon6 from 'react-native-vector-icons/FontAwesome';
-import Icon7 from 'react-native-vector-icons/MaterialIcons';
-import Icon8 from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/FontAwesome6';
+import { default as Icon5, default as Icon8 } from 'react-native-vector-icons/MaterialCommunityIcons';
+import { default as Icon4, default as Icon7 } from 'react-native-vector-icons/MaterialIcons';
+import { menuContext } from '../../contexts/MenuContext';
 import { screenContext } from '../../contexts/ScreenContext';
 import { userContext } from '../../contexts/UserContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { utilsContext } from '../../contexts/UtilsContext';
 import { notifyType } from '../../utils/notify';
 
@@ -104,6 +102,10 @@ const MenuArea = () => {
             </TouchableOpacity>
 
             {userData.user?.role === 'DOCTOR' && (<>
+              <TouchableOpacity onPress={() => navigate('profit')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Chart name='bar-chart' style={{ fontSize: 30, color: '#e6e635' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thống kê doanh thu</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('tickets')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Phiếu Đăng Ký</Text>
