@@ -41,6 +41,7 @@ const MenuArea = () => {
         await AsyncStorage.removeItem('refreshToken')
         userHandler.setUser()
         utilsHandler.notify(notifyType.SUCCESS, 'Đăng Xuất Thành Công')
+        screenHandler.navigate('landing')
     }
 
     return (
@@ -102,7 +103,7 @@ const MenuArea = () => {
             </TouchableOpacity>
 
             {userData.user?.role === 'DOCTOR' && (<>
-              <TouchableOpacity onPress={() => navigate('profit')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigate('profit')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Chart name='bar-chart' style={{ fontSize: 30, color: '#e6e635' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thống kê doanh thu</Text>
                 </TouchableOpacity>
@@ -147,7 +148,11 @@ const MenuArea = () => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('appointments')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon3 name='calendar-check' style={{ fontSize: 30, color: '#ebd400' }} />
-                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Của Bạn</Text>
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Trực Tuyến</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('appointment-homes')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon3 name='calendar-check' style={{ fontSize: 30, color: '#ebd400' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Tại Nhà</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('chat-message')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />

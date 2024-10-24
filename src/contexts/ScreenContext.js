@@ -60,7 +60,10 @@ const ScreenProvider = ({ children }) => {
                 break
             case "profit":
                 setCurrentScreen(16)
-                break    
+                break
+            case "appointment-homes":
+                setCurrentScreen(17)
+                break
         }
     }
 

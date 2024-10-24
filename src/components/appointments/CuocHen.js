@@ -22,13 +22,6 @@ const CuocHen = ({ type, setType }) => {
   );
   const [displayConnect, setDisplayConnect] = useState(false);
   const intervalRef = useRef();
-  const typeTime = {
-    1: "Hôm Nay",
-    2: "Ngày Mai",
-    3: "Tuần Này",
-    4: "Tháng Này",
-    5: "Tháng Sau",
-  };
   useEffect(() => {
     if (userData.user) {
       api({
@@ -159,6 +152,19 @@ const CuocHen = ({ type, setType }) => {
         api({
           type: TypeHTTP.POST,
           path: "/appointments/findByNextMonth",
+          body,
+          sendToken: false,
+        }).then((res) => {
+          setAppointments(res);
+        });
+      } else if (type === '6') {
+        const body = {
+          doctor_record_id:
+            doctorRecord._id,
+        };
+        api({
+          type: TypeHTTP.POST,
+          path: "/appointments/findByRecords",
           body,
           sendToken: false,
         }).then((res) => {

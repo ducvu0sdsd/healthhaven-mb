@@ -16,7 +16,7 @@ export const api = async ({ path, body, type, sendToken, port }) => {
         baseURL = 'http://192.168.1.81:' + port
         axios.defaults.baseURL = `${baseURL}`
     } else {
-        baseURL = 'http://192.168.1.81:8999'
+        baseURL = 'https://shoeshop-backend.online'
         axios.defaults.baseURL = `${baseURL}`
     }
     const accessToken = await AsyncStorage.getItem('accessToken')

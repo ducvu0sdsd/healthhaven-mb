@@ -43,7 +43,10 @@ const Schedule = () => {
                     const timeItem = scheduleItem.times[j]
                     if (timeItem.time === time) {
                         if (timeItem.status !== '') {
-                            if (timeItem.status === 'health') {
+                            if (timeItem.status === 'home') {
+                                return 4
+                            }
+                            else if (timeItem.status === 'health') {
                                 return 3
                             } else {
                                 return 2
@@ -138,6 +141,24 @@ const Schedule = () => {
             <View style={{ width: '100%', flexDirection: 'column', alignItems: 'center', paddingTop: 40, paddingHorizontal: 20, gap: 10 }}>
                 {payloadData.day && (<>
                     <Text style={{ fontFamily: 'Nunito-B', fontSize: 18, width: '100%' }}>{formatVietnameseDate(payloadData.day)}</Text>
+                    <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+                            <View style={{ width: 25, height: 25, backgroundColor: '#eaeded', borderRadius: 5 }} />
+                            <Text style={{ fontSize: 15, fontWeight: 400 }}>Lịch Trống</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+                            <View style={{ width: 25, height: 25, backgroundColor: '#abebc6', borderRadius: 5 }} />
+                            <Text style={{ fontSize: 15, fontWeight: 400 }}>Lịch khám theo dõi sức khỏe</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+                            <View style={{ width: 25, height: 25, backgroundColor: '#ffc1b4', borderRadius: 5 }} />
+                            <Text style={{ fontSize: 15, fontWeight: 400 }}>Lịch khám tại nhà</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+                            <View style={{ width: 25, height: 25, backgroundColor: '#fafac7', borderRadius: 5 }} />
+                            <Text style={{ fontSize: 15, fontWeight: 400 }}>Lịch khám trực tuyến</Text>
+                        </View>
+                    </View>
                     <Text style={{ fontFamily: 'Nunito-B', fontSize: 16, width: '100%' }}>Giờ Hẹn</Text>
                     <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
                         {times.map((time, index) => {
@@ -145,13 +166,15 @@ const Schedule = () => {
                                 if (new Date().getHours() + 2 >= Number(time.split(':')[0])) {
                                     // return <div key={index} className={`px-4 flex item-center justify-center py-2 transition-all border-[1px] border-[#999] text-[13px] font-medium bg-[#b7b7b7] rounded-md`}>{time}</div>
                                 } else {
-                                    return <View key={index} style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, backgroundColor: checkSchedule(time) === 0 ? '#f2f3f4' : checkSchedule(time) === 3 ? '#abebc6' : checkSchedule(time) === 1 ? '#cacfd2' : '#ffffee' }}>
+                                    return <View key={index} style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, backgroundColor: checkSchedule(time) === 0 ? '#f2f3f4' : checkSchedule(time) === 4 ? '#ffc1b4' : checkSchedule(time) === 3 ? '#abebc6' : checkSchedule(time) === 1 ? '#cacfd2' : '#ffffee' }}>
                                         <TouchableOpacity onPress={() => {
-                                            if (checkSchedule(time) === 1) {
-                                                handleTime(time, checkSchedule(time) === 2 ? true : false)
-                                            } else {
-                                                menuHandler.setDisplayDetailTime(true)
-                                                payloadHandler.setTime(time)
+                                            if (checkSchedule(time) !== 4 && checkSchedule(time) !== 3) {
+                                                if (checkSchedule(time) === 1) {
+                                                    handleTime(time, checkSchedule(time) === 2 ? true : false)
+                                                } else {
+                                                    menuHandler.setDisplayDetailTime(true)
+                                                    payloadHandler.setTime(time)
+                                                }
                                             }
                                         }} key={index}>
                                             <Text>{time}</Text>
@@ -159,13 +182,15 @@ const Schedule = () => {
                                     </View>
                                 }
                             } else {
-                                return <View key={index} style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, backgroundColor: checkSchedule(time) === 0 ? '#f2f3f4' : checkSchedule(time) === 3 ? '#abebc6' : checkSchedule(time) === 1 ? '#cacfd2' : '#ffffee' }}>
+                                return <View key={index} style={{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 5, backgroundColor: checkSchedule(time) === 0 ? '#f2f3f4' : checkSchedule(time) === 4 ? '#ffc1b4' : checkSchedule(time) === 3 ? '#abebc6' : checkSchedule(time) === 1 ? '#cacfd2' : '#ffffee' }}>
                                     <TouchableOpacity onPress={() => {
-                                        if (checkSchedule(time) === 1) {
-                                            handleTime(time, checkSchedule(time) === 2 ? true : false)
-                                        } else {
-                                            menuHandler.setDisplayDetailTime(true)
-                                            payloadHandler.setTime(time)
+                                        if (checkSchedule(time) !== 4 && checkSchedule(time) !== 3) {
+                                            if (checkSchedule(time) === 1) {
+                                                handleTime(time, checkSchedule(time) === 2 ? true : false)
+                                            } else {
+                                                menuHandler.setDisplayDetailTime(true)
+                                                payloadHandler.setTime(time)
+                                            }
                                         }
                                     }} key={index}>
                                         <Text>{time}</Text>

@@ -37,6 +37,13 @@ const PhieuTheoDoi = ({ type, setType }) => {
           .then(logBooks => {
             setLogBooks(logBooks)
           })
+      } else if (type === '6') {
+        api({
+          path: `/healthLogBooks/findByDoctor/${userData.user?._id}`, type: TypeHTTP.GET, sendToken: true,
+        })
+          .then(logBooks => {
+            setLogBooks(logBooks)
+          })
       }
       else {
         api({

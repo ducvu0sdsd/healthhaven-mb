@@ -25,6 +25,10 @@ const DetailDoctorScreen = () => {
     const { utilsHandler } = useContext(utilsContext)
     const { userData } = useContext(userContext)
     const [healthLogBooks, setHealthLogBooks] = useState([]);
+    const [priceListHome, setPriceListHome] = useState(0);
+    const [appointmentHomes, setAppointmentHomes] = useState(
+        []
+    );
 
     useEffect(() => {
         if (userData.user) {
@@ -32,6 +36,13 @@ const DetailDoctorScreen = () => {
                 .then(res => {
                     setHealthLogBooks(res)
                 })
+            api({
+                type: TypeHTTP.GET,
+                path: `/appointmentHomes/findByPatient/${userData.user?._id}`,
+                sendToken: true,
+            }).then((res) => {
+                setAppointmentHomes(res);
+            });
         }
 
     }, [userData.user]);
@@ -44,6 +55,9 @@ const DetailDoctorScreen = () => {
         }).then((res) => {
             setPriceList(
                 res.filter((item) => item.type === "Online")[0]
+            );
+            setPriceListHome(
+                res.filter((item) => item.type === "Home")[0]
             );
         });
     }, [data.sicks]);
@@ -115,10 +129,25 @@ const DetailDoctorScreen = () => {
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                                 <TouchableOpacity onPress={() => {
                                     if (priceList && doctorRecord) {
-                                        payloadHandler.setPriceList(priceList)
-                                        payloadHandler.setDoctorRecord(doctorRecord)
-                                        payloadHandler.setSick('Tư Vấn Trực Tuyến')
-                                        menuHandler.setDisplayFormBookingNormal(true)
+                                        if (userData.user) {
+                                            if (userData.user?.email === "") {
+                                                utilsHandler.notify(
+                                                    notifyType.WARNING,
+                                                    "Vui lòng cập nhật email để đặt khám !!!"
+                                                );
+                                                return;
+                                            } else {
+                                                payloadHandler.setPriceList(priceList)
+                                                payloadHandler.setDoctorRecord(doctorRecord)
+                                                payloadHandler.setSick('Tư Vấn Trực Tuyến')
+                                                menuHandler.setDisplayFormBookingNormal(true)
+                                            }
+                                        } else {
+                                            utilsHandler.notify(
+                                                notifyType.WARNING,
+                                                "Vui lòng đăng nhập để đặt khám với bác sĩ!!!"
+                                            );
+                                        }
                                     }
                                 }} style={{ borderRadius: 5, backgroundColor: 'white', paddingVertical: 12, paddingHorizontal: 15 }}>
                                     <Text style={{ color: 'black', fontFamily: 'Nunito-B', fontSize: 13 }}>Đặt Khám Ngay</Text>
@@ -128,6 +157,58 @@ const DetailDoctorScreen = () => {
                                     <Text style={{ fontSize: 15, fontFamily: 'Nunito-S', color: 'white' }} >{formatMoney(priceList?.price)}đ</Text>
                                 </View>
                             </View>
+                            {(appointmentHomes.length === 0 ||
+                                (appointmentHomes
+                                    .filter((item) =>
+                                        [
+                                            "CANCELED",
+                                            "REJECTED",
+                                            "COMPLETED",
+                                        ].includes(item.status.status_type)
+                                    )
+                                    .map((item) => item.doctor_record_id)
+                                    .includes(doctorRecord?._id) &&
+                                    !appointmentHomes
+                                        .filter((item) =>
+                                            [
+                                                "QUEUE"
+                                            ].includes(item.status.status_type)
+                                        )
+                                        .map((item) => item.doctor_record_id)
+                                        .includes(doctorRecord?._id))
+                            ) && (
+                                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
+                                        <TouchableOpacity onPress={() => {
+                                            if (priceList && doctorRecord) {
+                                                if (userData.user) {
+                                                    if (userData.user?.email === "") {
+                                                        utilsHandler.notify(
+                                                            notifyType.WARNING,
+                                                            "Vui lòng cập nhật email để đặt khám !!!"
+                                                        );
+                                                        return;
+                                                    } else {
+                                                        payloadHandler.setPriceList(priceListHome)
+                                                        payloadHandler.setDoctorRecord(doctorRecord)
+                                                        payloadHandler.setSick('Tư Vấn Tại Nhà')
+                                                        menuHandler.setDisplayBookingHome(true)
+                                                    }
+                                                } else {
+                                                    utilsHandler.notify(
+                                                        notifyType.WARNING,
+                                                        "Vui lòng đăng nhập để đặt khám với bác sĩ!!!"
+                                                    );
+                                                }
+                                            }
+                                        }} style={{ borderRadius: 5, backgroundColor: 'white', paddingVertical: 12, paddingHorizontal: 15 }}>
+                                            <Text style={{ color: 'black', fontFamily: 'Nunito-B', fontSize: 13 }}>Đặt Khám Ngay</Text>
+                                        </TouchableOpacity>
+                                        <View>
+                                            <Text style={{ fontSize: 16, fontFamily: 'Nunito-B', color: 'white' }} >Giá Tư Vấn Tại Nhà</Text>
+                                            <Text style={{ fontSize: 15, fontFamily: 'Nunito-S', color: 'white' }} >{formatMoney(priceListHome?.price)}đ</Text>
+                                        </View>
+                                    </View>
+                                )}
                             {!healthLogBooks.filter(log => (log.status.status_type === 'ACCEPTED' || log.status.status_type === 'QUEUE' || log.status.status_type === 'TRANSFER')).length > 0 && (
                                 <TouchableOpacity onPress={() => {
                                     if (userData.user) {

@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import Index from "./src/screens";
 import DataProvider from "./src/contexts/DataContext";
 import PayLoadProvider from "./src/contexts/PayloadContext";
+import BookingHomeProvider from "./src/contexts/BookingHomeContext";
 
 export default function App() {
   const [reload, setReload] = useState(false)
@@ -41,8 +42,10 @@ export default function App() {
             <AuthProvider>
               <MenuProvider>
                 <DataProvider>
-                  <Menu />
-                  <Index />
+                  <BookingHomeProvider>
+                    <Menu />
+                    <Index />
+                  </BookingHomeProvider>
                 </DataProvider>
               </MenuProvider>
             </AuthProvider>

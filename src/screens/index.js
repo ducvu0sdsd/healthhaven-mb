@@ -18,6 +18,7 @@ import ProfitDoctorScreen from './ProfitDoctorScreen'
 import ServicesScreen from './ServicesScreen'
 import TicketScreen from './TicketsScreen'
 import ZegoScreen from './ZegoScreen'
+import AppointmentHomesScreen from './AppointmentHomesScreen'
 const Index = () => {
     const { width } = Dimensions.get('window');
     const { screenData } = useContext(screenContext)
@@ -53,6 +54,7 @@ const Index = () => {
             <DoctorRecordScreen />
             <NotificationScreen />
             <ProfitDoctorScreen />
+            <AppointmentHomesScreen />
             {/* for patient */}
 
         </ScrollView>

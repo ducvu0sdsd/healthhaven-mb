@@ -9,6 +9,7 @@ import DetailBlog from "../components/blogs/DetailBlog";
 import FormBookingNormal from "../components/booking/FormBookingNormal";
 import InformationBookingNormal from "../components/booking/normal/InformationBookingNormal";
 import DetailAppointment from "../components/appointments/DetailAppointment";
+import DetailAppointmentHome from "../components/appointments/DetailAppointmentHome";
 import ChatArea from "../components/chat/ChatArea";
 import Health from "../components/health/Health";
 import DetailLogbook from "../components/logbook/DetailLogbook";
@@ -17,6 +18,10 @@ import DetailTime from "../components/doctorrecord/DetailTime";
 import MedicalRecord from "../components/logbook/MedicalRecord";
 import ServicesFollowing from "../components/booking/follow-health/ServicesFollowing";
 import InformationBookingHealth from "../components/booking/follow-health/InformationBookingHealth";
+import FormBookingHome from "../components/bookingHome/FormBookingHome";
+import FormNotificationPayment from "../components/bookingHome/NotificationPayment";
+import InformationBookingHome from "../components/bookingHome/payment/InformationBookingHome";
+import FormSchedule from "../components/appointments/FormSchedule";
 export const menuContext = createContext()
 
 const MenuProvider = ({ children }) => {
@@ -28,6 +33,7 @@ const MenuProvider = ({ children }) => {
     const [displayDetailBlog, setDisplayDetailBlog] = useState(false)
     const [displayFormBookingNormal, setDisplayFormBookingNormal] = useState(false)
     const [displayInformationBookingNormal, setDisplayInformationBookingNormal] = useState(false)
+    const [displayInformationBookingHome, setDisplayInformationBookingHome] = useState(false)
     const [displayDetailAppointment, setDisplayDetailAppointment] = useState(false)
     const [displayChatArea, setDisplayChatArea] = useState(false)
     const [displayHealth, setDisplayHealth] = useState(false)
@@ -37,7 +43,10 @@ const MenuProvider = ({ children }) => {
     const [displayMedicalRecord, setDisplayMedicalRecord] = useState(false)
     const [displayServicesFollowing, setDisplayServicesFollowing] = useState(false)
     const [displayInformationBookingHealth, setDisplayInformationBookingHealth] = useState(false)
-
+    const [displayBookingHome, setDisplayBookingHome] = useState(false)
+    const [displayNotificationPayment, setDisplayNotificationPayment] = useState(false)
+    const [displayScheduleAppoimentHome, setDisplayScheduleAppoimentHome] = useState(false)
+    const [displayDetailAppointmentHome, setDisplayDetailAppointmentHome] = useState(false)
 
     const hidden = () => {
         setDisplay(false)
@@ -57,6 +66,11 @@ const MenuProvider = ({ children }) => {
         setDisplayMedicalRecord(false)
         setDisplayServicesFollowing(false)
         setDisplayInformationBookingHealth(false)
+        setDisplayBookingHome(false)
+        setDisplayNotificationPayment(false)
+        setDisplayInformationBookingHome(false)
+        setDisplayScheduleAppoimentHome(false)
+        displayDetailAppointmentHome(false)
     }
 
     const data = {
@@ -76,7 +90,12 @@ const MenuProvider = ({ children }) => {
         displayDetailTime,
         displayMedicalRecord,
         displayServicesFollowing,
-        displayInformationBookingHealth
+        displayInformationBookingHealth,
+        displayBookingHome,
+        displayNotificationPayment,
+        displayInformationBookingHome,
+        displayScheduleAppoimentHome,
+        displayDetailAppointmentHome
     }
 
     const handler = {
@@ -96,7 +115,12 @@ const MenuProvider = ({ children }) => {
         setDisplayDetailTime,
         setDisplayMedicalRecord,
         setDisplayServicesFollowing,
-        setDisplayInformationBookingHealth
+        setDisplayInformationBookingHealth,
+        setDisplayBookingHome,
+        setDisplayNotificationPayment,
+        setDisplayInformationBookingHome,
+        setDisplayScheduleAppoimentHome,
+        setDisplayDetailAppointmentHome
     }
 
     return (
@@ -121,6 +145,12 @@ const MenuProvider = ({ children }) => {
             <Schedule />
             <DetailTime />
             <ChatArea />
+            <FormBookingNormal />
+            <FormBookingHome />
+            <FormNotificationPayment />
+            <InformationBookingHome />
+            <FormSchedule />
+            <DetailAppointmentHome />
             {/* <MedicalRecord /> */}
             <MedicalRecord />
         </menuContext.Provider>

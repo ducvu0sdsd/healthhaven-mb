@@ -40,6 +40,12 @@ const PayLoadProvider = ({ children }) => {
     // booking follow health
     const [bookingHealth, setBookingHealth] = useState()
 
+    // bookingHome
+    const [paymentBookingHome, setPaymentBookingHome] = useState([])
+    const [bookingHome, setBookingHome] = useState()
+    const [appointmentHome, setAppointmentHome] = useState()
+    const [appointmentHomes, setAppointmentHomes] = useState([])
+
     const data = {
         qa,
         blog,
@@ -60,7 +66,11 @@ const PayLoadProvider = ({ children }) => {
         accessToken,
         refreshToken,
         meetId,
-        meetType
+        meetType,
+        paymentBookingHome,
+        bookingHome,
+        appointmentHome,
+        appointmentHomes
     }
 
     const handler = {
@@ -83,7 +93,11 @@ const PayLoadProvider = ({ children }) => {
         setAccessToken,
         setRefreshToken,
         setMeetId,
-        setMeetType
+        setMeetType,
+        setPaymentBookingHome,
+        setBookingHome,
+        setAppointmentHome,
+        setAppointmentHomes
     }
 
     return (

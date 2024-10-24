@@ -12,6 +12,7 @@ import { api, TypeHTTP } from '../utils/api';
 import { convertDateToDayMonthYearVietNam } from '../utils/date';
 import { returnNumber } from '../utils/other';
 import { screenContext } from '../contexts/ScreenContext';
+import CuocHenTaiNha from '../components/appointments/CuocHenTaiNha';
 const TicketScreen = () => {
     const { width, height } = Dimensions.get('window');
     const { menuHandler } = useContext(menuContext)
@@ -21,33 +22,50 @@ const TicketScreen = () => {
     const [displayTime, setDisplayTime] = useState(false)
     const [doctorRecord, setDoctorRecord] = useState()
     const [appointments, setAppointments] = useState([])
-    const [type, setType] = useState("1");
+    const [type, setType] = useState("6");
     const [ticketType, setTicketType] = useState('1')
     const { screenData } = useContext(screenContext)
+
+    const types = {
+        '1': 'Hôm Nay',
+        '2': 'Ngày Mai',
+        '3': 'Tuần Này',
+        '4': 'Tháng Này',
+        '5': 'Tháng Sau',
+        '6': 'Tất Cả',
+    }
+
+    const ticketTypes = {
+        '1': 'Phiếu Đăng Ký Hẹn Khám',
+        '2': 'Phiếu Theo Dõi Sức Khỏe',
+        '3': 'Phiếu Hẹn Khám Tại Nhà'
+    }
 
     // Phiếu đăng ký
     return (
         <>
             <ScrollView >
-                <View style={{ flexWrap: 'wrap', flexDirection: 'column', width, gap: 10, paddingHorizontal: 20, paddingVertical: 10, height }}>
+                <View style={{ flexDirection: 'column', width, gap: 10, paddingHorizontal: 20, paddingVertical: 10, minHeight: height }}>
                     {screenData.currentScreen === 10 && (<>
                         <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', color: 'black' }}>Chào Mừng {userData.user?.fullName}</Text>
                         <Text style={{ fontSize: 15, fontFamily: 'Nunito-R', color: 'black' }}>Bắt đầu ngày mới với những cuộc hẹn mới.</Text>
                         {/* toggle */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <TouchableOpacity onPress={() => setDisplay(true)} style={{ gap: 5, backgroundColor: '#f0f0f0', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, paddingHorizontal: 10, borderRadius: 10 }}>
-                                <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Phiếu đăng ký theo dõi</Text>
+                                <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>{ticketTypes[ticketType]}</Text>
                                 <Icon name='chevron-down' style={{ fontSize: 25, color: 'black' }} />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => setDisplayTime(true)} style={{ gap: 5, backgroundColor: '#f0f0f0', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, paddingHorizontal: 10, borderRadius: 10 }}>
-                                <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>Hôm nay</Text>
+                                <Text style={{ fontSize: 16, color: 'black', fontFamily: 'Nunito-S' }}>{types[type]}</Text>
                                 <Icon name='chevron-down' style={{ fontSize: 25, color: 'black' }} />
                             </TouchableOpacity>
                         </View>
                         {ticketType === '1' ? (
                             <CuocHen type={type} setType={setType} />
-                        ) : (
+                        ) : ticketType === '2' ? (
                             <PhieuTheoDoi type={type} setType={setType} />
+                        ) : (
+                            <CuocHenTaiNha type={type} setType={setType} />
                         )}
                     </>)}
 
@@ -64,7 +82,9 @@ const TicketScreen = () => {
                             <TouchableOpacity onPress={() => { setTicketType("2"); setDisplay(false) }} style={{ marginTop: 10, backgroundColor: '#e5e7e9', paddingHorizontal: 10, borderRadius: 5, paddingVertical: 10 }}>
                                 <Text style={{ fontSize: 17, fontFamily: 'Nunito-S' }}>Phiếu theo dõi sức khỏe</Text>
                             </TouchableOpacity>
-
+                            <TouchableOpacity onPress={() => { setTicketType("3"); setDisplay(false) }} style={{ marginTop: 10, backgroundColor: '#e5e7e9', paddingHorizontal: 10, borderRadius: 5, paddingVertical: 10 }}>
+                                <Text style={{ fontSize: 17, fontFamily: 'Nunito-S' }}>Phiếu Hẹn Khám Tại Nhà</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 )}
@@ -73,6 +93,9 @@ const TicketScreen = () => {
                         <View style={{ width: '80%', position: 'absolute', backgroundColor: 'white', borderRadius: 10, top: '20%', zIndex: 4, padding: 20 }}>
                             <TouchableOpacity style={{ alignItems: 'flex-end' }} onPress={() => setDisplayTime(false)}>
                                 <IconX name="x" style={{ fontSize: 20 }} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { setType("6"), setDisplayTime(false) }} style={{ marginTop: 10, backgroundColor: '#e5e7e9', paddingHorizontal: 10, borderRadius: 5, paddingVertical: 10 }}>
+                                <Text style={{ fontSize: 17, fontFamily: 'Nunito-S' }}>Tất Cả</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { setType("1"), setDisplayTime(false) }} style={{ marginTop: 10, backgroundColor: '#e5e7e9', paddingHorizontal: 10, borderRadius: 5, paddingVertical: 10 }}>
                                 <Text style={{ fontSize: 17, fontFamily: 'Nunito-S' }}>Hôm nay</Text>
