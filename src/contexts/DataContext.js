@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { userContext } from "./UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { payloadContext } from "./PayloadContext";
+import { api, TypeHTTP } from "../utils/api";
 export const dataContext = createContext()
 
 const DataProvider = ({ children }) => {
@@ -11,6 +13,18 @@ const DataProvider = ({ children }) => {
     const [accessToken, setAccessToken] = useState()
     const [refreshToken, setRefreshToken] = useState()
     const { userData } = useContext(userContext)
+    const { payloadData } = useContext(payloadContext)
+
+    useEffect(() => {
+        api({ type: TypeHTTP.GET, path: '/doctorRecords/getAll', sendToken: false })
+            .then(res => {
+                setDoctorRecords(res)
+            })
+        api({ path: '/sicks/get-all', sendToken: false, type: TypeHTTP.GET })
+            .then(res => {
+                setSicks(res)
+            })
+    }, [payloadData.reload])
 
     useEffect(() => {
 

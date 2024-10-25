@@ -16,13 +16,10 @@ const Complete = ({ setStep }) => {
     const { menuHandler } = useContext(menuContext)
 
     const handleSubmit = () => {
-        api({ type: TypeHTTP.POST, path: '/healthLogBooks/save', sendToken: true, body: payloadData.bookingHealth })
-            .then(res => {
-                payloadHandler.setBookingHealth()
-                payloadHandler.setDoctorRecord()
-                utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
-                menuHandler.setDisplayInformationBookingHealth(false)
-            })
+        payloadHandler.setBookingHealth()
+        payloadHandler.setDoctorRecord()
+        menuHandler.setDisplayInformationBookingHealth(false)
+        payloadHandler.setReload(!payloadData.reload)
     }
 
 

@@ -1,15 +1,49 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Dimensions, TouchableOpacity } from 'react-native';
 import { Image, Text, View } from 'react-native'
 import { userContext } from '../../contexts/UserContext';
 import { payloadContext } from '../../contexts/PayloadContext';
 import { formatMoney } from '../../utils/other';
 import { convertDateToDayMonthYear } from '../../utils/date';
-
+import { utilsContext } from '../../contexts/UtilsContext';
+import { io } from 'socket.io-client'
+import { api, baseURL, TypeHTTP } from '../../utils/api';
+import { notifyType } from '../../utils/notify';
+const socket = io.connect(baseURL)
 const ChoosePayment = ({ setStep }) => {
     const { userData } = useContext(userContext)
     const { width } = Dimensions.get('window');
-    const { payloadData } = useContext(payloadContext)
+    const { payloadData, payloadHandler } = useContext(payloadContext)
+    const [url, setUrl] = useState('')
+    const { utilsHandler } = useContext(utilsContext)
+    useEffect(() => {
+        if (payloadData.bookingHealth && userData.user?._id) {
+            console.log(userData.user?._id, payloadData.bookingHealth?.priceList.price)
+            setUrl(`https://qr.sepay.vn/img?bank=MBBank&acc=0834885704&template=compact&amount=${payloadData.bookingHealth?.priceList.price}&des=MaKH${userData.user?._id}`)
+        }
+    }, [payloadData.bookingHealth, userData.user?._id])
+
+    useEffect(() => {
+        socket.on(`payment-appointment-logbooks${userData.user?._id}`, (data) => {
+            if (data) {
+                handleSubmit()
+            } else {
+                utilsHandler.notify(notifyType.WARNING, "Thanh Toán Thất Bại")
+            }
+
+        })
+        return () => {
+            socket.off(`payment-appointment-logbooks${userData.user?._id}`);
+        }
+    }, [userData.user?._id])
+
+    const handleSubmit = () => {
+        api({ type: TypeHTTP.POST, path: '/healthLogBooks/save', sendToken: true, body: payloadData.bookingHealth })
+            .then(res => {
+                utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
+                setStep(2)
+            })
+    }
 
     return (
         <View style={{ width, flexDirection: 'column', alignItems: 'center', paddingHorizontal: 10, paddingTop: 60 }}>
@@ -19,14 +53,11 @@ const ChoosePayment = ({ setStep }) => {
                 <View style={{ alignItems: 'center', flexDirection: 'row', gap: 5, borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
                     <Text style={{ fontFamily: 'Nunito-S' }}>Phương Thức Thanh Toán</Text>
                 </View>
-                <View style={{ alignItems: 'start', flexDirection: 'column', gap: 15, borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'start', gap: 5 }}>
-                        <Image style={{ height: 60, width: 60, borderRadius: 5 }} source={{ uri: 'https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png' }} />
-                        <View style={{ flexDirection: 'column', width: '80%' }}>
-                            <Text style={{ fontFamily: 'Nunito-B', paddingHorizontal: 10, borderRadius: 5 }}>Thanh Toán Qua Ví MOMO</Text>
-                            <Text style={{ fontFamily: 'Nunito-S', paddingHorizontal: 10, borderRadius: 5 }}>Sử dụng app Momo quét mã vạch hoặc nhập thông tin để thanh toán</Text>
-                        </View>
-                    </TouchableOpacity>
+                <View style={{ alignItems: 'center', flexDirection: 'column', borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
+                    <Image source={{ uri: url }} style={{ width: '70%', aspectRatio: 1 }} />
+                    <Text>Tên chủ TK: THAI ANH THU</Text>
+                    <Text>Số TK: 0834885704</Text>
+                    <Text style={{ textAlign: 'center' }}>Sử dụng app Momo hoặc app Ngân hàng để thanh toán</Text>
                 </View>
             </View>
 
@@ -67,10 +98,6 @@ const ChoosePayment = ({ setStep }) => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, color: 'red' }}>{formatMoney(payloadData.bookingHealth?.priceList.price)} đ</Text>
                 </View>
             </View>
-
-            <TouchableOpacity onPress={() => setStep(2)} style={{ borderRadius: 5, marginTop: 10, backgroundColor: '#1dcbb6', height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 15 }}>
-                <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Bước Tiếp Theo</Text>
-            </TouchableOpacity>
         </View>
     )
 }

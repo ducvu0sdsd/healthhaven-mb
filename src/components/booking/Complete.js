@@ -16,41 +16,10 @@ const Complete = ({ setStep }) => {
     const { menuHandler } = useContext(menuContext)
 
     const handleSubmit = () => {
-        if (userData.user) {
-            api({ sendToken: false, body: payloadData.bookingImages, path: '/upload-image/mobile/upload', type: TypeHTTP.POST })
-                .then(listImage => {
-                    api({ type: TypeHTTP.POST, sendToken: true, path: '/appointments/save', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id, images: listImage } })
-                        .then(res => {
-                            let record = JSON.parse(JSON.stringify(payloadData.doctorRecord))
-                            let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
-                            let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
-                            time.status = 'Queue'
-                            api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
-                                .then(res => {
-                                    payloadHandler.setBookingNormal()
-                                    payloadHandler.setDoctorRecord()
-                                    utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
-                                    menuHandler.setDisplayInformationBookingNormal(false)
-                                })
-                        })
-                })
-        } else {
-            // api({ type: TypeHTTP.POST, sendToken: false, path: '/appointments/save/customer', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id } })
-            //     .then(res => {
-            //         let record = JSON.parse(JSON.stringify(appointmentData.doctorRecord))
-            //         let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
-            //         let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
-            //         time.status = 'Queue'
-            //         api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
-            //             .then(res => {
-            //                 bookingHandler.setDoctorRecord()
-            //                 appointmentHandler.setDoctorRecord()
-            //                 globalHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
-            //                 router.push('/bac-si-noi-bat')
-            //                 globalHandler.reload()
-            //             })
-            //     })
-        }
+        payloadHandler.setBookingNormal()
+        payloadHandler.setDoctorRecord()
+        menuHandler.setDisplayInformationBookingNormal(false)
+        payloadHandler.setReload(!payloadData.reload)
     }
 
     return (

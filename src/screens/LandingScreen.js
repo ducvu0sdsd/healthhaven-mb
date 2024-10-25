@@ -14,17 +14,6 @@ const LandingScreen = () => {
     const { screenHandler } = useContext(screenContext)
     const { userData } = useContext(userContext)
 
-    useEffect(() => {
-        api({ type: TypeHTTP.GET, path: '/doctorRecords/getAll', sendToken: false })
-            .then(res => {
-                handler.setDoctorRecords(res)
-            })
-        api({ path: '/sicks/get-all', sendToken: false, type: TypeHTTP.GET })
-            .then(res => {
-                handler.setSicks(res)
-            })
-    }, [])
-
     return (
         <ScrollView style={{ flexDirection: 'column', paddingHorizontal: 10, width, paddingVertical: 10, gap: 10 }}>
             <View style={{ width: '100%', overflow: 'hidden', position: 'relative', flexDirection: 'row', height: 180, backgroundColor: '#1dcbb6', borderRadius: 8, paddingVertical: 10 }}>

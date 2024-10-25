@@ -1,15 +1,79 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Dimensions, TouchableOpacity } from 'react-native';
 import { Image, Text, View } from 'react-native'
 import { userContext } from '../../contexts/UserContext';
 import { payloadContext } from '../../contexts/PayloadContext';
 import { formatMoney } from '../../utils/other';
 import { convertDateToDayMonthYear } from '../../utils/date';
-
+import { io } from 'socket.io-client'
+import { api, baseURL, TypeHTTP } from '../../utils/api';
+import { notifyType } from '../../utils/notify';
+import { utilsContext } from '../../contexts/UtilsContext';
+import { menuContext } from '../../contexts/MenuContext';
+const socket = io.connect(baseURL)
 const ChoosePayment = ({ setStep }) => {
     const { userData } = useContext(userContext)
     const { width } = Dimensions.get('window');
-    const { payloadData } = useContext(payloadContext)
+    const { payloadData, payloadHandler } = useContext(payloadContext)
+    const [url, setUrl] = useState('')
+    const { utilsHandler } = useContext(utilsContext)
+    const { menuHandler } = useContext(menuContext)
+    useEffect(() => {
+        if (payloadData.bookingNormal) {
+            setUrl(`https://qr.sepay.vn/img?bank=MBBank&acc=0834885704&template=compact&amount=${payloadData.bookingNormal?.priceList.price}&des=MaKH${userData.user?._id}`)
+        }
+    }, [payloadData.bookingNormal, userData.user?._id])
+
+    useEffect(() => {
+        socket.on(`payment-appointment-online${userData.user?._id}`, (data) => {
+            if (data) {
+                console.log(1)
+                handleSubmit()
+            } else {
+                utilsHandler.notify(notifyType.WARNING, "Thanh Toán Thất Bại")
+            }
+
+        })
+        return () => {
+            socket.off(`payment-appointment-online${userData.user?._id}`);
+        }
+    }, [userData.user?._id])
+
+    const handleSubmit = () => {
+        if (userData.user) {
+            api({ sendToken: false, body: payloadData.bookingImages, path: '/upload-image/mobile/upload', type: TypeHTTP.POST })
+                .then(listImage => {
+                    api({ type: TypeHTTP.POST, sendToken: true, path: '/appointments/save', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id, images: listImage } })
+                        .then(res => {
+                            let record = JSON.parse(JSON.stringify(payloadData.doctorRecord))
+                            let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
+                            let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
+                            time.status = 'Queue'
+                            api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
+                                .then(res => {
+                                    utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
+                                    setStep(2)
+                                })
+                        })
+                })
+        } else {
+            // api({ type: TypeHTTP.POST, sendToken: false, path: '/appointments/save/customer', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id } })
+            //     .then(res => {
+            //         let record = JSON.parse(JSON.stringify(appointmentData.doctorRecord))
+            //         let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
+            //         let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
+            //         time.status = 'Queue'
+            //         api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
+            //             .then(res => {
+            //                 bookingHandler.setDoctorRecord()
+            //                 appointmentHandler.setDoctorRecord()
+            //                 globalHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
+            //                 router.push('/bac-si-noi-bat')
+            //                 globalHandler.reload()
+            //             })
+            //     })
+        }
+    }
 
     return (
         <View style={{ width, flexDirection: 'column', alignItems: 'center', paddingHorizontal: 10, paddingTop: 60 }}>
@@ -17,16 +81,13 @@ const ChoosePayment = ({ setStep }) => {
 
             <View style={{ flexDirection: 'column', gap: 10, borderRadius: 5, width: '85%', borderWidth: 1, borderColor: '#cacfd2', marginTop: 10 }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row', gap: 5, borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <Text style={{ fontFamily: 'Nunito-S' }}>Phương Thức Thanh Toán</Text>
+                    <Text style={{ fontFamily: 'Nunito-S' }}>Thanh Toán Qua Mã QR</Text>
                 </View>
-                <View style={{ alignItems: 'start', flexDirection: 'column', gap: 15, borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'start', gap: 5 }}>
-                        <Image style={{ height: 60, width: 60, borderRadius: 5 }} source={{ uri: 'https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png' }} />
-                        <View style={{ flexDirection: 'column', width: '80%' }}>
-                            <Text style={{ fontFamily: 'Nunito-B', paddingHorizontal: 10, borderRadius: 5 }}>Thanh Toán Qua Ví MOMO</Text>
-                            <Text style={{ fontFamily: 'Nunito-S', paddingHorizontal: 10, borderRadius: 5 }}>Sử dụng app Momo quét mã vạch hoặc nhập thông tin để thanh toán</Text>
-                        </View>
-                    </TouchableOpacity>
+                <View style={{ alignItems: 'center', flexDirection: 'column', borderRadius: 5, width: '100%', borderBottomWidth: 1, borderColor: '#cacfd2', paddingHorizontal: 20, paddingVertical: 10 }}>
+                    <Image source={{ uri: url }} style={{ width: '70%', aspectRatio: 1 }} />
+                    <Text>Tên chủ TK: THAI ANH THU</Text>
+                    <Text>Số TK: 0834885704</Text>
+                    <Text style={{ textAlign: 'center' }}>Sử dụng app Momo hoặc app Ngân hàng để thanh toán</Text>
                 </View>
             </View>
 
@@ -72,10 +133,6 @@ const ChoosePayment = ({ setStep }) => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, color: 'red' }}>{formatMoney(payloadData.bookingNormal?.priceList.price)} đ</Text>
                 </View>
             </View>
-
-            <TouchableOpacity onPress={() => setStep(2)} style={{ borderRadius: 5, marginTop: 10, backgroundColor: '#1dcbb6', height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 15 }}>
-                <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Bước Tiếp Theo</Text>
-            </TouchableOpacity>
         </View>
     )
 }

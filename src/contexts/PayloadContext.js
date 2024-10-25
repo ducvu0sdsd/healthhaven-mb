@@ -7,6 +7,9 @@ const PayLoadProvider = ({ children }) => {
     const [qa, setQa] = useState()
     const [blog, setBlog] = useState()
 
+    //reload
+    const [reload, setReload] = useState(false)
+
     // zego
     const [accessToken, setAccessToken] = useState()
     const [refreshToken, setRefreshToken] = useState()
@@ -70,7 +73,8 @@ const PayLoadProvider = ({ children }) => {
         paymentBookingHome,
         bookingHome,
         appointmentHome,
-        appointmentHomes
+        appointmentHomes,
+        reload
     }
 
     const handler = {
@@ -97,7 +101,8 @@ const PayLoadProvider = ({ children }) => {
         setPaymentBookingHome,
         setBookingHome,
         setAppointmentHome,
-        setAppointmentHomes
+        setAppointmentHomes,
+        setReload
     }
 
     return (

@@ -9,31 +9,15 @@ import { menuContext } from '../../../contexts/MenuContext';
 import { notifyType } from '../../../utils/notify';
 
 const Complete = ({ setStep }) => {
-    const { userData } = useContext(userContext)
     const { width } = Dimensions.get('window');
     const { payloadData, payloadHandler } = useContext(payloadContext)
-    const { utilsHandler } = useContext(utilsContext)
     const { menuHandler } = useContext(menuContext)
 
     const handleSubmit = () => {
-        if (userData.user) {
-            const body = {
-                _id: payloadData.bookingHome._id,
-                processAppointment: 2,
-                status: {
-                    status_type: "ACCEPTED",
-                    message: "Bệnh nhân đã thanh toán",
-                },
-            }
-            api({ path: '/appointmentHomes/payment', body, sendToken: true, type: TypeHTTP.POST })
-                .then((res => {
-                    utilsHandler.notify(notifyType.SUCCESS, "Đã Thanh Toán, Xác Nhận Lịch Hẹn Thành Công")
-                    payloadHandler.setBookingHome()
-                    menuHandler.setDisplayInformationBookingHome(false)
-                }))
-        }
+        payloadHandler.setBookingHome()
+        menuHandler.setDisplayInformationBookingHome(false)
+        payloadHandler.setReload(!payloadData.reload)
     }
-
 
     return (
         <View style={{ width, flexDirection: 'column', alignItems: 'center', paddingHorizontal: 10, paddingTop: 60 }}>
