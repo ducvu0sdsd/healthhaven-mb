@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-export let baseURL = 'http://192.168.1.81:8999'//https://shoeshop-backend.online
+export let baseURL = 'https://shoeshop-backend.online'//https://shoeshop-backend.online
 axios.defaults.baseURL = `${baseURL}`
 export const deploy = 'https://heath-haven-meet.vercel.app'
 

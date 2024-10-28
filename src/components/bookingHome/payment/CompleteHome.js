@@ -17,6 +17,7 @@ const Complete = ({ setStep }) => {
         payloadHandler.setBookingHome()
         menuHandler.setDisplayInformationBookingHome(false)
         payloadHandler.setReload(!payloadData.reload)
+        menuHandler.setDisplayNotificationPayment(false)
     }
 
     return (

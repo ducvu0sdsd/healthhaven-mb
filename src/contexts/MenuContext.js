@@ -70,7 +70,7 @@ const MenuProvider = ({ children }) => {
         setDisplayNotificationPayment(false)
         setDisplayInformationBookingHome(false)
         setDisplayScheduleAppoimentHome(false)
-        displayDetailAppointmentHome(false)
+        setDisplayDetailAppointmentHome(false)
     }
 
     const data = {

@@ -92,7 +92,7 @@ const ChoosePayment = ({ setStep }) => {
                         />
                     </View>
                     <View style={{ flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
-                        <Text style={{ fontFamily: 'Nunito-R', fontSize: 15, width: '65%' }}>Dịch Vụ Theo Dõi Sức Khỏe với bác sĩ {payloadData.bookingHome?.doctor.fullName}</Text>
+                        <Text style={{ fontFamily: 'Nunito-R', fontSize: 15, width: '65%' }}>Dịch vụ khám sức khỏe tại nhà với bác sĩ {payloadData.bookingHome?.doctor.fullName}</Text>
                         <Text style={{ fontFamily: 'Nunito-B', fontSize: 15 }}>{payloadData.bookingHome?.doctor.fullName}</Text>
                         <Text style={{ fontFamily: 'Nunito-S', fontSize: 13, paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#e0eff6', borderRadius: 5, marginVertical: 2 }}>{payloadData.bookingHome?.doctor.specialize}</Text>
                         <Text style={{ fontFamily: 'Nunito-S', fontSize: 15 }}>{formatMoney(payloadData.bookingHome?.price_list.price)} đ</Text>

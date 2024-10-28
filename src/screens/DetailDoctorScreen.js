@@ -21,7 +21,6 @@ const DetailDoctorScreen = () => {
     const [priceList, setPriceList] = useState(0);
     const [forums, setForums] = useState([]);
     const { menuHandler } = useContext(menuContext)
-    const { payloadHandler } = useContext(payloadContext)
     const { utilsHandler } = useContext(utilsContext)
     const { userData } = useContext(userContext)
     const [healthLogBooks, setHealthLogBooks] = useState([]);
@@ -29,6 +28,7 @@ const DetailDoctorScreen = () => {
     const [appointmentHomes, setAppointmentHomes] = useState(
         []
     );
+    const { payloadData, payloadHandler } = useContext(payloadContext)
 
     useEffect(() => {
         if (userData.user) {
@@ -45,7 +45,7 @@ const DetailDoctorScreen = () => {
             });
         }
 
-    }, [userData.user]);
+    }, [userData.user, payloadData.reload]);
 
     useEffect(() => {
         api({
