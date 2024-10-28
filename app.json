@@ -22,7 +22,7 @@
       "package": "com.vutienduc.healthhavenmb"
     },
     "web": {
-      "favicon": "./assets/favlogo.png"
+      "favicon": "./assets/logo.png"
     },
     "plugins": [
       "expo-font"
