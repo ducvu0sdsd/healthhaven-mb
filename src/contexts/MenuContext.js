@@ -22,6 +22,7 @@ import FormBookingHome from "../components/bookingHome/FormBookingHome";
 import FormNotificationPayment from "../components/bookingHome/NotificationPayment";
 import InformationBookingHome from "../components/bookingHome/payment/InformationBookingHome";
 import FormSchedule from "../components/appointments/FormSchedule";
+import ChatBot from "../components/chatbot/ChatBot";
 export const menuContext = createContext()
 
 const MenuProvider = ({ children }) => {
@@ -47,6 +48,7 @@ const MenuProvider = ({ children }) => {
     const [displayNotificationPayment, setDisplayNotificationPayment] = useState(false)
     const [displayScheduleAppoimentHome, setDisplayScheduleAppoimentHome] = useState(false)
     const [displayDetailAppointmentHome, setDisplayDetailAppointmentHome] = useState(false)
+    const [displayChatBot, setDisplayChatBot] = useState(false)
 
     const hidden = () => {
         setDisplay(false)
@@ -71,6 +73,7 @@ const MenuProvider = ({ children }) => {
         setDisplayInformationBookingHome(false)
         setDisplayScheduleAppoimentHome(false)
         setDisplayDetailAppointmentHome(false)
+        setDisplayChatBot(false)
     }
 
     const data = {
@@ -95,7 +98,8 @@ const MenuProvider = ({ children }) => {
         displayNotificationPayment,
         displayInformationBookingHome,
         displayScheduleAppoimentHome,
-        displayDetailAppointmentHome
+        displayDetailAppointmentHome,
+        displayChatBot
     }
 
     const handler = {
@@ -120,7 +124,8 @@ const MenuProvider = ({ children }) => {
         setDisplayNotificationPayment,
         setDisplayInformationBookingHome,
         setDisplayScheduleAppoimentHome,
-        setDisplayDetailAppointmentHome
+        setDisplayDetailAppointmentHome,
+        setDisplayChatBot
     }
 
     return (
@@ -151,6 +156,7 @@ const MenuProvider = ({ children }) => {
             <InformationBookingHome />
             <FormSchedule />
             <DetailAppointmentHome />
+            <ChatBot />
             {/* <MedicalRecord /> */}
             <MedicalRecord />
         </menuContext.Provider>

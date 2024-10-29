@@ -32,14 +32,14 @@ const ProfitDoctorScreen = () => {
   const { screenData } = useContext(screenContext);
   const [display, setDisplay] = useState(false);
   const [displayTime, setDisplayTime] = useState(false);
-   const [type, setType] = useState("1");
-   const [ticketType, setTicketType] = useState("1");
-   const [displayAssessment, setDisplayAssessment] = useState(false);
-   const hiddenAssessment = () => {
+  const [type, setType] = useState("1");
+  const [ticketType, setTicketType] = useState("1");
+  const [displayAssessment, setDisplayAssessment] = useState(false);
+  const hiddenAssessment = () => {
     setDisplayAssessment(false)
   };
   return (
-    <ScrollView>
+    <View>
       {/* {screenData.currentScreen === 1 && ( */}
       <View
         style={{
@@ -50,6 +50,7 @@ const ProfitDoctorScreen = () => {
           paddingHorizontal: 20,
           paddingVertical: 10,
           height,
+
         }}
       >
         {screenData.currentScreen === 16 && (
@@ -79,70 +80,71 @@ const ProfitDoctorScreen = () => {
                 gap: 10,
               }}
             >
-              
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => setDisplay(true)}
+
+              <View
                 style={{
-                  gap: 5,
-                  backgroundColor: "#f0f0f0",
                   flexDirection: "row",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  height: 40,
-                  paddingHorizontal: 20,
-                  borderRadius: 10,
                 }}
               >
-                <Text
+                <TouchableOpacity
+                  onPress={() => setDisplay(true)}
                   style={{
-                    fontSize: 16,
-                    color: "black",
-                    fontFamily: "Nunito-S",
+                    gap: 5,
+                    backgroundColor: "#f0f0f0",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 40,
+                    paddingHorizontal: 20,
+                    borderRadius: 10,
+                    width: 250
                   }}
                 >
-                  Doanh thu hẹn khám
-                </Text>
-                <Icon
-                  name="chevron-down"
-                  style={{ fontSize: 25, color: "black" }}
-                />
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: "black",
+                      fontFamily: "Nunito-S",
+                    }}
+                  >
+                    {ticketType === '1' ? 'Doanh thu khám trực tuyến' : ticketType === '2' ? 'Doanh thu theo dõi sức khỏe' : 'Doanh thu khám tại nhà'}
+                  </Text>
+                  <Icon
+                    name="chevron-down"
+                    style={{ fontSize: 25, color: "black" }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setDisplayTime(true)}
+                  style={{
+                    gap: 5,
+                    backgroundColor: "#f0f0f0",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 40,
+                    paddingHorizontal: 10,
+                    borderRadius: 10,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: "black",
+                      fontFamily: "Nunito-S",
+                    }}
+                  >
+                    Tất cả
+                  </Text>
+                  <Icon
+                    name="chevron-down"
+                    style={{ fontSize: 25, color: "black" }}
+                  />
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
-                onPress={() => setDisplayTime(true)}
-                style={{
-                  gap: 5,
-                  backgroundColor: "#f0f0f0",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: 40,
-                  paddingHorizontal: 10,
-                  borderRadius: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: "black",
-                    fontFamily: "Nunito-S",
-                  }}
-                >
-                  Tất cả
-                </Text>
-                <Icon
-                  name="chevron-down"
-                  style={{ fontSize: 25, color: "black" }}
-                />
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity
                 onPress={() => setDisplayAssessment(true)}
                 style={{
                   gap: 5,
@@ -162,16 +164,16 @@ const ProfitDoctorScreen = () => {
                     fontFamily: "Nunito-S",
                   }}
                 >
-                  Đánh gía của bệnh nhân
+                  Đánh giá của bệnh nhân
                 </Text>
-                
+
               </TouchableOpacity>
             </View>
             {ticketType === '1' ? (
-               <HenKham type={type} setType={setType} />
+              <HenKham type={type} setType={setType} />
             ) : ticketType === '2' ? (
               <TheoDoiSucKhoe type={type} setType={setType} />
-            ): (
+            ) : (
               <HenKhamTaiNha type={type} setType={setType} />
             )}
           </>
@@ -379,7 +381,10 @@ const ProfitDoctorScreen = () => {
       )}
       {(display || displayTime) && (
         <Pressable
-          onPress={() => setDisplay(false)}
+          onPress={() => {
+            setDisplay(false)
+            setDisplayTime(false)
+          }}
           style={{
             position: "absolute",
             width: "100%",
@@ -393,8 +398,8 @@ const ProfitDoctorScreen = () => {
       )}
       {/* )} */}
       {displayAssessment && (<Assessment hidden={hiddenAssessment} doctor={userData.user} />)}
-    </ScrollView>
-   
+    </View>
+
   );
 };
 

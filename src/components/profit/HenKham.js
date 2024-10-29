@@ -74,8 +74,8 @@ const HenKham = ({ type, setType }) => {
     intervalRef.current = setInterval(() => {
       setTime(
         new Date().getHours() +
-          ":" +
-          new Date().getMinutes()
+        ":" +
+        new Date().getMinutes()
       );
     }, 60000);
   }, []);
@@ -323,8 +323,8 @@ const HenKham = ({ type, setType }) => {
                 {sumAppointment === 0
                   ? 0
                   : formatMoney(
-                      returnNumber(sumAppointment) * 140000
-                    )}{" "}
+                    returnNumber(sumAppointment) * 140000
+                  )}{" "}
                 đ
               </Text>
               <Text
@@ -382,9 +382,9 @@ const HenKham = ({ type, setType }) => {
                 {sumAppointmentWeek === 0
                   ? 0
                   : formatMoney(
-                      returnNumber(sumAppointmentWeek) *
-                        140000
-                    )}{" "}
+                    returnNumber(sumAppointmentWeek) *
+                    140000
+                  )}{" "}
                 đ
               </Text>
               <Text
@@ -431,9 +431,9 @@ const HenKham = ({ type, setType }) => {
                 {sumAppointmentMonth === 0
                   ? 0
                   : formatMoney(
-                      returnNumber(sumAppointmentWeek) *
-                        140000
-                    )}{" "}
+                    returnNumber(sumAppointmentWeek) *
+                    140000
+                  )}{" "}
                 đ
               </Text>
               <Text
@@ -491,7 +491,7 @@ const HenKham = ({ type, setType }) => {
         textFontSize={13}
         width={width * 0.85}
       />
-      <ScrollView>
+      <ScrollView style={{ height: 100 }}>
         {appointments.map((appointment, index) => (
           <View
             key={index}
@@ -502,6 +502,7 @@ const HenKham = ({ type, setType }) => {
               flexDirection: "row",
               gap: 10,
               alignItems: "start",
+              paddingBottom: index === appointments.length - 1 ? 30 : 0
             }}
           >
             <View
@@ -556,10 +557,10 @@ const HenKham = ({ type, setType }) => {
                     appointment.status === "QUEUE"
                       ? "black"
                       : appointment.status === "ACCEPTED"
-                      ? "green"
-                      : appointment?.status === "COMPLETED"
-                      ? "blue"
-                      : "red",
+                        ? "green"
+                        : appointment?.status === "COMPLETED"
+                          ? "blue"
+                          : "red",
                 }}
               >
                 Trạng thái: {appointment?.status_message}

@@ -12,6 +12,8 @@ import { api, TypeHTTP } from '../utils/api';
 import { convertDateToDayMonthYear } from '../utils/date';
 import { notifyType } from '../utils/notify';
 import { screenContext } from '../contexts/ScreenContext';
+import PaymentDoctor from '../components/profile/PaymentDoctor';
+import PaymentPatient from '../components/profile/PaymentPatient';
 const ProfileScreen = () => {
     const { width } = Dimensions.get('window');
     const { menuHandler } = useContext(menuContext)
@@ -119,7 +121,7 @@ const ProfileScreen = () => {
         <ScrollView>
             <View style={{ alignItems: 'center', flexDirection: 'column', width, gap: 10, paddingHorizontal: 20, paddingVertical: 10 }}>
                 {screenData.currentScreen === 12 && (<>
-                    <View style={{ flexDirection: 'row', width: '100%', gap: 5 }}>
+                    <View style={{ flexDirection: 'row', width: '100%', gap: 5, position: 'relative' }}>
                         <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 5 }}>
                             {userData.user?.role === 'USER' ? (
                                 <Image source={{ uri: userData.user?.image }} style={{ height: 70, width: 70, borderRadius: 35 }} />
@@ -149,6 +151,11 @@ const ProfileScreen = () => {
                             <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', color: 'black' }}>{userData.user?.fullName}</Text>
                             <Text style={{ fontSize: 15, color: 'black' }}>{userData.user?.phone}</Text>
                         </View>
+                        {(choose === 1 || choose === 3) && (
+                            <TouchableOpacity onPress={() => handleUpdateUser()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 80, position: 'absolute', right: 0, top: 20 }}>
+                                <Text style={{ color: 'white', fontFamily: 'Nunito-B', fontSize: 14 }}>Cập nhật</Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
                     <View style={{ flexDirection: 'row', gap: 15, marginTop: 2, width: '100%' }}>
                         <TouchableOpacity onLayout={(e) => setWidths({ ...widths, width1: e.nativeEvent.layout.width })} onPress={() => setChoose(1)} style={{ gap: 5, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderBottomWidth: choose === 1 ? 2 : 0, borderColor: choose === 1 ? 'blue' : 'black' }} className="item-1">
@@ -166,13 +173,10 @@ const ProfileScreen = () => {
                         <UserInformation user={user} setUser={setUser} />
                     ) : choose === 2 ? (
                         <Password />
+                    ) : userData.user?.role === 'DOCTOR' ? (
+                        <PaymentDoctor user={user} setUser={setUser} />
                     ) : (
-                        <></>
-                    )}
-                    {choose === 1 && (
-                        <TouchableOpacity onPress={() => handleUpdateUser()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '85%' }}>
-                            <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Xác nhận</Text>
-                        </TouchableOpacity>
+                        <PaymentPatient user={user} setUser={setUser} />
                     )}
                 </>)}
             </View>

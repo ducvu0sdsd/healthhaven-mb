@@ -74,8 +74,8 @@ const HenKhamTaiNha = ({ type, setType }) => {
     intervalRef.current = setInterval(() => {
       setTime(
         new Date().getHours() +
-          ":" +
-          new Date().getMinutes()
+        ":" +
+        new Date().getMinutes()
       );
     }, 60000);
   }, []);
@@ -180,14 +180,14 @@ const HenKhamTaiNha = ({ type, setType }) => {
   useEffect(() => {
     if (doctorRecord) {
       if (type === "1") {
-        
+
         api({
           type: TypeHTTP.GET,
           path: `/appointmentHomes/findByRecord/${doctorRecord?._id}`,
           sendToken: true,
         }).then((res) => {
           setAppointmentHomes(res.filter((item) => item.status?.status_type === "COMPLETED"));
-          
+
         });
       } else if (type === "2") {
         const body = {
@@ -205,7 +205,7 @@ const HenKhamTaiNha = ({ type, setType }) => {
           );
 
           setAppointmentHomes(app);
-          
+
         });
       } else if (type === "3") {
         const body = {
@@ -223,7 +223,7 @@ const HenKhamTaiNha = ({ type, setType }) => {
           );
 
           setAppointmentHomes(app);
-          
+
         });
       }
     }
@@ -319,8 +319,8 @@ const HenKhamTaiNha = ({ type, setType }) => {
                 {sumAppointmentHome === 0
                   ? 0
                   : formatMoney(
-                      returnNumber(sumAppointmentHome) * 280000
-                    )}{" "}
+                    returnNumber(sumAppointmentHome) * 280000
+                  )}{" "}
                 đ
               </Text>
               <Text
@@ -378,9 +378,9 @@ const HenKhamTaiNha = ({ type, setType }) => {
                 {sumAppointmentWeekHome === 0
                   ? 0
                   : formatMoney(
-                      returnNumber(sumAppointmentWeekHome) *
-                      280000
-                    )}{" "}
+                    returnNumber(sumAppointmentWeekHome) *
+                    280000
+                  )}{" "}
                 đ
               </Text>
               <Text
@@ -427,9 +427,9 @@ const HenKhamTaiNha = ({ type, setType }) => {
                 {sumAppointmentMonthHome === 0
                   ? 0
                   : formatMoney(
-                      returnNumber(sumAppointmentWeekHome) *
-                      280000
-                    )}{" "}
+                    returnNumber(sumAppointmentWeekHome) *
+                    280000
+                  )}{" "}
                 đ
               </Text>
               <Text
@@ -446,58 +446,58 @@ const HenKhamTaiNha = ({ type, setType }) => {
         </View>
       </View>
       <BarChart
-  data={(() => {
-    const appointmentCounts = {};
+        data={(() => {
+          const appointmentCounts = {};
 
-    // Kiểm tra nếu appointmentHomes không rỗng
-    if (appointmentHomes && appointmentHomes.length > 0) {
-      // Duyệt qua danh sách appointments và cập nhật đối tượng
-      appointmentHomes.forEach((item) => {
-        const { day, month, year } = item.appointment_date;
-        const date = `${day}/${month}/${year}`;
+          // Kiểm tra nếu appointmentHomes không rỗng
+          if (appointmentHomes && appointmentHomes.length > 0) {
+            // Duyệt qua danh sách appointments và cập nhật đối tượng
+            appointmentHomes.forEach((item) => {
+              const { day, month, year } = item.appointment_date;
+              const date = `${day}/${month}/${year}`;
 
-        // Kiểm tra nếu các giá trị ngày tháng không undefined
-        if (day && month && year) {
-          if (appointmentCounts[date]) {
-            appointmentCounts[date]++;
-          } else {
-            appointmentCounts[date] = 1;
+              // Kiểm tra nếu các giá trị ngày tháng không undefined
+              if (day && month && year) {
+                if (appointmentCounts[date]) {
+                  appointmentCounts[date]++;
+                } else {
+                  appointmentCounts[date] = 1;
+                }
+              }
+            });
+
+            // Chuyển đổi đối tượng thành mảng để sử dụng trong biểu đồ
+            const labels = Object.keys(appointmentCounts);
+            const data = Object.values(appointmentCounts).map(
+              (item) => item * 280000
+            );
+
+            return labels.map((label, index) => ({
+              value: data[index],
+              label: label,
+            }));
           }
-        }
-      });
+          return []; // Trả về mảng rỗng nếu không có dữ liệu
+        })()}
+        height={200}
+        showValuesAsDataPointsText
+        frontColor={"#FF3366"}
+        textColor1="green"
+        dataPointsHeight={6}
+        dataPointsWidth={6}
+        xAxisLabelTextStyle={{
+          color: "gray",
+          fontSize: 10,
+          transform: [{ rotate: "45deg" }], // Xoay nhãn 45 độ
+          width: 100,
+        }}
+        textShiftY={-2}
+        textShiftX={-5}
+        textFontSize={13}
+        width={width * 0.75}
+      />
 
-      // Chuyển đổi đối tượng thành mảng để sử dụng trong biểu đồ
-      const labels = Object.keys(appointmentCounts);
-      const data = Object.values(appointmentCounts).map(
-        (item) => item * 280000
-      );
-
-      return labels.map((label, index) => ({
-        value: data[index],
-        label: label,
-      }));
-    }
-    return []; // Trả về mảng rỗng nếu không có dữ liệu
-  })()}
-  height={200}
-  showValuesAsDataPointsText
-  frontColor={"#FF3366"}
-  textColor1="green"
-  dataPointsHeight={6}
-  dataPointsWidth={6}
-  xAxisLabelTextStyle={{
-    color: "gray",
-    fontSize: 10,
-    transform: [{ rotate: "45deg" }], // Xoay nhãn 45 độ
-    width: 100,
-  }}
-  textShiftY={-2}
-  textShiftX={-5}
-  textFontSize={13}
-  width={width * 0.75}
-/>
-
-      <ScrollView>
+      <ScrollView style={{ height: 100 }}>
         {appointmentHomes.map((appointment, index) => (
           <View
             key={index}
@@ -508,6 +508,7 @@ const HenKhamTaiNha = ({ type, setType }) => {
               flexDirection: "row",
               gap: 10,
               alignItems: "start",
+              paddingBottom: index === appointmentHomes.length - 1 ? 30 : 0
             }}
           >
             <View
@@ -558,12 +559,12 @@ const HenKhamTaiNha = ({ type, setType }) => {
                   fontFamily: "Nunito-R",
                   fontSize: 14,
                   marginTop: 3,
-                  color:"blue",
+                  color: "blue",
                 }}
               >
                 Trạng thái: {appointment?.status.message}
               </Text>
-             
+
               <Text
                 style={{
                   fontFamily: "Nunito-R",

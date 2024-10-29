@@ -40,7 +40,7 @@ import {
   returnNumber,
 } from "../../utils/other";
 
-const TheoDoiSucKhoe = ({type, setType}) => {
+const TheoDoiSucKhoe = ({ type, setType }) => {
   const { menuData, menuHandler } = useContext(menuContext);
   const { width } = Dimensions.get("window");
   const [translateX] = useState(
@@ -70,7 +70,7 @@ const TheoDoiSucKhoe = ({type, setType}) => {
   };
   useEffect(() => {
     if (userData.user) {
-      
+
       if (type === "1") {
         api({
           path: "/healthLogBooks/get-all",
@@ -84,13 +84,12 @@ const TheoDoiSucKhoe = ({type, setType}) => {
                 item.status.status_type === "COMPLETED"
             )
           );
-          
+
         });
       } else {
         api({
-          path: `/healthLogBooks/findBy${
-            type === "2" ? "Week" : "Month"
-          }`,
+          path: `/healthLogBooks/findBy${type === "2" ? "Week" : "Month"
+            }`,
           type: TypeHTTP.POST,
           sendToken: true,
           body: {
@@ -104,7 +103,7 @@ const TheoDoiSucKhoe = ({type, setType}) => {
                 item.status.status_type === "COMPLETED"
             )
           );
-          
+
         });
       }
     }
@@ -169,284 +168,284 @@ const TheoDoiSucKhoe = ({type, setType}) => {
       );
     });
   }, [userData.user]);
-    return (
-        <>
-          <View style={{ flexDirection: "column", width: "100%" }}>
+  return (
+    <>
+      <View style={{ flexDirection: "column", width: "100%" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "flex-center",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: 80,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: 1,
+              borderColor: "#e5e7e9",
+              alignItems: "flex-start",
+              backgroundColor: "#ff7777",
+              borderRadius: 10,
+              gap: 10,
+              padding: 10,
+              width: "48%",
+            }}
+          >
+            <CalenderCheck
+              name="calendar-check-o"
+              style={{ fontSize: 35, color: "white" }}
+            />
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "flex-center",
-                width: "100%",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: 80,
+                flexDirection: "column",
+                alignItems: "flex-start",
               }}
             >
-              <View
+              <Text
                 style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 1,
-                  borderColor: "#e5e7e9",
-                  alignItems: "flex-start",
-                  backgroundColor: "#ff7777",
-                  borderRadius: 10,
-                  gap: 10,
-                  padding: 10,
-                  width: "48%",
+                  fontSize: 20,
+                  color: "white",
+                  fontFamily: "Nunito-S",
                 }}
               >
-                <CalenderCheck
-                  name="calendar-check-o"
-                  style={{ fontSize: 35, color: "white" }}
-                />
-                <View
-                  style={{
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Nunito-S",
-                    }}
-                  >
-                    {returnNumber(sumLogBook.length)}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontFamily: "Nunito-S",
-                      color: "white",
-                    }}
-                  >
-                    Cuộc hẹn hoàn tất
-                  </Text>
-                </View>
-              </View>
-              <View
+                {returnNumber(sumLogBook.length)}
+              </Text>
+              <Text
                 style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 1,
-                  borderColor: "#e5e7e9",
-                  alignItems: "flex-start",
-                  backgroundColor: "orange",
-                  borderRadius: 10,
-                  gap: 10,
-                  padding: 10,
-                  width: "48%",
+                  fontSize: 13,
+                  fontFamily: "Nunito-S",
+                  color: "white",
                 }}
               >
-                <Icon5
-                  name="coins"
-                  style={{ fontSize: 34, color: "white" }}
-                />
-                <View
-                  style={{
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Nunito-S",
-                    }}
-                  >
-                    {sumLogBook.length === 0
-                      ? 0
-                      : formatMoney(calculator(sumLogBook))}{" "}
-                    đ
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontFamily: "Nunito-S",
-                      color: "white",
-                    }}
-                  >
-                    Tổng doanh thu
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-center",
-                width: "100%",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: 80,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 1,
-                  borderColor: "#e5e7e9",
-                  alignItems: "flex-start",
-                  backgroundColor: "#66cc66",
-                  borderRadius: 10,
-                  gap: 10,
-                  padding: 10,
-                  width: "48%",
-                }}
-              >
-                <Octicons
-                  name="hourglass"
-                  style={{ fontSize: 35, color: "white" }}
-                />
-                <View
-                  style={{
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Nunito-S",
-                    }}
-                  >
-                    {sumLogBookWeek.length === 0
-                        ? 0
-                        : formatMoney(
-                            calculator(sumLogBookWeek)
-                          )}{" "}
-                      đ
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontFamily: "Nunito-S",
-                      color: "white",
-                    }}
-                  >
-                    Doanh thu tuần
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  borderBottomWidth: 1,
-                  borderColor: "#e5e7e9",
-                  alignItems: "flex-start",
-                  backgroundColor: "#ff2222",
-                  borderRadius: 10,
-                  gap: 10,
-                  padding: 10,
-                  width: "48%",
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="chart-line"
-                  style={{ fontSize: 35, color: "white" }}
-                />
-                <View
-                  style={{
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      color: "white",
-                      fontFamily: "Nunito-S",
-                    }}
-                  >
-                    {sumLogBookMonth.length === 0
-                ? 0
-                : formatMoney(
-                    calculator(sumLogBookMonth)
-                  )}{" "}
-              đ
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontFamily: "Nunito-S",
-                      color: "white",
-                    }}
-                  >
-                    Doanh thu tháng
-                  </Text>
-                </View>
-              </View>
+                Cuộc hẹn hoàn tất
+              </Text>
             </View>
           </View>
-          <BarChart
-  data={(() => {
-    const logBookCount = {};
-    const logBookPrice = {};
-    // Duyệt qua danh sách logBooks và cập nhật đối tượng
-    logBooks.forEach((item) => {
-      const date = `${item.date.day}/${item.date.month}/${item.date.year}`;
-      if (logBookCount[date]) {
-        logBookCount[date]++;
-        logBookPrice[date] += item.priceList.price;
-      } else {
-        logBookCount[date] = 1;
-        logBookPrice[date] = item.priceList.price;
-      }
-    });
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: 1,
+              borderColor: "#e5e7e9",
+              alignItems: "flex-start",
+              backgroundColor: "orange",
+              borderRadius: 10,
+              gap: 10,
+              padding: 10,
+              width: "48%",
+            }}
+          >
+            <Icon5
+              name="coins"
+              style={{ fontSize: 34, color: "white" }}
+            />
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                  fontFamily: "Nunito-S",
+                }}
+              >
+                {sumLogBook.length === 0
+                  ? 0
+                  : formatMoney(calculator(sumLogBook))}{" "}
+                đ
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontFamily: "Nunito-S",
+                  color: "white",
+                }}
+              >
+                Tổng doanh thu
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "flex-center",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: 80,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: 1,
+              borderColor: "#e5e7e9",
+              alignItems: "flex-start",
+              backgroundColor: "#66cc66",
+              borderRadius: 10,
+              gap: 10,
+              padding: 10,
+              width: "48%",
+            }}
+          >
+            <Octicons
+              name="hourglass"
+              style={{ fontSize: 35, color: "white" }}
+            />
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                  fontFamily: "Nunito-S",
+                }}
+              >
+                {sumLogBookWeek.length === 0
+                  ? 0
+                  : formatMoney(
+                    calculator(sumLogBookWeek)
+                  )}{" "}
+                đ
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontFamily: "Nunito-S",
+                  color: "white",
+                }}
+              >
+                Doanh thu tuần
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottomWidth: 1,
+              borderColor: "#e5e7e9",
+              alignItems: "flex-start",
+              backgroundColor: "#ff2222",
+              borderRadius: 10,
+              gap: 10,
+              padding: 10,
+              width: "48%",
+            }}
+          >
+            <MaterialCommunityIcons
+              name="chart-line"
+              style={{ fontSize: 35, color: "white" }}
+            />
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                  fontFamily: "Nunito-S",
+                }}
+              >
+                {sumLogBookMonth.length === 0
+                  ? 0
+                  : formatMoney(
+                    calculator(sumLogBookMonth)
+                  )}{" "}
+                đ
+              </Text>
+              <Text
+                style={{
+                  fontSize: 13,
+                  fontFamily: "Nunito-S",
+                  color: "white",
+                }}
+              >
+                Doanh thu tháng
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <BarChart
+        data={(() => {
+          const logBookCount = {};
+          const logBookPrice = {};
+          // Duyệt qua danh sách logBooks và cập nhật đối tượng
+          logBooks.forEach((item) => {
+            const date = `${item.date.day}/${item.date.month}/${item.date.year}`;
+            if (logBookCount[date]) {
+              logBookCount[date]++;
+              logBookPrice[date] += item.priceList.price;
+            } else {
+              logBookCount[date] = 1;
+              logBookPrice[date] = item.priceList.price;
+            }
+          });
 
-    // Chuyển đổi đối tượng thành mảng để sử dụng trong biểu đồ
-    const labels = Object.keys(logBookCount);
-    const data = labels.map((date) => ({
-      count: logBookCount[date],
-      totalPrice: logBookPrice[date],
-    }));
-    return labels.map((label, index) => ({
-      value: data[index].totalPrice, // Assuming you want to show totalPrice
-      label: label,
-    }));
-  })()}
-  height={200}
-  showValuesAsDataPointsText
-  frontColor={"#FF3366"}
-  textColor1="green"
-  dataPointsHeight={6}
-  dataPointsWidth={6}
-  xAxisLabelTextStyle={{
-    color: "gray",
-    fontSize: 10,
-    transform: [{ rotate: "45deg" }], // Xoay nhãn 45 độ
-    width: 100,
-  }}
-  textShiftY={-2}
-  textShiftX={-5}
-  textFontSize={13}
-  width={width * 0.85}
-/>
-          <ScrollView >
-          {logBooks.map((logBook, index) => (
-          <View key={index} style={{ backgroundColor: '#f8f9f9', padding: 5, borderRadius: 10, flexDirection: 'row', gap: 10, alignItems: 'start' }}>
+          // Chuyển đổi đối tượng thành mảng để sử dụng trong biểu đồ
+          const labels = Object.keys(logBookCount);
+          const data = labels.map((date) => ({
+            count: logBookCount[date],
+            totalPrice: logBookPrice[date],
+          }));
+          return labels.map((label, index) => ({
+            value: data[index].totalPrice, // Assuming you want to show totalPrice
+            label: label,
+          }));
+        })()}
+        height={200}
+        showValuesAsDataPointsText
+        frontColor={"#FF3366"}
+        textColor1="green"
+        dataPointsHeight={6}
+        dataPointsWidth={6}
+        xAxisLabelTextStyle={{
+          color: "gray",
+          fontSize: 10,
+          transform: [{ rotate: "45deg" }], // Xoay nhãn 45 độ
+          width: 100,
+        }}
+        textShiftY={-2}
+        textShiftX={-5}
+        textFontSize={13}
+        width={width * 0.85}
+      />
+      <ScrollView style={{ height: 100 }} >
+        {logBooks.map((logBook, index) => (
+          <View key={index} style={{ backgroundColor: '#f8f9f9', padding: 5, borderRadius: 10, flexDirection: 'row', gap: 10, alignItems: 'start', paddingBottom: index === logBooks.length - 1 ? 30 : 0 }}>
             <View style={{ height: 60, width: 60, borderWidth: 1, borderColor: '#1dcbb6', overflow: 'hidden', borderRadius: 150 }}>
               <Image source={{ uri: logBook.patient.image }} style={{ height: 90, width: 60 }} />
             </View>
             <View style={{ flexDirection: 'column', marginTop: 5, paddingBottom: 10 }}>
               <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, marginTop: 3 }}>Bệnh nhân: {logBook.patient.fullName}</Text>
               <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3 }}>Thời gian: {convertDateToDayMonthYearVietNam(logBook.date)}</Text>
-              <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3, color: 'blue' , }}>Trạng thái: {logBook.status.message}</Text>
+              <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3, color: 'blue', }}>Trạng thái: {logBook.status.message}</Text>
               <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, marginTop: 3 }}>Loại phiếu: {logBook.priceList.price === 1350000
-                      ? formatMoney(945000)
-                      : logBook.priceList.price === 2300000
-                      ? formatMoney(1610000)
-                      : formatMoney(2800000)}
-                    đ/
-                    {logBook.priceList.type}</Text>
+                ? formatMoney(945000)
+                : logBook.priceList.price === 2300000
+                  ? formatMoney(1610000)
+                  : formatMoney(2800000)}
+                đ/
+                {logBook.priceList.type}</Text>
             </View>
-            </View>
-            ))}
-            </ScrollView>
-        </>
-    )
+          </View>
+        ))}
+      </ScrollView>
+    </>
+  )
 }
 
 export default TheoDoiSucKhoe

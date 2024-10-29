@@ -14,6 +14,7 @@ import { screenContext } from '../../contexts/ScreenContext';
 import { userContext } from '../../contexts/UserContext';
 import { utilsContext } from '../../contexts/UtilsContext';
 import { notifyType } from '../../utils/notify';
+import ChatBot from '../../../assets/chatbot.png'
 
 const MenuArea = () => {
     const { menuData, menuHandler } = useContext(menuContext);
@@ -107,6 +108,10 @@ const MenuArea = () => {
                     <Chart name='bar-chart' style={{ fontSize: 30, color: '#e6e635' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thống kê doanh thu</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('my-profit')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Doanh Thu Của Tôi</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('tickets')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon1 name='circle-with-plus' style={{ fontSize: 30, color: '#ed4c4c' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Phiếu Đăng Ký</Text>
@@ -167,6 +172,13 @@ const MenuArea = () => {
             <TouchableOpacity onPress={() => navigate('blogs')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                 <Icon3 name='blog' style={{ fontSize: 30, color: '#ff7834' }} />
                 <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cẩm Nang</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                menuHandler.setDisplay(false)
+                menuHandler.setDisplayChatBot(true)
+            }} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <Image source={ChatBot} style={{ height: 30, width: 30 }} />
+                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>HealthHaven ChatBot</Text>
             </TouchableOpacity>
             {!userData.user ? (
                 <View style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
