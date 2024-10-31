@@ -354,10 +354,9 @@ const MyProfitScreen = () => {
             <ScrollView style={{ flexDirection: 'column', width: '100%' }}>
                 {dsPayBack.map((payback, index) => (
                     <View key={index} style={{ flexDirection: 'column', marginBottom: 5, width: '100%', gap: 5, backgroundColor: '#f7f7f7', paddingHorizontal: 10, paddingVertical: 10, borderRadius: 10 }}>
-                        <Text style={{ fontSize: 16, fontWeight: 600 }}>Tư vấn sức khỏe trực tuyến</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 600 }}>{ticketType === '1' ? 'Tư vấn sức khỏe trực tuyến' : ticketType === '2' ? 'Dịch vụ theo dõi sức khỏe' : 'Tư vấn sức khỏe tại nhà'}</Text>
                         <Text>{formatMoney(payback.price)}đ</Text>
-                        {console.log(payback)}
-                        {/* <Text>{`${payback.bank.accountNumber}-${payback.bank.bankName}-${payback.bank.accountName}`}</Text> */}
+                        <Text>{payback.date?.time}-{payback.date?.day}/{payback.date?.month}/{payback.date?.year}</Text>
                         <Text style={{
                             color:
                                 payback.status?.type === "AVAILABLE"
@@ -376,42 +375,6 @@ const MyProfitScreen = () => {
                     </View>
                 ))}
             </ScrollView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             {(display) && (
                 <Pressable
                     onPress={() => setDisplay(false)}
