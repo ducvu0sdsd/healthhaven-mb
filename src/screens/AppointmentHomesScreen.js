@@ -7,6 +7,8 @@ import { screenContext } from '../contexts/ScreenContext';
 import { api, TypeHTTP } from '../utils/api';
 import { convertDateToDayMonthYearVietNam, sortByAppointmentDate } from '../utils/date';
 import { color, status } from './AppointmentsScreen';
+import { utilsContext } from '../contexts/UtilsContext';
+import { notifyType } from '../utils/notify';
 
 const AppointmentHomesScreen = () => {
     const { width } = Dimensions.get('window');
@@ -16,6 +18,7 @@ const AppointmentHomesScreen = () => {
     const { screenData } = useContext(screenContext)
     const [appointmentHomes, setAppointmentHomes] = useState([])
     const [doctorRecords, setDoctorRecords] = useState([])
+    const { utilsHandler } = useContext(utilsContext)
     useEffect(() => {
         if (userData.user) {
             api({
@@ -34,6 +37,28 @@ const AppointmentHomesScreen = () => {
             });
         }
     }, [userData.user]);
+
+    const handleCancelAppointmentHome = (appointment) => {
+        const body = {
+            _id: appointment._id,
+
+            status: {
+                status_type: "CANCELED",
+                message: "Bệnh nhân đã hủy cuộc hẹn",
+            },
+            note: ''
+        }
+        api({ sendToken: true, path: '/appointmentHomes/patient-cancel', type: TypeHTTP.POST, body: body })
+            .then(res => {
+                setAppointmentHomes(prev => prev.map(item => {
+                    if (item._id === res._id) {
+                        return res
+                    }
+                    return item
+                }))
+                utilsHandler.notify(notifyType.SUCCESS, 'Đã hủy cuộc hẹn')
+            })
+    }
 
     return (
         <ScrollView>
@@ -73,21 +98,33 @@ const AppointmentHomesScreen = () => {
                                 <Text style={{
                                     fontSize: 14,
                                 }}>{home.note}</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                    {home.status?.status_type === "QUEUE" && (
-                                        <>
-                                            <TouchableOpacity onPress={() => {
-                                                payloadHandler.setAppointmentHome(home)
-                                                menuHandler.setDisplayScheduleAppoimentHome(true)
-                                            }} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
-                                                <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Chấp nhận</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => handleRejectAppointmentHome(home)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
-                                                <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Từ chối</Text>
-                                            </TouchableOpacity>
-                                        </>
-                                    )}
-                                </View>
+                                {userData.user.role === 'USER' ?
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                        {home.status?.status_type === "QUEUE" && (
+                                            <>
+                                                <TouchableOpacity onPress={() => handleCancelAppointmentHome(home)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                                                    <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Hủy</Text>
+                                                </TouchableOpacity>
+                                            </>
+                                        )}
+                                    </View>
+                                    :
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                        {home.status?.status_type === "QUEUE" && (
+                                            <>
+                                                <TouchableOpacity onPress={() => {
+                                                    payloadHandler.setAppointmentHome(home)
+                                                    menuHandler.setDisplayScheduleAppoimentHome(true)
+                                                }} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                                                    <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Chấp nhận</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => handleRejectAppointmentHome(home)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                                                    <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Từ chối</Text>
+                                                </TouchableOpacity>
+                                            </>
+                                        )}
+                                    </View>
+                                }
                             </View>
                         </TouchableOpacity>
                     ))}

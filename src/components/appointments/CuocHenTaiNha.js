@@ -222,21 +222,33 @@ const CuocHenTaiNha = ({ type, setType }) => {
                             <Text style={{
                                 fontSize: 14,
                             }}>{home.note}</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                {home.status?.status_type === "QUEUE" && (
-                                    <>
-                                        <TouchableOpacity onPress={() => {
-                                            payloadHandler.setAppointmentHome(home)
-                                            menuHandler.setDisplayScheduleAppoimentHome(true)
-                                        }} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
-                                            <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Chấp nhận</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => handleRejectAppointmentHome(home)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
-                                            <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Từ chối</Text>
-                                        </TouchableOpacity>
-                                    </>
-                                )}
-                            </View>
+                            {userData.user.role === 'USER' ?
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                    {home.status?.status_type === "QUEUE" && (
+                                        <>
+                                            <TouchableOpacity onPress={() => handleRejectAppointmentHome(home)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                                                <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Hủy</Text>
+                                            </TouchableOpacity>
+                                        </>
+                                    )}
+                                </View>
+                                :
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                                    {home.status?.status_type === "QUEUE" && (
+                                        <>
+                                            <TouchableOpacity onPress={() => {
+                                                payloadHandler.setAppointmentHome(home)
+                                                menuHandler.setDisplayScheduleAppoimentHome(true)
+                                            }} style={{ gap: 5, backgroundColor: '#66cc66', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                                                <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Chấp nhận</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => handleRejectAppointmentHome(home)} style={{ gap: 5, backgroundColor: '#ff2222', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 30, paddingHorizontal: 10, borderRadius: 10 }}>
+                                                <Text style={{ fontFamily: 'Nunito-R', fontSize: 14, color: 'white' }}>Từ chối</Text>
+                                            </TouchableOpacity>
+                                        </>
+                                    )}
+                                </View>
+                            }
                         </View>
                     </TouchableOpacity>
                 ))}

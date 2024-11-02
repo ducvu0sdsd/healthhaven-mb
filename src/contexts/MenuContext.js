@@ -23,6 +23,7 @@ import FormNotificationPayment from "../components/bookingHome/NotificationPayme
 import InformationBookingHome from "../components/bookingHome/payment/InformationBookingHome";
 import FormSchedule from "../components/appointments/FormSchedule";
 import ChatBot from "../components/chatbot/ChatBot";
+import SmartSearching from "../components/smartsearching/SmartSearching";
 export const menuContext = createContext()
 
 const MenuProvider = ({ children }) => {
@@ -49,6 +50,7 @@ const MenuProvider = ({ children }) => {
     const [displayScheduleAppoimentHome, setDisplayScheduleAppoimentHome] = useState(false)
     const [displayDetailAppointmentHome, setDisplayDetailAppointmentHome] = useState(false)
     const [displayChatBot, setDisplayChatBot] = useState(false)
+    const [displaySmartSearching, setDisplaySmartSearching] = useState(false)
 
     const hidden = () => {
         setDisplay(false)
@@ -74,6 +76,7 @@ const MenuProvider = ({ children }) => {
         setDisplayScheduleAppoimentHome(false)
         setDisplayDetailAppointmentHome(false)
         setDisplayChatBot(false)
+        setDisplaySmartSearching(false)
     }
 
     const data = {
@@ -99,7 +102,8 @@ const MenuProvider = ({ children }) => {
         displayInformationBookingHome,
         displayScheduleAppoimentHome,
         displayDetailAppointmentHome,
-        displayChatBot
+        displayChatBot,
+        displaySmartSearching
     }
 
     const handler = {
@@ -125,7 +129,8 @@ const MenuProvider = ({ children }) => {
         setDisplayInformationBookingHome,
         setDisplayScheduleAppoimentHome,
         setDisplayDetailAppointmentHome,
-        setDisplayChatBot
+        setDisplayChatBot,
+        setDisplaySmartSearching
     }
 
     return (
@@ -157,6 +162,7 @@ const MenuProvider = ({ children }) => {
             <FormSchedule />
             <DetailAppointmentHome />
             <ChatBot />
+            <SmartSearching />
             {/* <MedicalRecord /> */}
             <MedicalRecord />
         </menuContext.Provider>

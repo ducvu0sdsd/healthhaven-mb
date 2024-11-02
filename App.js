@@ -1,6 +1,6 @@
 
 import { useFonts } from "expo-font";
-import { ScrollView, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import LandingScreen from './src/screens/LandingScreen';
 import MenuArea from "./src/components/menu/MenuArea";
 import MenuProvider from "./src/contexts/MenuContext";
@@ -25,33 +25,33 @@ export default function App() {
     'Nunito-S': require('./assets/fonts/Nunito-SemiBold.ttf'),
   });
 
-  useEffect(() => {
-    if (fontsLoaded) {
-      setReload(!reload)
-    }
-  }, [fontsLoaded])
-
   // icons
   //https://oblador.github.io/react-native-vector-icons
 
   return (
-    <UtilsProvider>
-      <PayLoadProvider>
-        <UserProvider>
-          <ScreenProvider>
-            <AuthProvider>
-              <MenuProvider>
-                <DataProvider>
-                  <BookingHomeProvider>
-                    <Menu />
-                    <Index />
-                  </BookingHomeProvider>
-                </DataProvider>
-              </MenuProvider>
-            </AuthProvider>
-          </ScreenProvider>
-        </UserProvider>
-      </PayLoadProvider>
-    </UtilsProvider>
+    <>
+      {fontsLoaded ? (
+        <UtilsProvider>
+          <PayLoadProvider>
+            <UserProvider>
+              <ScreenProvider>
+                <AuthProvider>
+                  <MenuProvider>
+                    <DataProvider>
+                      <BookingHomeProvider>
+                        <Menu />
+                        <Index />
+                      </BookingHomeProvider>
+                    </DataProvider>
+                  </MenuProvider>
+                </AuthProvider>
+              </ScreenProvider>
+            </UserProvider>
+          </PayLoadProvider>
+        </UtilsProvider>
+      ) : (
+        <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />
+      )}
+    </>
   );
 }

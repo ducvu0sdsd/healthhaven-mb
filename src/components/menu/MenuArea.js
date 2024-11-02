@@ -68,14 +68,14 @@ const MenuArea = () => {
             </TouchableOpacity>
 
             {(userData.user && userData.user.role === 'USER') && (
-                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7, width: '90%' }}>
+                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', gap: 7, width: '90%' }}>
                     <Image source={{ uri: userData.user.image }} style={{ height: 46, width: 46, borderRadius: 23 }} />
                     <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', }}>{userData.user.fullName}</Text>
                 </TouchableOpacity>
             )}
 
             {(userData.user && userData.user.role === 'DOCTOR') && (
-                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 30, alignItems: 'center', gap: 7, width: '90%' }}>
+                <TouchableOpacity onPress={() => navigate('profile')} style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', gap: 7, width: '90%' }}>
                     <View style={{
                         height: 50,
                         width: 50,
@@ -109,7 +109,7 @@ const MenuArea = () => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thống kê doanh thu</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('my-profit')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
+                    <Icon8 name='google-analytics' style={{ fontSize: 30, color: '#e53df3' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Doanh Thu Của Tôi</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('tickets')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
@@ -125,8 +125,15 @@ const MenuArea = () => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('doctor-record')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
+                    <Icon5 name='file-document' style={{ fontSize: 30, color: '#f5b041' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Bác Sĩ</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    menuHandler.setDisplay(false)
+                    menuHandler.setDisplayChatBot(true)
+                }} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Image source={ChatBot} style={{ height: 30, width: 30 }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>HealthHaven ChatBot</Text>
                 </TouchableOpacity>
             </>)}
 
@@ -143,6 +150,10 @@ const MenuArea = () => {
             </>)}
 
             {userData.user?.role === 'USER' && (<>
+                <TouchableOpacity onPress={() => { menuHandler.setDisplay(false); menuHandler.setDisplaySmartSearching(true) }} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon name='search' style={{ fontSize: 30, color: '#ff3359' }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Tìm Kiếm Thông Minh</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('medical-record')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                     <Icon5 name='file-document' style={{ fontSize: 30, color: '#ff3359' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Hồ Sơ Sức Khỏe</Text>
@@ -152,7 +163,7 @@ const MenuArea = () => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Theo Dõi Sức Khỏe</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('appointments')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon3 name='calendar-check' style={{ fontSize: 30, color: '#ebd400' }} />
+                    <Icon6 name='calendar' style={{ fontSize: 30, color: '#e53df3' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cuộc Hẹn Trực Tuyến</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate('appointment-homes')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
@@ -163,6 +174,13 @@ const MenuArea = () => {
                     <Icon7 name='message' style={{ fontSize: 30, color: '#567fea' }} />
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Trò Chuyện</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    menuHandler.setDisplay(false)
+                    menuHandler.setDisplayChatBot(true)
+                }} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <Image source={ChatBot} style={{ height: 30, width: 30 }} />
+                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>HealthHaven ChatBot</Text>
+                </TouchableOpacity>
             </>)}
 
             <TouchableOpacity onPress={() => navigate('forums')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
@@ -172,13 +190,6 @@ const MenuArea = () => {
             <TouchableOpacity onPress={() => navigate('blogs')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                 <Icon3 name='blog' style={{ fontSize: 30, color: '#ff7834' }} />
                 <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Cẩm Nang</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-                menuHandler.setDisplay(false)
-                menuHandler.setDisplayChatBot(true)
-            }} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                <Image source={ChatBot} style={{ height: 30, width: 30 }} />
-                <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>HealthHaven ChatBot</Text>
             </TouchableOpacity>
             {!userData.user ? (
                 <View style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>

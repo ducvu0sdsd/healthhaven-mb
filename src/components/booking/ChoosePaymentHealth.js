@@ -98,6 +98,9 @@ const ChoosePayment = ({ setStep }) => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, color: 'red' }}>{formatMoney(payloadData.bookingHealth?.priceList.price)} đ</Text>
                 </View>
             </View>
+            {/* <TouchableOpacity onPress={() => handleSubmit()}>
+                <Text>Save</Text>
+            </TouchableOpacity> */}
         </View>
     )
 }

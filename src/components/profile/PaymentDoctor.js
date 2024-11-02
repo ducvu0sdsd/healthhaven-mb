@@ -27,7 +27,7 @@ const PaymentDoctor = ({ user, setUser }) => {
             <TextInput value={user?.bank?.accountNumber} onChangeText={e => setUser({ ...user, bank: { ...user.bank, accountNumber: e } })} placeholder='Số Tài Khoản' style={{ color: 'black', height: 45, zIndex: 1, width: '100%', backgroundColor: 'white', borderWidth: 1, paddingHorizontal: 10, borderRadius: 7, borderColor: '#bbb' }} />
             <Text style={{ fontSize: 15, fontWeight: 600, width: '100%', marginTop: 10 }}>Lịch Sử Thanh Toán</Text>
             {payments.map((payment, index) => (
-                <View style={{ flexDirection: 'column', gap: 5, padding: 10, backgroundColor: '#f7f7f7', borderRadius: 10, position: 'relative', width: '100%' }}>
+                <View key={index} style={{ flexDirection: 'column', gap: 5, padding: 10, backgroundColor: '#f7f7f7', borderRadius: 10, position: 'relative', width: '100%' }}>
                     <Text key={index} style={{ fontWeight: 600 }}>{payment?.beneficiaryAccount?.bankName === ""
                         ? "Đang xử lý" : `${payment.beneficiaryAccount?.bankName}-${payment.beneficiaryAccount?.accountNumber}-${payment.beneficiaryAccount?.accountName}`}</Text>
                     <Text>Nhận tiền</Text>

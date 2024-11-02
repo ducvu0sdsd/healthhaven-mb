@@ -75,6 +75,15 @@ export function convertDateToDayMonthYearVietNam2(date) {
     return `${day} tháng ${month}, ${year}`;
 }
 
+export function convertDateInputToObject(dateString) {
+    console.log(dateString)
+    return {
+        day: Number(dateString.split('-')[2].split('T')[0]),
+        month: Number(dateString.split('-')[1]),
+        year: Number(dateString.split('-')[0])
+    }
+}
+
 export function convertDateToDayMonthYearMinuteHour(dateString) {
     // Tạo một đối tượng Date từ chuỗi ngày hiện tại
     let currentDate = new Date(dateString);

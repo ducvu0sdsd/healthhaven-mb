@@ -195,7 +195,7 @@ const MyProfitScreen = () => {
                         style={{ fontSize: 25, color: "black" }}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleSignIn()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 100 }}>
+                <TouchableOpacity onPress={() => handleReceive()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 100 }}>
                     <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Rút Tiền</Text>
                 </TouchableOpacity>
             </View>

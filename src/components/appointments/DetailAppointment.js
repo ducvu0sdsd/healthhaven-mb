@@ -213,7 +213,7 @@ const DetailAppointment = () => {
                             )
                         )}
                     </ScrollView>
-                    {(payloadData.displayConnect !== payloadData.detailAppointment?._id && userData.user?.role === 'USER') && (
+                    {(payloadData.displayConnect === payloadData.detailAppointment?._id && userData.user?.role === 'USER') && (
                         <TouchableOpacity onPress={() => handleGoToMeet()} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', paddingVertical: 11, marginTop: 12, paddingHorizontal: 20 }}>
                             <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Tham Gia Cuộc Hẹn</Text>
                         </TouchableOpacity>
