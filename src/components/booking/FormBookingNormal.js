@@ -133,16 +133,35 @@ const FormBookingNormal = () => {
                         </Pressable>
                         {display === index && (
                             <View style={{ width: '80%', flexDirection: 'column', gap: 5, paddingVertical: 5 }}>
-                                {sortTimes(schedule.times).map((time, indexTime) => (
-                                    <TouchableOpacity onPress={() => setAppointmentDate({
-                                        day: schedule.date.day,
-                                        month: schedule.date.month,
-                                        year: schedule.date.year,
-                                        time: time.time
-                                    })} key={indexTime} style={{ width: '100%', backgroundColor: appointmentDate?.time === time.time ? '#35a4ff2a' : '#f2f3f4', borderRadius: 5, paddingHorizontal: 20, paddingVertical: 15 }}>
-                                        <Text style={{ fontFamily: 'Nunito-S' }}>{time.time}</Text>
-                                    </TouchableOpacity>
-                                ))}
+                                {
+                                    compare2Date(schedule.date, convertDateToDayMonthYearObject(new Date().toISOString())) ? (
+                                        <>
+                                            {sortTimes(schedule.times).filter(time => new Date(new Date().getTime() + 120 * 60000).getHours() < Number(time.time.split(':')[0])).map((time, indexTime) => (
+                                                <TouchableOpacity onPress={() => setAppointmentDate({
+                                                    day: schedule.date.day,
+                                                    month: schedule.date.month,
+                                                    year: schedule.date.year,
+                                                    time: time.time
+                                                })} key={indexTime} style={{ width: '100%', backgroundColor: appointmentDate?.time === time.time ? '#35a4ff2a' : '#f2f3f4', borderRadius: 5, paddingHorizontal: 20, paddingVertical: 15 }}>
+                                                    <Text style={{ fontFamily: 'Nunito-S' }}>{time.time}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {sortTimes(schedule.times).map((time, indexTime) => (
+                                                <TouchableOpacity onPress={() => setAppointmentDate({
+                                                    day: schedule.date.day,
+                                                    month: schedule.date.month,
+                                                    year: schedule.date.year,
+                                                    time: time.time
+                                                })} key={indexTime} style={{ width: '100%', backgroundColor: appointmentDate?.time === time.time ? '#35a4ff2a' : '#f2f3f4', borderRadius: 5, paddingHorizontal: 20, paddingVertical: 15 }}>
+                                                    <Text style={{ fontFamily: 'Nunito-S' }}>{time.time}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </>
+                                    )
+                                }
                             </View>
                         )}
                     </View>

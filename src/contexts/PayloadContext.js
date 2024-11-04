@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
+import { api, TypeHTTP } from "../utils/api";
 export const payloadContext = createContext()
 
 const PayLoadProvider = ({ children }) => {
@@ -49,6 +50,14 @@ const PayLoadProvider = ({ children }) => {
     const [appointmentHome, setAppointmentHome] = useState()
     const [appointmentHomes, setAppointmentHomes] = useState([])
 
+    // assessment
+    const [assessment, setAssessments] = useState([])
+
+    useEffect(() => {
+        api({ type: TypeHTTP.GET, sendToken: false, path: '/assessments/getAll' })
+            .then(res => setAssessments(res))
+    }, [])
+
     const data = {
         qa,
         blog,
@@ -74,7 +83,8 @@ const PayLoadProvider = ({ children }) => {
         bookingHome,
         appointmentHome,
         appointmentHomes,
-        reload
+        reload,
+        assessment
     }
 
     const handler = {
@@ -102,7 +112,8 @@ const PayLoadProvider = ({ children }) => {
         setBookingHome,
         setAppointmentHome,
         setAppointmentHomes,
-        setReload
+        setReload,
+        setAssessments
     }
 
     return (

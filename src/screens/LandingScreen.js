@@ -32,7 +32,7 @@ const LandingScreen = () => {
                     <TouchableOpacity
                         key={index}
                         onPress={() => {
-                            if (userData.user && userData.user.role === 'USER') {
+                            if (userData.user?.role !== 'DOCTOR') {
                                 screenHandler.setCurrentDoctorRecord(doctorRecord)
                                 screenHandler.navigate('detail-doctor')
                             }

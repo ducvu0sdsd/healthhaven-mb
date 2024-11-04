@@ -274,7 +274,7 @@ const FormSchedule = () => {
                             <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap', paddingHorizontal: 20, width: '100%' }}>
                                 {times.map((time, index) => {
                                     if (compare2Date(convertDateToDayMonthYearObject(new Date().toISOString()), currentDay)) {
-                                        if (new Date().getHours() + 2 >= Number(time.split(':')[0])) {
+                                        if (new Date(new Date().getTime() + 120 * 60000).getHours() >= Number(time.split(':')[0])) {
                                             // return <div key={index} className={`px-4 flex item-center justify-center py-2 transition-all border-[1px] border-[#999] text-[13px] font-medium bg-[#b7b7b7] rounded-md`}>{time}</div>
                                         } else {
                                             if (checkSchedule(time) === 0) {
