@@ -169,7 +169,7 @@ const InformationBookingNormal = () => {
                             <Text style={{ color: 'white', fontFamily: 'Nunito-B' }}>Bước Tiếp Theo</Text>
                         </TouchableOpacity>
                     </View>
-                    <ChoosePayment setStep={setStep} />
+                    <ChoosePayment step={step} setStep={setStep} />
                     <Complete />
                 </>)}
             </ScrollView>

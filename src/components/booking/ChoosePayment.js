@@ -4,20 +4,22 @@ import { Image, Text, View } from 'react-native'
 import { userContext } from '../../contexts/UserContext';
 import { payloadContext } from '../../contexts/PayloadContext';
 import { formatMoney } from '../../utils/other';
-import { convertDateToDayMonthYear } from '../../utils/date';
+import { compare2Date, convertDateToDayMonthYear } from '../../utils/date';
 import { io } from 'socket.io-client'
 import { api, baseURL, TypeHTTP } from '../../utils/api';
 import { notifyType } from '../../utils/notify';
 import { utilsContext } from '../../contexts/UtilsContext';
 import { menuContext } from '../../contexts/MenuContext';
+import { screenContext } from '../../contexts/ScreenContext';
 const socket = io.connect(baseURL)
-const ChoosePayment = ({ setStep }) => {
+const ChoosePayment = ({ step, setStep }) => {
     const { userData } = useContext(userContext)
     const { width } = Dimensions.get('window');
     const { payloadData, payloadHandler } = useContext(payloadContext)
     const [url, setUrl] = useState('')
     const { utilsHandler } = useContext(utilsContext)
     const { menuHandler } = useContext(menuContext)
+    const { screenHandler } = useContext(screenContext)
     useEffect(() => {
         if (payloadData.bookingNormal) {
             setUrl(`https://qr.sepay.vn/img?bank=MBBank&acc=0834885704&template=compact&amount=${payloadData.bookingNormal?.priceList.price}&des=MaKH${userData.user?._id}`)
@@ -27,7 +29,6 @@ const ChoosePayment = ({ setStep }) => {
     useEffect(() => {
         socket.on(`payment-appointment-online${userData.user?._id}`, (data) => {
             if (data) {
-                console.log(1)
                 handleSubmit()
             } else {
                 utilsHandler.notify(notifyType.WARNING, "Thanh Toán Thất Bại")
@@ -41,21 +42,43 @@ const ChoosePayment = ({ setStep }) => {
 
     const handleSubmit = () => {
         if (userData.user) {
-            api({ sendToken: false, body: payloadData.bookingImages, path: '/upload-image/mobile/upload', type: TypeHTTP.POST })
-                .then(listImage => {
-                    api({ type: TypeHTTP.POST, sendToken: true, path: '/appointments/save', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id, images: listImage } })
-                        .then(res => {
-                            let record = JSON.parse(JSON.stringify(payloadData.doctorRecord))
-                            let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
-                            let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
-                            time.status = 'Queue'
-                            api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
-                                .then(res => {
-                                    utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
-                                    setStep(2)
-                                })
-                        })
+            api({
+                type: TypeHTTP.GET,
+                path: `/doctorRecords/getById/${payloadData.doctorRecord.doctor._id}`,
+                sendToken: false,
+            })
+                .then((res) => {
+                    payloadHandler.setDoctorRecord(res);
+                    const filter = res.schedules.filter(item => {
+                        return compare2Date(item.date, payloadData.bookingNormal.appointment_date)
+                    })[0]
+                    const nestedFilter = filter.times.filter(item => item.time === payloadData.bookingNormal.appointment_date.time)[0]
+                    if (nestedFilter.status !== '') {
+                        utilsHandler.notify(notifyType.WARNING, "Cập nhật: Thời gian hẹn đã được đặt, vui lòng chọn thời gian khác")
+                        setTimeout(() => {
+                            screenHandler.navigate('doctors')
+                        }, 2000);
+                    } else {
+                        api({ sendToken: false, body: payloadData.bookingImages, path: '/upload-image/mobile/upload', type: TypeHTTP.POST })
+                            .then(listImage => {
+                                api({ type: TypeHTTP.POST, sendToken: true, path: '/appointments/save', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id, images: listImage } })
+                                    .then(res => {
+                                        let record = JSON.parse(JSON.stringify(payloadData.doctorRecord))
+                                        let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
+                                        let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
+                                        time.status = 'Queue'
+                                        api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
+                                            .then(res => {
+                                                utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
+                                                setStep(2)
+                                            })
+                                    })
+                            })
+                    }
                 })
+                .catch((error) => {
+                    screenHandler.navigate('doctors')
+                });
         } else {
             // api({ type: TypeHTTP.POST, sendToken: false, path: '/appointments/save/customer', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id } })
             //     .then(res => {
@@ -133,9 +156,9 @@ const ChoosePayment = ({ setStep }) => {
                     <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, color: 'red' }}>{formatMoney(payloadData.bookingNormal?.priceList.price)} đ</Text>
                 </View>
             </View>
-            {/* <TouchableOpacity onPress={() => handleSubmit()}>
+            <TouchableOpacity onPress={() => handleSubmit()}>
                 <Text>Save</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     )
 }
