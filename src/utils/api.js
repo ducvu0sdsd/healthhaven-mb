@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 export let baseURL = 'https://shoeshop-backend.online'//https://shoeshop-backend.online
 axios.defaults.baseURL = `${baseURL}`
-export const deploy = 'https://heath-haven-meet.vercel.app'
+export const deploy = 'https://health-haven-nu.vercel.app'
 
 export const TypeHTTP = {
     GET: 'get',
@@ -17,7 +17,7 @@ export const api = async ({ path, body, type, sendToken, port }) => {
         axios.defaults.baseURL = `${baseURL}`
     } else {
         // baseURL = 'https://shoeshop-backend.online'
-        baseURL = 'http://192.168.1.7:8999'
+        baseURL = 'http://192.168.88.206:8999'
         axios.defaults.baseURL = `${baseURL}`
     }
     const accessToken = await AsyncStorage.getItem('accessToken')

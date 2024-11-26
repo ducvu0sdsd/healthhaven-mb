@@ -126,39 +126,34 @@ const DetailDoctorScreen = () => {
 
                         <View style={{ width: '100%', overflow: 'hidden', position: 'relative', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#1dcbb6', borderRadius: 8, padding: 15 }}>
                             <Text style={{ fontSize: 15, fontFamily: 'Nunito-S', color: 'white' }}>{doctorRecord?.description}</Text>
+                            {userData.user?.role !== 'DOCTOR' && (
+                                <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                    <TouchableOpacity onPress={() => {
+                                        if (priceList && doctorRecord) {
+                                            if (userData.user?.email === "") {
+                                                utilsHandler.notify(
+                                                    notifyType.WARNING,
+                                                    "Vui lòng cập nhật email để đặt khám !!!"
+                                                );
+                                                return;
+                                            } else {
+                                                payloadHandler.setPriceList(priceList)
+                                                payloadHandler.setDoctorRecord(doctorRecord)
+                                                payloadHandler.setSick('Tư Vấn Trực Tuyến')
+                                                menuHandler.setDisplayFormBookingNormal(true)
+                                            }
+                                        }
+                                    }} style={{ borderRadius: 5, backgroundColor: 'white', paddingVertical: 12, paddingHorizontal: 15 }}>
+                                        <Text style={{ color: 'black', fontFamily: 'Nunito-B', fontSize: 13 }}>Đặt Khám Ngay</Text>
+                                    </TouchableOpacity>
+                                    <View>
+                                        <Text style={{ fontSize: 16, fontFamily: 'Nunito-B', color: 'white' }} >Giá Tư Vấn Trực Tuyến</Text>
+                                        <Text style={{ fontSize: 15, fontFamily: 'Nunito-S', color: 'white' }} >{formatMoney(priceList?.price)}đ</Text>
+                                    </View>
+                                </View>
+                            )}
                             {userData.user?.role === 'USER' && (
                                 <>
-                                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                                        <TouchableOpacity onPress={() => {
-                                            if (priceList && doctorRecord) {
-                                                if (userData.user) {
-                                                    if (userData.user?.email === "") {
-                                                        utilsHandler.notify(
-                                                            notifyType.WARNING,
-                                                            "Vui lòng cập nhật email để đặt khám !!!"
-                                                        );
-                                                        return;
-                                                    } else {
-                                                        payloadHandler.setPriceList(priceList)
-                                                        payloadHandler.setDoctorRecord(doctorRecord)
-                                                        payloadHandler.setSick('Tư Vấn Trực Tuyến')
-                                                        menuHandler.setDisplayFormBookingNormal(true)
-                                                    }
-                                                } else {
-                                                    utilsHandler.notify(
-                                                        notifyType.WARNING,
-                                                        "Vui lòng đăng nhập để đặt khám với bác sĩ!!!"
-                                                    );
-                                                }
-                                            }
-                                        }} style={{ borderRadius: 5, backgroundColor: 'white', paddingVertical: 12, paddingHorizontal: 15 }}>
-                                            <Text style={{ color: 'black', fontFamily: 'Nunito-B', fontSize: 13 }}>Đặt Khám Ngay</Text>
-                                        </TouchableOpacity>
-                                        <View>
-                                            <Text style={{ fontSize: 16, fontFamily: 'Nunito-B', color: 'white' }} >Giá Tư Vấn Trực Tuyến</Text>
-                                            <Text style={{ fontSize: 15, fontFamily: 'Nunito-S', color: 'white' }} >{formatMoney(priceList?.price)}đ</Text>
-                                        </View>
-                                    </View>
                                     {(appointmentHomes.length === 0 ||
                                         (appointmentHomes
                                             .filter((item) =>

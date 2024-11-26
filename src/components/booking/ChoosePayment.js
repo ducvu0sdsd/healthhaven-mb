@@ -80,21 +80,49 @@ const ChoosePayment = ({ step, setStep }) => {
                     screenHandler.navigate('doctors')
                 });
         } else {
-            // api({ type: TypeHTTP.POST, sendToken: false, path: '/appointments/save/customer', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id } })
-            //     .then(res => {
-            //         let record = JSON.parse(JSON.stringify(appointmentData.doctorRecord))
-            //         let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
-            //         let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
-            //         time.status = 'Queue'
-            //         api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
-            //             .then(res => {
-            //                 bookingHandler.setDoctorRecord()
-            //                 appointmentHandler.setDoctorRecord()
-            //                 globalHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
-            //                 router.push('/bac-si-noi-bat')
-            //                 globalHandler.reload()
-            //             })
-            //     })
+            try {
+                api({
+                    type: TypeHTTP.GET,
+                    path: `/doctorRecords/getById/${payloadData.doctorRecord.doctor._id}`,
+                    sendToken: false,
+                })
+                    .then((res) => {
+                        payloadHandler.setDoctorRecord(res);
+                        const filter = res.schedules.filter(item => {
+                            return compare2Date(item.date, payloadData.bookingNormal.appointment_date)
+                        })[0]
+                        const nestedFilter = filter.times.filter(item => item.time === payloadData.bookingNormal.appointment_date.time)[0]
+                        if (nestedFilter.status !== '') {
+                            utilsHandler.notify(notifyType.WARNING, "Cập nhật: Thời gian hẹn đã được đặt, vui lòng chọn thời gian khác")
+                            setTimeout(() => {
+                                screenHandler.navigate('doctors')
+                            }, 2000);
+                        } else {
+                            api({ sendToken: false, body: payloadData.bookingImages, path: '/upload-image/mobile/upload', type: TypeHTTP.POST })
+                                .then(listImage => {
+                                    api({ type: TypeHTTP.POST, sendToken: true, path: '/appointments/save/customer', body: { ...payloadData.bookingNormal, price_list: payloadData.bookingNormal.priceList._id, images: listImage } })
+                                        .then(res => {
+                                            let record = JSON.parse(JSON.stringify(payloadData.doctorRecord))
+                                            let schedule = record.schedules.filter(item => item.date.day === res.appointment_date.day && item.date.month === res.appointment_date.month && item.date.year === res.appointment_date.year)[0]
+                                            let time = schedule.times.filter(item => item.time === res.appointment_date.time)[0]
+                                            time.status = 'Queue'
+                                            console.log(res)
+                                            // api({ type: TypeHTTP.POST, path: '/doctorRecords/update', sendToken: false, body: record })
+                                            //     .then(res => {
+                                            //         utilsHandler.notify(notifyType.SUCCESS, "Đăng Ký Lịch Hẹn Thành Công")
+                                            //         setStep(2)
+                                            //     })
+                                            //     .catch(error => console.log(error))
+                                        })
+                                })
+                        }
+                    })
+                    .catch((error) => {
+                        screenHandler.navigate('doctors')
+                    });
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 

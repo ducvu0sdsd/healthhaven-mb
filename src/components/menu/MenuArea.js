@@ -202,10 +202,6 @@ const MenuArea = () => {
                 </View>
             ) : (
                 <>
-                    <TouchableOpacity onPress={() => navigate('notify')} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
-                        <Icon8 name='bell' style={{ fontSize: 30, color: 'black' }} />
-                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Thông báo</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleLogout()} style={{ width: '100%', gap: 10, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon4 name='logout' style={{ fontSize: 30, color: 'black' }} />
                         <Text style={{ fontFamily: 'Nunito-S', fontSize: 17 }}>Đăng Xuất</Text>
