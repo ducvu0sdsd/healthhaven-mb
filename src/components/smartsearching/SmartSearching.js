@@ -10,6 +10,7 @@ import { userContext } from '../../contexts/UserContext';
 import { utilsContext } from '../../contexts/UtilsContext';
 import { payloadContext } from '../../contexts/PayloadContext';
 import { notifyType } from '../../utils/notify';
+import { screenContext } from '../../contexts/ScreenContext';
 
 const SmartSearching = () => {
     const { menuData, menuHandler } = useContext(menuContext);
@@ -31,6 +32,7 @@ const SmartSearching = () => {
     const [type, setType] = useState('1')
     const [doctorRecordAIs, setDoctorRecordAIs] = useState([]);
     const [answerAI, setAnswerAI] = useState("");
+    const { screenHandler } = useContext(screenContext)
 
     useEffect(() => {
         Animated.timing(translateX, {
@@ -46,6 +48,8 @@ const SmartSearching = () => {
         setTime()
         setDes()
         setCurrentStep(0)
+        setAnswerAI('')
+        setDoctorRecordAIs([])
     }
 
     useEffect(() => {
@@ -338,12 +342,10 @@ const SmartSearching = () => {
                                                     priceList: priceList,
                                                     sick: des
                                                 }
-                                                payloadHandler.setBookingNormal(body)
-                                                payloadHandler.setDoctorRecord(doctorRecord)
-                                                menuHandler.setDisplayInformationBookingNormal(true)
+                                                screenHandler.setCurrentDoctorRecord(doctorRecord)
+                                                screenHandler.navigate('detail-doctor')
                                                 menuHandler.setDisplaySmartSearching(false)
-                                                setFilterDoctorRecords([])
-                                                setCurrentStep(0)
+                                                reset()
                                             }
                                         }}
                                         style={{

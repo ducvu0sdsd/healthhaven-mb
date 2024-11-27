@@ -152,28 +152,18 @@ const DetailDoctorScreen = () => {
                                     </View>
                                 </View>
                             )}
-                            {userData.user?.role === 'USER' && (
+                            {userData.user && (
                                 <>
                                     {(appointmentHomes.length === 0 ||
-                                        (appointmentHomes
+                                        appointmentHomes
                                             .filter((item) =>
-                                                [
-                                                    "CANCELED",
-                                                    "REJECTED",
-                                                    "COMPLETED",
-                                                ].includes(item.status.status_type)
+                                                ["QUEUE", "ACCEPTED"].includes(item.status.status_type)
                                             )
-                                            .map((item) => item.doctor_record_id)
-                                            .includes(doctorRecord?._id) &&
-                                            !appointmentHomes
-                                                .filter((item) =>
-                                                    [
-                                                        "QUEUE"
-                                                    ].includes(item.status.status_type)
-                                                )
-                                                .map((item) => item.doctor_record_id)
-                                                .includes(doctorRecord?._id))
-                                    ) && (
+                                            .filter(
+                                                (item) =>
+                                                    item.doctor_record_id === doctorRecord?._id &&
+                                                    item.patient._id === userData.user?._id
+                                            ).length === 0) && (
                                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 10 }}>
                                                 <TouchableOpacity onPress={() => {
                                                     if (priceList && doctorRecord) {
