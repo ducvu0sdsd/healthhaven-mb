@@ -2,16 +2,19 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Logo from '../../../assets/logo.png'
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import { menuContext } from '../../contexts/MenuContext';
 import { userContext } from '../../contexts/UserContext';
 import { default as Icon5, default as Icon8 } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { screenContext } from '../../contexts/ScreenContext';
 import { api, TypeHTTP } from '../../utils/api';
+import { utilsContext } from '../../contexts/UtilsContext';
 
 const Menu = () => {
     const { userData } = useContext(userContext)
     const { menuHandler, menuData } = useContext(menuContext)
     const { screenHandler } = useContext(screenContext)
+    const { utilsHandler } = useContext(utilsContext)
     const navigate = (goal) => {
         menuHandler.setDisplay(false)
         screenHandler.navigate(goal)
@@ -40,12 +43,17 @@ const Menu = () => {
                     </TouchableOpacity>
                 )}
                 {userData.user && (
-                    <TouchableOpacity onPress={() => navigate('notify')} style={{ gap: 10, flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
-                        <Icon8 name='bell' style={{ fontSize: 30, color: '#a6acaf' }} />
-                        <View style={{ position: 'absolute', top: -5, right: -5, width: 20, height: 20, backgroundColor: '#DD0000', borderRadius: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 13, color: 'white', textAlign: 'center', fontFamily: 'Nunito-B' }}>{notifications.filter(item => item.seen === false).length}</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <>
+                        <TouchableOpacity onPress={() => utilsHandler.setReload(true)}>
+                            <Icon1 name='reload' style={{ fontSize: 30, color: '#566573' }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigate('notify')} style={{ gap: 10, flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+                            <Icon8 name='bell' style={{ fontSize: 30, color: '#a6acaf' }} />
+                            <View style={{ position: 'absolute', top: -5, right: -5, width: 20, height: 20, backgroundColor: '#DD0000', borderRadius: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 13, color: 'white', textAlign: 'center', fontFamily: 'Nunito-B' }}>{notifications.filter(item => item.seen === false).length}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </>
                 )}
                 <TouchableOpacity onPress={() => menuHandler.setDisplay(true)}>
                     <Icon name='bars' style={{ fontSize: 30, color: '#566573' }} />

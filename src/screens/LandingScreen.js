@@ -22,7 +22,7 @@ const LandingScreen = () => {
                 <View style={{ width: '50%', paddingHorizontal: 12, flexDirection: 'column', justifyContent: 'center' }}>
                     <Text style={{ fontSize: 15, fontFamily: 'Nunito-B', color: 'white', lineHeight: 20 }}>Tham khảo ý kiến sức khỏe về bệnh tim mạch tại HealthHaven.</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                        <TouchableOpacity style={{ borderRadius: 5, backgroundColor: 'white', paddingVertical: 8, paddingHorizontal: 15 }}>
+                        <TouchableOpacity onPress={() => screenHandler.navigate('doctors')} style={{ borderRadius: 5, backgroundColor: 'white', paddingVertical: 8, paddingHorizontal: 15 }}>
                             <Text style={{ color: 'black', fontFamily: 'Nunito-B', fontSize: 13 }}>Đặt Khám Ngay</Text>
                         </TouchableOpacity>
                     </View>

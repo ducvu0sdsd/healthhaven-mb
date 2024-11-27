@@ -26,6 +26,7 @@ const InformationBookingNormal = () => {
     const [showPicker, setShowPicker] = useState(false);
     const [date, setDate] = useState(new Date());
     const { utilsHandler } = useContext(utilsContext)
+    const [customer, setCustomer] = useState()
 
     //data
     const { userData } = useContext(userContext)
@@ -88,6 +89,7 @@ const InformationBookingNormal = () => {
 
     const handleNextStep = () => {
         if (!userData.user) {
+            console.log(payloadData.bookingNormal?.patient?.sex)
             if (!payloadData.bookingNormal?.patient?.fullName) {
                 utilsHandler.notify(notifyType.WARNING, "Họ Tên Không Hợp Lệ");
                 return;
@@ -120,11 +122,7 @@ const InformationBookingNormal = () => {
                 utilsHandler.notify(notifyType.WARNING, "Phải trên 18 tuổi");
                 return;
             }
-            if (!payloadData.bookingNormal?.patient?.sex) {
-                utilsHandler.notify(notifyType.WARNING, "Vui lòng chọn giới tính");
-                return;
-            }
-            if (!payloadData.bookingNormal?.patient?.sex) {
+            if (payloadData.bookingNormal?.patient?.sex !== false && payloadData.bookingNormal?.patient?.sex !== true) {
                 utilsHandler.notify(notifyType.WARNING, "Vui lòng chọn giới tính");
                 return;
             }
@@ -232,6 +230,7 @@ const InformationBookingNormal = () => {
             })
                 .then((res) => {
                     setStep(1)
+                    setCustomer(res)
                 })
                 .catch((err) => {
                     utilsHandler.notify(
@@ -488,7 +487,7 @@ const InformationBookingNormal = () => {
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
-                    <ChoosePayment step={step} setStep={setStep} />
+                    <ChoosePayment step={step} setStep={setStep} customer={customer} />
                     <Complete />
                 </>)}
             </ScrollView>
