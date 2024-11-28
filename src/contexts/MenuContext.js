@@ -150,17 +150,17 @@ const MenuProvider = ({ children }) => {
             <InformationBookingNormal />
             <InformationBookingHealth />
             <DetailAppointment />
-            <Health />
             <DetailLogbook />
             <Schedule />
             <DetailTime />
             <ChatArea />
+            <Health />
             <FormBookingNormal />
             <FormBookingHome />
             <FormNotificationPayment />
+            <DetailAppointmentHome />
             <InformationBookingHome />
             <FormSchedule />
-            <DetailAppointmentHome />
             <ChatBot />
             <SmartSearching />
             {/* <MedicalRecord /> */}
