@@ -97,6 +97,7 @@ const AppointmentHomesScreen = () => {
                                 </View>
                                 <Text style={{
                                     fontSize: 14,
+                                    width: '75%'
                                 }}>{home.note}</Text>
                                 {userData.user.role === 'USER' ?
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
