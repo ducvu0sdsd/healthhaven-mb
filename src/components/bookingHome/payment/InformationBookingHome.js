@@ -93,7 +93,6 @@ const InformationBookingHome = () => {
                 scrollEnabled={false}
                 style={{ flexDirection: 'row' }}>
                 {payloadData.bookingHome && (<>
-                    <Complete />
                     <View style={{ width, flexDirection: 'column', alignItems: 'center', paddingHorizontal: 10, paddingTop: 60 }}>
                         <Text style={{ fontFamily: 'Nunito-B', fontSize: 20 }}>Thông Tin Đặt Khám</Text>
                         <View style={{ flexDirection: 'row', gap: 15, borderRadius: 5, width: '85%', borderWidth: 1, borderColor: '#cacfd2', marginTop: 15, paddingHorizontal: 20, paddingVertical: 10 }}>

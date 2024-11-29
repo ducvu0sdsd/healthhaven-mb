@@ -226,7 +226,7 @@ const DetailAppoinmentHome = () => {
                         </View>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'flex-start', gap: 5, paddingHorizontal: 10 }}>
                             <Text style={{ fontSize: 16, fontWeight: 600 }}>Lời Nhắn:</Text>
-                            <Text style={{ fontSize: 16, width: '90%' }}>{payloadData.appointmentHome.note}</Text>
+                            <Text style={{ fontSize: 16, width: '75%' }}>{payloadData.appointmentHome.note}</Text>
                         </View>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'flex-start', gap: 5, paddingHorizontal: 10 }}>
                             <Text style={{ fontSize: 16, fontWeight: 600 }}>Thiết bị có sẵn:</Text>
