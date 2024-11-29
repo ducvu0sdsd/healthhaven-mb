@@ -89,7 +89,6 @@ const InformationBookingNormal = () => {
 
     const handleNextStep = () => {
         if (!userData.user) {
-            console.log(payloadData.bookingNormal?.patient?.sex)
             if (!payloadData.bookingNormal?.patient?.fullName) {
                 utilsHandler.notify(notifyType.WARNING, "Họ Tên Không Hợp Lệ");
                 return;
