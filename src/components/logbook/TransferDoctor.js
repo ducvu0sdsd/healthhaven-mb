@@ -50,12 +50,12 @@ const TransferDoctor = ({ hidden, logBook }) => {
     // sửa chổ này
     api({ type: TypeHTTP.POST, sendToken: true, path: '/healthLogBooks/transfer-doctor', body })
       .then(res => {
-
         utilsHandler.notify(
           notifyType.SUCCESS,
           `Chuyển hồ sơ bệnh nhân cho bác sĩ ${doctor.doctor.fullName} thành công`
         );
         hidden();
+        utilsHandler.setReload(true)
       })
   }
   return (

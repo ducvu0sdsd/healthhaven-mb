@@ -321,7 +321,7 @@ const MedicalRecordHome = ({ doctorRecord, medicalRecord, setCurrentLayout, setM
                         </View>
                         <View style={{ width: '95%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Text style={{ width: '40%', fontSize: 16, fontWeight: 600 }}>Ngày Tái Khám: </Text>
-                            <TouchableOpacity style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, fontSize: 16, backgroundColor: 'white', borderRadius: 7, width: '60%', borderColor: '#bbb', height: 48, borderWidth: 1 }} onPress={() => setShowPicker(true)}>
+                            <TouchableOpacity style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, fontSize: 16, backgroundColor: 'white', borderRadius: 7, width: '60%', borderColor: '#bbb', height: 48, borderWidth: 1 }}>
                                 <Text style={{ color: '#999' }}>
                                     {reAppointmentDate ? reAppointmentDate.split('-')[2] + "/" + reAppointmentDate.split('-')[1] + "/" + reAppointmentDate.split('-')[0] : 'dd/mm/yyyy'}
                                 </Text>

@@ -221,6 +221,7 @@ const CuocHenTaiNha = ({ type, setType }) => {
                             </View>
                             <Text style={{
                                 fontSize: 14,
+                                width: '60%'
                             }}>{home.note}</Text>
                             {userData.user.role === 'USER' ?
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>

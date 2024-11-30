@@ -251,7 +251,7 @@ const ChoosePayment = ({ setStep }) => {
         </View>
       </View>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => handleSubmit()}
         style={{
           borderRadius: 5,
@@ -267,7 +267,7 @@ const ChoosePayment = ({ setStep }) => {
         <Text style={{ color: "white", fontFamily: "Nunito-B" }}>
           Bước Tiếp Theo
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

@@ -76,7 +76,7 @@ const FormBookingHome = () => {
                 doctor_record_id: payloadData.doctorRecord._id,
                 patient: userData.user ? userData.user._id : null,
                 appointment_date: { day: 0, month: 0, year: 0, time: '' },
-                address,
+                address: address1,
                 status: {
                     status_type: 'QUEUE',
                     message: 'Đang chờ bác sĩ xác nhận'

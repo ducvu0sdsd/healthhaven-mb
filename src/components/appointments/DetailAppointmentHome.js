@@ -261,14 +261,6 @@ const DetailAppoinmentHome = () => {
                                         <Text style={{ color: 'white' }}>Thanh Toán</Text>
                                     </TouchableOpacity>
                                 )}
-                            {userData.user?._id ===
-                                payloadData.appointmentHome?.patient?._id &&
-                                payloadData.appointmentHome?.status.status_type ===
-                                "COMPLETED" && (
-                                    <TouchableOpacity onPress={() => setCurrentLayout(3)} style={{ borderRadius: 5, backgroundColor: '#1dcbb6', height: 35, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
-                                        <Text style={{ color: 'white' }}>Đánh giá bác sĩ</Text>
-                                    </TouchableOpacity>
-                                )}
                             {(userData.user?._id ===
                                 doctorRecord?.doctor?._id ||
                                 finish) &&
