@@ -180,9 +180,9 @@ const DetailAppoinmentHome = () => {
                     {payloadData.appointmentHome && (<>
                         <Text style={{ fontFamily: 'Nunito-B', fontSize: 18 }}>THÔNG TIN CHI TIẾT CUỘC HẸN</Text>
                         <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, marginTop: 3 }}>Khám tại nhà</Text>
-                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, marginTop: 3 }}>{`${convertDateToDayMonthYearVietNam(payloadData.appointmentHome.appointment_date)}`}</Text>
+                        <Text style={{ fontFamily: 'Nunito-S', fontSize: 16, marginTop: 3 }}>{payloadData.appointmentHome.appointment_date.day !== 0 ? `${convertDateToDayMonthYearVietNam(payloadData.appointmentHome.appointment_date)}` : 'Chưa rõ giờ hẹn'}</Text>
                         <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'space-between', width: '100%', alignItems: 'center', gap: 5, padding: 5, borderRadius: 5 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}>
                                 <View style={{
                                     height: 60,
                                     width: 60,
@@ -210,18 +210,16 @@ const DetailAppoinmentHome = () => {
                                     <Text style={{ fontFamily: 'Nunito-R', fontSize: 14 }}>{userData.user?.role !== "DOCTOR"
                                         ? doctorRecord?.doctor?.phone
                                         : payloadData.appointmentHome?.patient?.phone}</Text>
+                                    <Text style={{ fontFamily: 'Nunito-S', fontSize: 14, color: color[payloadData.appointmentHome?.status?.status_type] }}>{status[payloadData.appointmentHome?.status?.status_type]}</Text>
+                                    <Text style={{ fontFamily: 'Nunito-R', fontSize: 14 }}>{payloadData.appointmentHome?.status?.status_type === "ACCEPTED"
+                                        ? calculateDetailedTimeDifference(
+                                            convertDateToDayMonthYearTimeObject(
+                                                new Date().toISOString()
+                                            ),
+                                            payloadData.appointmentHome?.appointment_date
+                                        )
+                                        : payloadData.appointmentHome?.status?.message}</Text>
                                 </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                                <Text style={{ fontFamily: 'Nunito-S', fontSize: 14, color: color[payloadData.appointmentHome?.status?.status_type] }}>{status[payloadData.appointmentHome?.status?.status_type]}</Text>
-                                <Text style={{ fontFamily: 'Nunito-R', fontSize: 14 }}>{payloadData.appointmentHome?.status?.status_type === "ACCEPTED"
-                                    ? calculateDetailedTimeDifference(
-                                        convertDateToDayMonthYearTimeObject(
-                                            new Date().toISOString()
-                                        ),
-                                        payloadData.appointmentHome?.appointment_date
-                                    )
-                                    : payloadData.appointmentHome?.status?.message}</Text>
                             </View>
                         </View>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'flex-start', gap: 5, paddingHorizontal: 10 }}>

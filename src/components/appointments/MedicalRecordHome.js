@@ -63,7 +63,7 @@ const MedicalRecordHome = ({ doctorRecord, medicalRecord, setCurrentLayout, setM
 
     const updateMedicalRecord = () => {
         let splitDate = reAppointmentDate
-            ? reAppointmentDate.split("-")
+            ? reAppointmentDate.split("-").map(item => Number(item))
             : [];
         // chổ này cần check xem có nhập đủ thông tin không
         if (symptoms === "") {
@@ -128,7 +128,9 @@ const MedicalRecordHome = ({ doctorRecord, medicalRecord, setCurrentLayout, setM
             setDiagnosisDisease(medicalRecord.diagnosisDisease)
             setSymptoms(medicalRecord.symptoms)
             setNote(medicalRecord.note)
-            setReAppointmentDate()
+            if (medicalRecord.reExaminationDate?.day !== 0) {
+                setReAppointmentDate(`${medicalRecord.reExaminationDate.year}-${medicalRecord.reExaminationDate.month}-${medicalRecord.reExaminationDate.day}`)
+            }
             setTemperature(medicalRecord.temperature + '')
             setBloodPressure(medicalRecord.bloodPressure)
             setHealthRate(medicalRecord.healthRate + '')

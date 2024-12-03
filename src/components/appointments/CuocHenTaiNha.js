@@ -203,7 +203,7 @@ const CuocHenTaiNha = ({ type, setType }) => {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                                 {/* <Text style={{ fontSize: 15, fontWeight: 600 }}>Thời gian:</Text> */}
-                                <Text style={{ fontSize: 15 }}>{home.status?.status_type === "ACCEPTED" ? `${convertDateToDayMonthYearVietNam(
+                                <Text style={{ fontSize: 15 }}>{['ACCEPTED', 'COMPLETED'].includes(home.status?.status_type) ? `${convertDateToDayMonthYearVietNam(
                                     home.appointment_date
                                 )}` : 'Chưa rõ thời gian'}</Text>
                             </View>
