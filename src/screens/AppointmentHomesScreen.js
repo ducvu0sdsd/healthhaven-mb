@@ -26,7 +26,7 @@ const AppointmentHomesScreen = () => {
                 path: `/appointmentHomes/findByPatient/${userData.user._id}`,
                 sendToken: true,
             }).then((logBooks) => {
-                setAppointmentHomes(logBooks);
+                setAppointmentHomes(logBooks.reverse());
             });
             api({
                 type: TypeHTTP.GET,
@@ -66,7 +66,7 @@ const AppointmentHomesScreen = () => {
                 <Text style={{ fontSize: 20, fontFamily: 'Nunito-B', width: '100%' }}>Chào {userData.user?.fullName}</Text>
                 <Text style={{ fontFamily: 'Nunito-R', width: '70%' }}>Đăng ký khám sức khỏe tại nhà với các bác sĩ để nhận được lời khuyên tốt nhất.</Text>
                 <View style={{ flexDirection: 'column', width: '70%', marginTop: 10, gap: 10 }}>
-                    {appointmentHomes.reverse().map((home, index) => (
+                    {appointmentHomes.map((home, index) => (
                         <TouchableOpacity onPress={() => {
                             menuHandler.setDisplayDetailAppointmentHome(true)
                             payloadHandler.setAppointmentHome(home)

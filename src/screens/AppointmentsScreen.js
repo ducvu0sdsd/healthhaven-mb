@@ -78,7 +78,7 @@ const AppointmentScreen = () => {
                     <Text style={{ fontSize: 20, fontFamily: 'Nunito-B' }}>Chào {userData.user?.fullName}</Text>
                     <Text style={{ fontFamily: 'Nunito-R' }}>Tư vấn với các bác sĩ để nhận lời khuyên tốt nhất</Text>
                     <ScrollView style={{ flexDirection: 'column' }}>
-                        {sortByAppointmentDate(appointments).map((appointment, index) => (
+                        {appointments.map((appointment, index) => (
                             <TouchableOpacity onPress={() => {
                                 payloadHandler.setDetailAppointment(appointment)
                                 payloadHandler.setDisplayConnect(displayConnect)
